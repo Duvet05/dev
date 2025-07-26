@@ -147,6 +147,8 @@ export default function CyberpunkPortfolio() {
           <div className="flex justify-between items-center">
             <div className="flex space-x-8 text-base">
               <a href="#home" className="text-white hover:underline">HOME</a>
+              <a href="#about" className="text-gray-400 hover:underline">ABOUT.ME</a>
+              <a href="#stack" className="text-gray-400 hover:underline">STACK</a>
               <a href="#projects" className="text-gray-400 hover:underline">PROJECTS</a>
               <a href="#skills" className="text-gray-400 hover:underline">SKILLS</a>
               <a href="#contact" className="text-gray-400 hover:underline">CONTACT</a>
@@ -166,6 +168,32 @@ export default function CyberpunkPortfolio() {
         <div className="p-8">
           {/* Hero Section */}
           <div className="relative mb-16">
+            {/* Window Header */}
+            <div
+              className="pl-4 bg-secondary p-2 flex items-center justify-between"
+            >
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-red-500"></div>
+                <div className="w-3 h-3 bg-yellow-500"></div>
+                <div className="w-3 h-3 bg-green-500"></div>
+                <span className="text-sm text-primary ml-4">HOME.EXE</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                  <span className="text-xs">_</span>
+                </Button>
+                <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                  <span className="text-xs">□</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-primary w-6 h-6 p-0"
+                >
+                  <span className="text-xs">×</span>
+                </Button>
+              </div>
+            </div>
             <div className="grid grid-cols-12 mb-8">
               <div className="col-span-12 lg:col-span-8">
                 <div className="relative h-96 bg-primary border border-secondary overflow-hidden">
@@ -245,6 +273,33 @@ export default function CyberpunkPortfolio() {
             {/* About Me Section */}
             <div id="about" className="flex-[3] h-full self-stretch flex flex-col">
               <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">ABOUT.ME</h2>
+              {/* Window Header */}
+              <div
+                className="pl-4 bg-secondary p-2 flex items-center justify-between"
+              >
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-red-500"></div>
+                  <div className="w-3 h-3 bg-yellow-500"></div>
+                  <div className="w-3 h-3 bg-green-500"></div>
+                  <span className="text-sm text-primary ml-4">ABOUT.ME.EXE</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                    <span className="text-xs">_</span>
+                  </Button>
+                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                    <span className="text-xs">□</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-primary w-6 h-6 p-0"
+                  >
+                    <span className="text-xs">×</span>
+                  </Button>
+                </div>
+              </div>
+
               <div className="flex flex-col md:flex-row h-full flex-1">
                 <div className="border-l border-t border-b border-secondary bg-primary p-6 text-white text-lg font-vt323 max-w-3xl flex items-center justify-center md:mr-0 md:ml-0 md:self-stretch">
                   <img
@@ -278,16 +333,34 @@ export default function CyberpunkPortfolio() {
             </div>
 
             {/* Stack Section */}
-            <div id="stack" className="flex-1 h-full flex flex-col justify-center self-stretch">
+            <div id="stack" className="flex-1 h-full flex flex-col self-stretch">
               <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">STACK</h2>
-              <div className="w-fit max-w-3xl mx-auto flex flex-col items-center h-full">
-                <div className="grid grid-cols-4 gap-2 h-64">
-                  {["Blender", "Maya", "ZBrush", "Three.js", "WebGL", "React", "Unreal", "Unity", "Substance", "Houdini", "Marvelous", "Photoshop"].map((tech, idx) => (
-                    <div key={idx} className="w-14 h-full bg-black border border-secondary flex items-center justify-center text-xs font-vt323 text-white text-center">
-                      {tech}
-                    </div>
-                  ))}
-                </div>
+              <div className="w-full max-w-2xl mx-auto flex flex-col">
+                {[
+                  { tech: "Blender", level: 10 },
+                  { tech: "Maya", level: 9 },
+                  { tech: "ZBrush", level: 8 },
+                  { tech: "Substance", level: 9 },
+                  { tech: "Photoshop", level: 10 },
+                  { tech: "Unity", level: 6 },
+                  { tech: "Unreal", level: 6 },
+                  { tech: "WebGL", level: 7 },
+                  { tech: "Marvelous", level: 7 },
+                  { tech: "Houdini", level: 6 },
+                ].map(({ tech, level }, idx) => (
+                  <div key={tech} className="flex items-center w-full">
+                  <span className="font-vt323 text-lg text-white min-w-[100px] md:min-w-[120px] text-left">■ {tech}</span>
+                  <div className="flex flex-1 justify-end gap-1">
+                    {[...Array(10)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-7 h-3 border border-secondary ${i < level ? 'bg-white' : 'bg-black'} transition-colors`}
+                      style={{ boxShadow: i < level ? '0 0 1px #fff' : 'none', marginLeft: '1px' }}
+                    ></div>
+                    ))}
+                  </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -303,6 +376,33 @@ export default function CyberpunkPortfolio() {
                 VIEW.ALL <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
+            {/* Window Header */}
+            <div
+              className="pl-4 bg-secondary p-2 flex items-center justify-between"
+            >
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-red-500"></div>
+                <div className="w-3 h-3 bg-yellow-500"></div>
+                <div className="w-3 h-3 bg-green-500"></div>
+                <span className="text-sm text-primary ml-4">PROJECTS.EXE</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                  <span className="text-xs">_</span>
+                </Button>
+                <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                  <span className="text-xs">□</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-primary w-6 h-6 p-0"
+                >
+                  <span className="text-xs">×</span>
+                </Button>
+              </div>
+            </div>
+
             <div className="border-r border-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {projects.map((project, index) => (
                 <div
@@ -347,7 +447,35 @@ export default function CyberpunkPortfolio() {
 
           {/* Skills Section */}
           <div id="skills" className="mb-16">
+            
             <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">SKILLS</h2>
+            {/* Window Header */}
+              <div
+                className="pl-4 bg-secondary p-2 flex items-center justify-between"
+              >
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-red-500"></div>
+                  <div className="w-3 h-3 bg-yellow-500"></div>
+                  <div className="w-3 h-3 bg-green-500"></div>
+                  <span className="text-sm text-primary ml-4">SKILLS.EXE</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                    <span className="text-xs">_</span>
+                  </Button>
+                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                    <span className="text-xs">□</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-primary w-6 h-6 p-0"
+                  >
+                    <span className="text-xs">×</span>
+                  </Button>
+                </div>
+              </div>
+            
             <div className="border-secondary border-r grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
               {[
                 { img: "/images/skills/modeling.png", title: "3D MODELING", desc: "High-poly & low-poly assets" },
@@ -378,6 +506,32 @@ export default function CyberpunkPortfolio() {
           {/* Contact Section */}
           <div id="contact" className="mb-16">
             <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">CONTACT</h2>
+            {/* Window Header */}
+              <div
+                className="pl-4 bg-secondary p-2 flex items-center justify-between"
+              >
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-red-500"></div>
+                  <div className="w-3 h-3 bg-yellow-500"></div>
+                  <div className="w-3 h-3 bg-green-500"></div>
+                  <span className="text-sm text-primary ml-4">CONTACT.EXE</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                    <span className="text-xs">_</span>
+                  </Button>
+                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                    <span className="text-xs">□</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-primary w-6 h-6 p-0"
+                  >
+                    <span className="text-xs">×</span>
+                  </Button>
+                </div>
+              </div>
             <div className="border-secondary border grid grid-cols-1 lg:grid-cols-2">
               <div>
                 <div className="bg-primary border-r border-secondary p-6">
@@ -530,6 +684,11 @@ export default function CyberpunkPortfolio() {
           100% {
             text-shadow: -0.025em 0 0 #ffffff, -0.025em -0.025em 0 #000000, -0.025em -0.05em 0 #ffffff;
           }
+        }
+      `}</style>
+      <style jsx global>{`
+        html {
+          scroll-behavior: smooth;
         }
       `}</style>
     </div>
