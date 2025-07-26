@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Terminal, Code, Cpu, Zap, Globe, Mail, Github, Twitter, ArrowRight } from "lucide-react"
+import '@hackernoon/pixel-icon-library/fonts/iconfont.css';
 
 export default function CyberpunkPortfolio() {
   const [currentTime, setCurrentTime] = useState("")
@@ -20,6 +21,9 @@ export default function CyberpunkPortfolio() {
 
   // Estado para la barra de rendering
   const [renderingProgress, setRenderingProgress] = useState(73);
+
+  // Estado para la rotación de skills
+  const [skillAngles, setSkillAngles] = useState([0, 0, 0, 0]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -76,6 +80,14 @@ export default function CyberpunkPortfolio() {
         return prev + 1;
       });
     }, 1000); // Sube cada segundo
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // Bajo FPS: 16 frames por segundo
+    const interval = setInterval(() => {
+      setSkillAngles(prev => prev.map(angle => (angle + 22.5) % 360));
+    }, 62); // ~16 FPS
     return () => clearInterval(interval);
   }, []);
 
@@ -154,7 +166,7 @@ export default function CyberpunkPortfolio() {
         <div className="p-8">
           {/* Hero Section */}
           <div className="relative mb-16">
-            <div className="grid grid-cols-12 gap-4 mb-8">
+            <div className="grid grid-cols-12 mb-8">
               <div className="col-span-12 lg:col-span-8">
                 <div className="relative h-96 bg-primary border border-secondary overflow-hidden">
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -187,7 +199,7 @@ export default function CyberpunkPortfolio() {
                   </div>
                 </div>
               </div>
-              <div className="col-span-12 lg:col-span-4 border border-secondary">
+              <div className="col-span-12 lg:col-span-4 border-t border-b border-r border-secondary">
                 <div className="text-secondary bg-primary border-b border-secondary p-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-gray-400">SYSTEM.STATUS</span>
@@ -213,11 +225,11 @@ export default function CyberpunkPortfolio() {
                       <span className="text-white">{ramUsage}GB</span>
                     </div>
                     <div className="w-full bg-secondary h-1">
-                      <div className="bg-yellow-500 h-1" style={{ width: `${(ramUsage/64)*100}%` }}></div>
+                      <div className="bg-yellow-500 h-1" style={{ width: `${(ramUsage / 64) * 100}%` }}></div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-primary border-b border-secondary p-4">
+                <div className="bg-primary p-4">
                   <div className="text-sm text-gray-400 mb-2">CURRENT.PROJECT</div>
                   <div className="text-base text-white">QUANTUM_MESH.EXE</div>
                   <div className="text-sm text-gray-400 mt-1">RENDERING... {renderingProgress}%</div>
@@ -229,13 +241,54 @@ export default function CyberpunkPortfolio() {
             </div>
           </div>
 
-          {/* About Me Section */}
-          <div id="about" className="mb-16">
-            <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">ABOUT.ME</h2>
-            <div className="bg-primary border border-secondary p-6 text-white text-lg font-vt323 max-w-3xl mx-auto">
-              <p>
-                I'm Cuadot, a 3D artist with a strong background in digital art and technology. I studied and taught at UNiAT, where I discovered my passion for sharing knowledge and pushing creative boundaries. My journey includes freelance work and collaborations with leading companies in the industry, contributing to projects for games, film, and advertising. I specialize in advanced visualization, procedural environments, and interactive experiences, always blending technical mastery with artistic vision. I love exploring new tools and trends, and I'm always open to new challenges, collaborations, and freelance opportunities in the digital and creative world.
-              </p>
+          <div className="flex flex-col md:flex-row mb-16 gap-8 items-stretch h-full md:justify-between">
+            {/* About Me Section */}
+            <div id="about" className="flex-[3] h-full self-stretch flex flex-col">
+              <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">ABOUT.ME</h2>
+              <div className="flex flex-col md:flex-row h-full flex-1">
+                <div className="border-l border-t border-b border-secondary bg-primary p-6 text-white text-lg font-vt323 max-w-3xl flex items-center justify-center md:mr-0 md:ml-0 md:self-stretch">
+                  <img
+                    src="/images/dithered-image.png"
+                    alt="Cuadot Profile"
+                    className="w-[196px] h-[196px] object-cover rounded-lg aspect-square"
+                  />
+                </div>
+                <div className="bg-primary border border-secondary p-6 text-white text-lg font-vt323 flex-1 flex items-center md:ml-0 md:self-stretch">
+                  <div className="w-full">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold font-bauhaus whitespace-nowrap overflow-hidden flex items-center">
+                        <span>VICTOR.CUADOT.ESQUEDA</span>
+                        <span className="flex-1 ml-2 text-secondary" style={{ letterSpacing: '2px' }}>{'/'.repeat(40)}</span>
+                      </h3>
+                      <a href="/cv.pdf" download>
+                        <Button
+                          variant="outline"
+                          className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none"
+                        >
+                          DOWNLOAD.CV <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      </a>
+                    </div>
+                    <p>
+                      I'm Cuadot, a 3D artist with a strong background in digital art and technology. I studied and taught at UNIAT, where I discovered my passion for sharing knowledge and pushing creative boundaries. My journey includes freelance work and collaborations with leading companies in the industry, contributing to projects for games, film, and advertising. I specialize in advanced visualization, procedural environments, and interactive experiences, always blending technical mastery with artistic vision. I love exploring new tools and trends, and I'm always open to new challenges, collaborations, and freelance opportunities in the digital and creative world.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Stack Section */}
+            <div id="stack" className="flex-1 h-full flex flex-col justify-center self-stretch">
+              <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">STACK</h2>
+              <div className="w-fit max-w-3xl mx-auto flex flex-col items-center h-full">
+                <div className="grid grid-cols-4 gap-2 h-64">
+                  {["Blender", "Maya", "ZBrush", "Three.js", "WebGL", "React", "Unreal", "Unity", "Substance", "Houdini", "Marvelous", "Photoshop"].map((tech, idx) => (
+                    <div key={idx} className="w-14 h-full bg-black border border-secondary flex items-center justify-center text-xs font-vt323 text-white text-center">
+                      {tech}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -243,18 +296,18 @@ export default function CyberpunkPortfolio() {
           <div id="projects" className="mb-16">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-4xl font-bauhaus-pixel leading-none">PROJECTS</h2>
-                <Button
+              <Button
                 variant="outline"
                 className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none"
-                >
+              >
                 VIEW.ALL <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
+              </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="border-r border-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {projects.map((project, index) => (
                 <div
                   key={index}
-                  className="bg-primary border border-secondary hover:border-white transition-colors group"
+                  className="bg-primary border-t border-b border-l border-secondary hover:border-white transition-colors group"
                 >
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
@@ -295,18 +348,26 @@ export default function CyberpunkPortfolio() {
           {/* Skills Section */}
           <div id="skills" className="mb-16">
             <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">SKILLS</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="border-secondary border-r grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
               {[
-                { icon: Cpu, title: "3D MODELING", desc: "High-poly & low-poly assets" },
-                { icon: Zap, title: "ANIMATION", desc: "Character & motion graphics" },
-                { icon: Code, title: "DEVELOPMENT", desc: "WebGL & real-time rendering" },
-                { icon: Globe, title: "DEPLOYMENT", desc: "Web & mobile platforms" },
+                { img: "/images/skills/modeling.png", title: "3D MODELING", desc: "High-poly & low-poly assets" },
+                { img: "/images/skills/animation.png", title: "ANIMATION", desc: "Character & motion graphics" },
+                { img: "/images/skills/texturing.png", title: "TEXTURING", desc: "PBR, hand-painted, UV mapping" },
+                { img: "/images/skills/rigging.png", title: "RIGGING", desc: "Skeletons, facial, advanced setups" },
               ].map((skill, index) => (
                 <div
                   key={index}
-                  className="bg-primary border border-secondary p-6 text-center hover:border-white transition-colors group"
+                  className="bg-primary border-t border-b border-l border-secondary p-6 text-center hover:border-white transition-colors group"
                 >
-                  <skill.icon className="w-8 h-8 mx-auto mb-4 text-white group-hover:animate-pulse" />
+                  <img
+                    src={skill.img}
+                    alt={skill.title}
+                    className="w-[50px] h-[50px] mx-auto mb-4 object-contain invert"
+                    style={{
+                      transform: `rotateY(${skillAngles[index]}deg)`,
+                      transition: 'transform 0.06s linear',
+                    }}
+                  />
                   <h3 className="font-bold text-secondary font-bauhaus text-lg">{skill.title}</h3>
                   <p className="text-base text-gray-400">{skill.desc}</p>
                 </div>
@@ -317,10 +378,13 @@ export default function CyberpunkPortfolio() {
           {/* Contact Section */}
           <div id="contact" className="mb-16">
             <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">CONTACT</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="border-secondary border grid grid-cols-1 lg:grid-cols-2">
               <div>
-                <div className="bg-primary border border-secondary p-6">
-                  <h3 className="text-xl font-bold mb-4 font-bauhaus">SEND.MESSAGE</h3>
+                <div className="bg-primary border-r border-secondary p-6">
+                  <h3 className="text-xl font-bold mb-4 font-bauhaus whitespace-nowrap overflow-hidden w-full flex items-center">
+                    <span>SEND.MESSAGE</span>
+                    <span className="flex-1 ml-2 text-secondary" style={{ letterSpacing: '2px' }}>{'/'.repeat(40)}</span>
+                  </h3>
                   <div className="space-y-4">
                     <Input
                       placeholder="NAME.INPUT"
@@ -332,36 +396,51 @@ export default function CyberpunkPortfolio() {
                     />
                     <Textarea
                       placeholder="MESSAGE.CONTENT"
-                      className="bg-black border-gray-600 text-white placeholder:text-gray-500 min-h-[120px] rounded-none"
+                      className="bg-black border-gray-600 text-white placeholder:text-gray-500 min-h-[129px] rounded-none"
                     />
                     <Button className="w-full bg-white text-black hover:bg-gray-200 rounded-none">TRANSMIT.DATA</Button>
                   </div>
                 </div>
               </div>
-              <div className="space-y-6">
-                <div className="text-secondary bg-primary border border-secondary p-6">
-                  <h3 className="text-xl font-bold mb-4 font-bauhaus">DIRECT.LINKS</h3>
+              <div>
+                <div className="text-secondary bg-primary border-b border-secondary p-6">
+                  <h3 className="text-xl font-bold mb-4 font-bauhaus whitespace-nowrap overflow-hidden w-full flex items-center">
+                    <span>DIRECT.LINKS</span>
+                    <span className="flex-1 ml-2 text-secondary" style={{ letterSpacing: '2px' }}>{'/'.repeat(40)}</span>
+                  </h3>
                   <div className="space-y-3">
+
                     <div className="flex items-center space-x-3">
-                      <Mail className="w-4 h-4 text-white" />
-                      <span className="text-base">cuadot@gmail.com</span>
+                      <i className="hn hn-expand text-white text-xl" />
+                      <a href="https://www.artstation.com/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">artstation.com/cuadot</a>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <Github className="w-4 h-4 text-white" />
-                      <span className="text-base">github.com/neural-link</span>
+                      <i className="hn hn-linkedin text-white text-xl" />
+                      <a href="https://www.linkedin.com/in/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">linkedin.com/in/cuadot</a>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <Twitter className="w-4 h-4 text-white" />
-                      <span className="text-base">@neural_link_3d</span>
+                      <i className="hn hn-instagram text-white text-xl" />
+                      <a href="https://www.instagram.com/cuadot.art" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">@cuadot.art</a>
                     </div>
+                    <div className="flex items-center space-x-3">
+                      <i className="hn hn-external-link text-white text-xl" />
+                      <a href="https://sketchfab.com/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">sketchfab.com/cuadot</a>
+                    </div>
+                    {/*<div className="flex items-center space-x-3">
+                      <i className="hn hn-discord text-white text-xl" />
+                      <a href="https://discord.gg/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">discord.gg/cuadot</a>
+                    </div>*/}
                   </div>
                 </div>
-                <div className="bg-primary border border-secondary p-6">
-                  <h3 className="text-lg font-bold mb-4 font-bauhaus">LOCATION.DATA</h3>
+                <div className="bg-primary p-6">
+                  <h3 className="text-xl font-bold mb-4 font-bauhaus whitespace-nowrap overflow-hidden w-full flex items-center">
+                    <span>LOCATION.DATA</span>
+                    <span className="flex-1 ml-2 text-secondary" style={{ letterSpacing: '2px' }}>{'/'.repeat(39)}</span>
+                  </h3>
                   <div className="text-sm text-gray-400">
-                    <p>SECTOR: DIGITAL.REALM</p>
-                    <p>TIMEZONE: UTC+00:00</p>
-                    <p>STATUS: AVAILABLE.FOR.HIRE</p>
+                    <p>■ SECTOR: MÉXICO</p>
+                    <p>■ TIMEZONE: GMT-6 {currentTime}</p>
+                    <p>■ STATUS: AVAILABLE.FOR.HIRE</p>
                   </div>
                 </div>
               </div>
@@ -376,11 +455,13 @@ export default function CyberpunkPortfolio() {
                   <div className="w-8 h-8 border border-white flex items-center justify-center">
                     <Terminal className="w-4 h-4 text-white" />
                   </div>
-                  <span className="font-bold font-bauhaus text-base">CUADOT</span>
+                  <span className="text-2xl font-bauhaus-pixel mb-[-8]">CUADOT</span>
                 </div>
                 <p className="text-gray-400">
-                  Advanced 3D visualization and interactive development studio specializing in cyberpunk aesthetics and
-                  futuristic design.
+                  Cuadot is a 3D artist and developer focused on visualization, procedural environments, and interactive experiences. Open for collaborations and freelance work.
+                </p>
+                <p className="text-gray-500 mt-2 text-xs">
+                  Website developed by <a href="https://cosmodev.me" target="_blank" rel="noopener noreferrer" className="underline">cosmodev.me</a>
                 </p>
               </div>
               <div>

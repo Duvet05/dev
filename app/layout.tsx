@@ -23,8 +23,8 @@ const bauhausPixel = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Neural Link Industrial Studio",
-  description: "3D Artist & Developer Portfolio",
+  title: "Cuadot | 3D Artist",
+  description: "3D Artist & Developer Portfolio for Cuadot",
 };
 
 export default function RootLayout({
