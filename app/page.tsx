@@ -1,19 +1,27 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Terminal, Code, Cpu, Zap, Globe, Mail, Github, Twitter, ArrowRight } from "lucide-react"
+import { Terminal, Code, Cpu, Zap, Globe, Mail, Github, Twitter, ArrowRight, Volume2, SkipBack, SkipForward, Play, Pause } from "lucide-react"
 import { SiArtstation, SiInstagram, SiLinkedin, SiDiscord, SiGmail, SiSketchfab } from "react-icons/si";
+import { FaStepBackward, FaStepForward, FaPlay, FaPause, FaVolumeUp } from "react-icons/fa";
 import '@hackernoon/pixel-icon-library/fonts/iconfont.css';
 
 export default function CyberpunkPortfolio() {
   const [currentTime, setCurrentTime] = useState("")
   const [glitchText, setGlitchText] = useState("CUADOT")
   const [isPlaying, setIsPlaying] = useState(false)
+  const [showProjectsWindow, setShowProjectsWindow] = useState(false)
+  const [windowPosition, setWindowPosition] = useState({ x: 100, y: 100 })
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
+  const [currentTrack, setCurrentTrack] = useState(0)
+  const [playerState, setPlayerState] = useState("STOPPED")
+  const [volume, setVolume] = useState(8) // 0-8
 
   // Simulación de porcentajes dinámicos
   const [cpuUsage, setCpuUsage] = useState(87);
@@ -25,6 +33,27 @@ export default function CyberpunkPortfolio() {
 
   // Estado para la rotación de skills
   const [skillAngles, setSkillAngles] = useState([0, 0, 0, 0]);
+
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [tracks, setTracks] = useState<{ name: string, src: string }[]>([]);
+  const [isLoadingArt, setIsLoadingArt] = useState(false);
+
+  // --- Reproductor de música mejorado estilo pixel/cyberpunk ---
+  // Solo muestra el nombre del archivo mp3
+  const fetchTracks = async () => {
+    try {
+      const res = await fetch("/api/music");
+      if (!res.ok) throw new Error("No se pudo cargar la música");
+      const data: { name: string, src: string }[] = await res.json();
+      setTracks(data);
+    } catch (err) {
+      setTracks([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchTracks();
+  }, []);
 
   useEffect(() => {
     const updateTime = () => {
@@ -92,6 +121,92 @@ export default function CyberpunkPortfolio() {
     return () => clearInterval(interval);
   }, []);
 
+  // Control de reproducción
+  const handlePlayPause = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+      setPlayerState("STOPPED");
+    } else {
+      audioRef.current.play();
+      setIsPlaying(true);
+      setPlayerState("PLAYING");
+    }
+  };
+
+  const handlePrev = () => {
+    if (tracks.length === 0) return;
+    let prev = currentTrack - 1;
+    if (prev < 0) prev = tracks.length - 1;
+    setCurrentTrack(prev);
+    setIsPlaying(false);
+    setPlayerState("STOPPED");
+  };
+
+  const handleNext = () => {
+    if (tracks.length === 0) return;
+    let next = currentTrack + 1;
+    if (next >= tracks.length) next = 0;
+    setCurrentTrack(next);
+    setIsPlaying(false);
+    setPlayerState("STOPPED");
+  };
+
+  // Actualiza la pista cuando cambia
+  useEffect(() => {
+    if (audioRef.current && tracks.length > 0) {
+      audioRef.current.pause();
+      audioRef.current.load();
+      setIsPlaying(false);
+      setPlayerState("STOPPED");
+    }
+  }, [currentTrack, tracks]);
+
+  // Control de volumen
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume / 8;
+    }
+  }, [volume]);
+
+  // Cuando termina la canción
+  const handleEnded = () => {
+    handleNext();
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true)
+    setDragOffset({
+      x: e.clientX - windowPosition.x,
+      y: e.clientY - windowPosition.y,
+    })
+  }
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (isDragging) {
+      setWindowPosition({
+        x: e.clientX - dragOffset.x,
+        y: e.clientY - dragOffset.y,
+      })
+    }
+  }
+
+  const handleMouseUp = () => {
+    setIsDragging(false)
+  }
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove)
+      document.addEventListener("mouseup", handleMouseUp)
+      return () => {
+        document.removeEventListener("mousemove", handleMouseMove)
+        document.removeEventListener("mouseup", handleMouseUp)
+      }
+    }
+  }, [isDragging, dragOffset])
+
   const projects = [
     {
       title: "QUANTUM_MESH.EXE",
@@ -99,6 +214,7 @@ export default function CyberpunkPortfolio() {
       status: "ACTIVE",
       description: "Neural network visualization with real-time data processing",
       tech: ["BLENDER", "THREE.JS", "WEBGL"],
+      date: "2024.01.15",
     },
     {
       title: "CYBER_CITY.BIN",
@@ -106,6 +222,7 @@ export default function CyberpunkPortfolio() {
       status: "COMPLETE",
       description: "Dystopian cityscape with procedural generation",
       tech: ["UNREAL", "HOUDINI", "SUBSTANCE"],
+      date: "2024.01.08",
     },
     {
       title: "ANDROID_DREAMS",
@@ -113,6 +230,31 @@ export default function CyberpunkPortfolio() {
       status: "BETA",
       description: "Photorealistic android character with advanced rigging",
       tech: ["MAYA", "ZBRUSH", "MARVELOUS"],
+      date: "2024.01.22",
+    },
+    {
+      title: "NEON_INTERFACE.SYS",
+      type: "UI/UX",
+      status: "ACTIVE",
+      description: "Holographic user interface design system",
+      tech: ["FIGMA", "AFTER.EFFECTS", "CSS"],
+      date: "2024.01.30",
+    },
+    {
+      title: "MECH_WARRIOR.OBJ",
+      type: "CHARACTER",
+      status: "COMPLETE",
+      description: "High-detail mechanical warrior with full animation rig",
+      tech: ["MAYA", "SUBSTANCE", "UNREAL"],
+      date: "2023.12.20",
+    },
+    {
+      title: "DATA_STREAM.VFX",
+      type: "EFFECTS",
+      status: "BETA",
+      description: "Real-time particle system for data visualization",
+      tech: ["HOUDINI", "THREE.JS", "GLSL"],
+      date: "2024.02.05",
     },
   ]
 
@@ -164,7 +306,7 @@ export default function CyberpunkPortfolio() {
         </div>
 
         {/* Navigation */}
-        <div className="bg-primary border-b border-secondary p-4">
+        <div className="bg-primary border-b border-secondary py-2 px-4">
           <div className="flex justify-between items-center">
             <div className="flex space-x-8 text-base">
               <a href="#home" className="text-white hover:underline">HOME</a>
@@ -174,11 +316,69 @@ export default function CyberpunkPortfolio() {
               <a href="#skills" className="text-gray-400 hover:underline">SKILLS</a>
               <a href="#contact" className="text-gray-400 hover:underline">CONTACT</a>
             </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm">CART (0)</span>
-              <div className="flex space-x-1">
+            {/* Mini reproductor de música funcional estilo terminal/pixel art */}
+            <div className="flex items-center space-x-3 rounded-none font-vt323 text-white min-w-[260px] bg-black">
+              {tracks.length > 0 ? (
+                <audio
+                  ref={audioRef}
+                  src={tracks[currentTrack]?.src}
+                  onEnded={handleEnded}
+                  preload="auto"
+                  style={{ display: "none" }}
+                />
+              ) : null}
+              {/* Nombre del archivo mp3 */}
+              <div className="flex items-center ml-2 min-w-0">
+                <span
+                  className="text-xs text-gray-400 truncate max-w-[120px]"
+                  title={tracks.length > 0 ? tracks[currentTrack]?.name : "No music"}
+                >
+                  {tracks.length > 0 ? tracks[currentTrack]?.name : "No music"}
+                </span>
+                <span
+                  className={`text-xs ${playerState === "PLAYING" ? "text-green-500" : "text-gray-400"}`}
+                >
+                  [{playerState}]
+                </span>
+              </div>
+              {/* Controles con iconos sólidos de react-icons/fa */}
+              <div className="flex items-center space-x-1">
+                <button
+                  className="w-6 h-6 flex items-center justify-center bg-secondary text-black hover:bg-white hover:text-black transition-colors rounded-none border border-gray-600"
+                  onClick={handlePrev}
+                  aria-label="Anterior"
+                  disabled={tracks.length === 0}
+                >
+                  <FaStepBackward className="w-3 h-3" />
+                </button>
+                <button
+                  className={`w-6 h-6 flex items-center justify-center bg-secondary ${isPlaying ? "text-black" : "text-black"} hover:bg-white hover:text-black transition-colors rounded-none border border-gray-600`}
+                  onClick={handlePlayPause}
+                  aria-label={isPlaying ? "Pausar" : "Reproducir"}
+                  disabled={tracks.length === 0}
+                >
+                  {isPlaying ? <FaPause className="w-3 h-3" /> : <FaPlay className="w-3 h-3" />}
+                </button>
+                <button
+                  className="w-6 h-6 flex items-center justify-center bg-secondary text-black hover:bg-white hover:text-black transition-colors rounded-none border border-gray-600"
+                  onClick={handleNext}
+                  aria-label="Siguiente"
+                  disabled={tracks.length === 0}
+                >
+                  <FaStepForward className="w-3 h-3" />
+                </button>
+              </div>
+              {/* Volumen tipo cuadritos + icono */}
+              <div className="flex items-center ml-2">
+                <FaVolumeUp className="w-4 h-4 text-gray-400 mr-1" />
                 {[...Array(8)].map((_, i) => (
-                  <div key={i} className="w-4 h-4 border border-gray-600"></div>
+                  <button
+                    key={i}
+                    className={`w-4 h-4 border border-gray-600 mx-[1px] ${i < volume ? "bg-white" : "bg-black"}`}
+                    style={{ boxShadow: i < volume ? "0 0 1px #fff" : "none" }}
+                    onClick={() => setVolume(i + 1)}
+                    aria-label={`Volumen ${((i + 1) * 12.5).toFixed(0)}%`}
+                  ></button>
                 ))}
               </div>
             </div>
@@ -367,16 +567,17 @@ export default function CyberpunkPortfolio() {
               <Button
                 variant="outline"
                 className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none"
+                onClick={() => setShowProjectsWindow(true)}
               >
                 VIEW.ALL <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
 
-            <div className="border-r border-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className="border-r border-b border-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {projects.map((project, index) => (
                 <div
                   key={index}
-                  className="bg-primary border-t border-b border-l border-secondary hover:border-white transition-colors group"
+                  className="bg-primary border-t border-l border-secondary hover:border-white transition-colors group"
                 >
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
@@ -594,6 +795,122 @@ export default function CyberpunkPortfolio() {
             </div>
           </div>
         </div>
+
+        {/* Projects Window Modal */}
+        {showProjectsWindow && (
+          <div className="fixed inset-0 z-50">
+            <div className="absolute inset-0 bg-black/60"></div>
+            <div
+              className="absolute bg-primary border border-gray-700 min-w-[800px] max-w-[1000px] min-h-[600px]"
+              style={{
+                left: windowPosition.x,
+                top: windowPosition.y,
+              }}
+            >
+              {/* Window Header */}
+              <div
+                className="pl-4 bg-secondary p-2 flex items-center justify-between cursor-move select-none"
+                onMouseDown={handleMouseDown}
+              >
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-red-500"></div>
+                  <div className="w-3 h-3 bg-yellow-500"></div>
+                  <div className="w-3 h-3 bg-green-500"></div>
+                  <span className="text-sm text-primary ml-4">PROJECTS.ARCHIVE.EXE</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                    <span className="text-xs">_</span>
+                  </Button>
+                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                    <span className="text-xs">□</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-primary w-6 h-6 p-0 cursor-pointer"
+                    onClick={() => setShowProjectsWindow(false)}
+                  >
+                    <span className="text-xs">×</span>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Window Content */}
+              <div className="p-6 max-h-[500px] overflow-y-auto">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold mb-2">PROJECT.ARCHIVE</h2>
+                  <div className="text-xs text-gray-400">TOTAL.ENTRIES: {projects.length} | STATUS: OPERATIONAL</div>
+                </div>
+
+                <div className="border-l border-t border-secondary grid grid-cols-1 md:grid-cols-2">
+                  {projects.map((project, index) => (
+                    <div key={index} className="bg-black border-secondary border-r border-b hover:border-white transition-colors group">
+                      <div className="p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <Badge
+                            variant="outline"
+                            className={`text-xs rounded-none ${project.status === "ACTIVE"
+                              ? "border-white text-white"
+                              : project.status === "COMPLETE"
+                                ? "border-gray-400 text-gray-400"
+                                : "border-gray-500 text-gray-500"
+                              }`}
+                          >
+                            {project.status}
+                          </Badge>
+                          <span className="text-xs text-gray-400">{project.date}</span>
+                        </div>
+
+                        <h3 className="text-sm font-bold mb-2 group-hover:text-white transition-colors">
+                          {project.title}
+                        </h3>
+
+                        <div className="text-xs text-gray-400 mb-2">{project.type}</div>
+
+                        <p className="text-xs text-gray-500 mb-3 line-clamp-2">{project.description}</p>
+
+                        <div className="flex flex-wrap gap-1">
+                          {project.tech.map((tech, techIndex) => (
+                            <Badge
+                              key={techIndex}
+                              variant="secondary"
+                              className="text-xs bg-gray-800 text-gray-400 px-1 py-0"
+                            >
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+
+                        <div className="mt-3 pt-3 border-t border-gray-800">
+                          <div className="flex justify-between items-center">
+                            <span className="text-xs text-gray-500">FILE.SIZE: 2.4GB</span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-xs text-gray-400 hover:text-white h-6 px-2"
+                            >
+                              OPEN →
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Window Footer */}
+                <div className="mt-6 pt-4 border-t border-gray-700">
+                  <div className="flex justify-between items-center text-xs text-gray-400">
+                    <span>LAST.UPDATED: {currentTime}</span>
+                    <span>MEMORY.USAGE: 847MB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
 
       {/* Sección Home */}
