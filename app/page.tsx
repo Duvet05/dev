@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Terminal, Code, Cpu, Zap, Globe, Mail, Github, Twitter, ArrowRight } from "lucide-react"
+import { SiArtstation, SiInstagram, SiLinkedin, SiDiscord, SiGmail, SiSketchfab } from "react-icons/si";
 import '@hackernoon/pixel-icon-library/fonts/iconfont.css';
 
 export default function CyberpunkPortfolio() {
@@ -120,25 +121,45 @@ export default function CyberpunkPortfolio() {
       {/* Browser Frame */}
       <div className="border border-secondary m-2">
         {/* Browser Header */}
-        <div className="bg-primary border-b border-secondary p-2 pl-4 pr-4 flex items-center justify-between">
+        <div className="bg-primary border-b border-secondary p-2 pl-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-red-500"></div>
             <div className="w-3 h-3 bg-yellow-500"></div>
             <div className="w-3 h-3 bg-green-500"></div>
           </div>
-          <div className="flex-1 mx-4">
+          <div className="flex-1 ml-4 mr-2">
             <div className="bg-black border border-gray-600 px-3 py-1 text-sm">
               HTTPS://CUADOT.COM
             </div>
           </div>
           <div className="flex space-x-1 group">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-gray-400 hover:text-primary hover:bg-secondary rounded-none group-hover:bg-secondary group-hover:text-primary"
-            >
-              <Terminal className="w-4 h-4 transition-colors group-hover:text-primary" />
-            </Button>
+            <a href="https://www.artstation.com/cuadot" target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-gray-400 hover:text-primary hover:bg-secondary rounded-none h-8 py-1 flex items-center"
+              >
+                <SiArtstation className="w-5 h-5" />
+              </Button>
+            </a>
+            <a href="https://sketchfab.com/cuadot" target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-gray-400 hover:text-primary hover:bg-secondary rounded-none h-8 py-1 flex items-center"
+              >
+                <SiSketchfab className="w-5 h-5" />
+              </Button>
+            </a>
+            <a href="https://instagram.com/cuadot.art" target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-gray-400 hover:text-primary hover:bg-secondary rounded-none h-8 py-1 flex items-center"
+              >
+                <SiInstagram className="w-5 h-5" />
+              </Button>
+            </a>
           </div>
         </div>
 
@@ -168,32 +189,6 @@ export default function CyberpunkPortfolio() {
         <div className="p-8">
           {/* Hero Section */}
           <div className="relative mb-16">
-            {/* Window Header */}
-            <div
-              className="pl-4 bg-secondary p-2 flex items-center justify-between"
-            >
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-red-500"></div>
-                <div className="w-3 h-3 bg-yellow-500"></div>
-                <div className="w-3 h-3 bg-green-500"></div>
-                <span className="text-sm text-primary ml-4">HOME.EXE</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
-                  <span className="text-xs">_</span>
-                </Button>
-                <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
-                  <span className="text-xs">□</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-primary w-6 h-6 p-0"
-                >
-                  <span className="text-xs">×</span>
-                </Button>
-              </div>
-            </div>
             <div className="grid grid-cols-12 mb-8">
               <div className="col-span-12 lg:col-span-8">
                 <div className="relative h-96 bg-primary border border-secondary overflow-hidden">
@@ -349,16 +344,16 @@ export default function CyberpunkPortfolio() {
                   { tech: "Houdini", level: 6 },
                 ].map(({ tech, level }, idx) => (
                   <div key={tech} className="flex items-center w-full">
-                  <span className="font-vt323 text-lg text-white min-w-[100px] md:min-w-[120px] text-left">■ {tech}</span>
-                  <div className="flex flex-1 justify-end gap-1">
-                    {[...Array(10)].map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-7 h-3 border border-secondary ${i < level ? 'bg-white' : 'bg-black'} transition-colors`}
-                      style={{ boxShadow: i < level ? '0 0 1px #fff' : 'none', marginLeft: '1px' }}
-                    ></div>
-                    ))}
-                  </div>
+                    <span className="font-vt323 text-lg text-white min-w-[100px] md:min-w-[120px] text-left">■ {tech}</span>
+                    <div className="flex flex-1 justify-end gap-1">
+                      {[...Array(10)].map((_, i) => (
+                        <div
+                          key={i}
+                          className={`w-7 h-3 border border-secondary ${i < level ? 'bg-white' : 'bg-black'} transition-colors`}
+                          style={{ boxShadow: i < level ? '0 0 1px #fff' : 'none', marginLeft: '1px' }}
+                        ></div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -375,32 +370,6 @@ export default function CyberpunkPortfolio() {
               >
                 VIEW.ALL <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
-            </div>
-            {/* Window Header */}
-            <div
-              className="pl-4 bg-secondary p-2 flex items-center justify-between"
-            >
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-red-500"></div>
-                <div className="w-3 h-3 bg-yellow-500"></div>
-                <div className="w-3 h-3 bg-green-500"></div>
-                <span className="text-sm text-primary ml-4">PROJECTS.EXE</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
-                  <span className="text-xs">_</span>
-                </Button>
-                <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
-                  <span className="text-xs">□</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-primary w-6 h-6 p-0"
-                >
-                  <span className="text-xs">×</span>
-                </Button>
-              </div>
             </div>
 
             <div className="border-r border-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -447,35 +416,9 @@ export default function CyberpunkPortfolio() {
 
           {/* Skills Section */}
           <div id="skills" className="mb-16">
-            
+
             <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">SKILLS</h2>
-            {/* Window Header */}
-              <div
-                className="pl-4 bg-secondary p-2 flex items-center justify-between"
-              >
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-red-500"></div>
-                  <div className="w-3 h-3 bg-yellow-500"></div>
-                  <div className="w-3 h-3 bg-green-500"></div>
-                  <span className="text-sm text-primary ml-4">SKILLS.EXE</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
-                    <span className="text-xs">_</span>
-                  </Button>
-                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
-                    <span className="text-xs">□</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-primary w-6 h-6 p-0"
-                  >
-                    <span className="text-xs">×</span>
-                  </Button>
-                </div>
-              </div>
-            
+
             <div className="border-secondary border-r grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
               {[
                 { img: "/images/skills/modeling.png", title: "3D MODELING", desc: "High-poly & low-poly assets" },
@@ -507,31 +450,31 @@ export default function CyberpunkPortfolio() {
           <div id="contact" className="mb-16">
             <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">CONTACT</h2>
             {/* Window Header */}
-              <div
-                className="pl-4 bg-secondary p-2 flex items-center justify-between"
-              >
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-red-500"></div>
-                  <div className="w-3 h-3 bg-yellow-500"></div>
-                  <div className="w-3 h-3 bg-green-500"></div>
-                  <span className="text-sm text-primary ml-4">CONTACT.EXE</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
-                    <span className="text-xs">_</span>
-                  </Button>
-                  <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
-                    <span className="text-xs">□</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-primary w-6 h-6 p-0"
-                  >
-                    <span className="text-xs">×</span>
-                  </Button>
-                </div>
+            <div
+              className="pl-4 bg-secondary p-2 flex items-center justify-between"
+            >
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-red-500"></div>
+                <div className="w-3 h-3 bg-yellow-500"></div>
+                <div className="w-3 h-3 bg-green-500"></div>
+                <span className="text-sm text-primary ml-4">CONTACT.EXE</span>
               </div>
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                  <span className="text-xs">_</span>
+                </Button>
+                <Button variant="ghost" size="sm" className="text-primary w-6 h-6 p-0">
+                  <span className="text-xs">□</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-primary w-6 h-6 p-0"
+                >
+                  <span className="text-xs">×</span>
+                </Button>
+              </div>
+            </div>
             <div className="border-secondary border grid grid-cols-1 lg:grid-cols-2">
               <div>
                 <div className="bg-primary border-r border-secondary p-6">
@@ -550,7 +493,7 @@ export default function CyberpunkPortfolio() {
                     />
                     <Textarea
                       placeholder="MESSAGE.CONTENT"
-                      className="bg-black border-gray-600 text-white placeholder:text-gray-500 min-h-[129px] rounded-none"
+                      className="bg-black border-gray-600 text-white placeholder:text-gray-500 min-h-[201px] rounded-none"
                     />
                     <Button className="w-full bg-white text-black hover:bg-gray-200 rounded-none">TRANSMIT.DATA</Button>
                   </div>
@@ -563,27 +506,30 @@ export default function CyberpunkPortfolio() {
                     <span className="flex-1 ml-2 text-secondary" style={{ letterSpacing: '2px' }}>{'/'.repeat(40)}</span>
                   </h3>
                   <div className="space-y-3">
-
                     <div className="flex items-center space-x-3">
-                      <i className="hn hn-expand text-white text-xl" />
+                      <SiArtstation className="w-5 h-5 text-white" />
                       <a href="https://www.artstation.com/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">artstation.com/cuadot</a>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <i className="hn hn-linkedin text-white text-xl" />
-                      <a href="https://www.linkedin.com/in/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">linkedin.com/in/cuadot</a>
+                      <SiSketchfab className="w-5 h-5 text-white" />
+                      <a href="https://sketchfab.com/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">sketchfab.com/cuadot</a>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <i className="hn hn-instagram text-white text-xl" />
+                      <SiInstagram className="w-5 h-5 text-white" />
                       <a href="https://www.instagram.com/cuadot.art" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">@cuadot.art</a>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <i className="hn hn-external-link text-white text-xl" />
-                      <a href="https://sketchfab.com/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">sketchfab.com/cuadot</a>
+                      <SiLinkedin className="w-5 h-5 text-white" />
+                      <a href="https://www.linkedin.com/in/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">linkedin.com/in/cuadot</a>
                     </div>
-                    {/*<div className="flex items-center space-x-3">
-                      <i className="hn hn-discord text-white text-xl" />
+                    <div className="flex items-center space-x-3">
+                      <SiGmail className="w-5 h-5 text-white" />
+                      <a href="mailto:cuadot.art@gmail.com" className="text-base hover:underline">cuadot.art@gmail.com</a>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <SiDiscord className="w-5 h-5 text-white" />
                       <a href="https://discord.gg/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">discord.gg/cuadot</a>
-                    </div>*/}
+                    </div>
                   </div>
                 </div>
                 <div className="bg-primary p-6">
