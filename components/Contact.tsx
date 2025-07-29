@@ -33,7 +33,7 @@ export const Contact: React.FC<ContactProps> = ({ currentTime }) => (
               placeholder="MESSAGE.CONTENT"
               className="bg-black border-gray-600 text-white placeholder:text-gray-500 min-h-[201px] rounded-none"
             />
-            <Button className="w-full bg-white text-black hover:bg-gray-200 rounded-none">TRANSMIT.DATA</Button>
+            <Button className="w-full bg-white text-black hover:bg-gray-200 rounded-none cursor-pointer">TRANSMIT.DATA</Button>
           </div>
         </div>
       </div>

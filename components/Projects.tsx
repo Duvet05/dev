@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { SiBlender, SiAutodesk, SiAdobephotoshop, SiUnity, SiUnrealengine, SiWebgl, SiAdobe, SiFigma, SiCss3, SiHoudini, SiMarvelapp } from "react-icons/si";
 import { TbBrandThreejs } from "react-icons/tb";
 import { FaPaintBrush } from "react-icons/fa";
@@ -37,20 +38,20 @@ interface Project {
 
 interface ProjectsProps {
   projects: Project[];
-  onViewAll: () => void;
 }
 
-export const Projects: React.FC<ProjectsProps> = ({ projects, onViewAll }) => (
+export const Projects: React.FC<ProjectsProps> = ({ projects }) => (
   <div id="projects" className="mb-12">
     <div className="flex items-center justify-between mb-4">
       <h2 className="text-4xl font-bauhaus-pixel leading-none">PROJECTS</h2>
-      <Button
-        variant="outline"
-        className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none"
-        onClick={onViewAll}
-      >
-        VIEW.ALL <ArrowRight className="w-4 h-4 ml-2" />
-      </Button>
+      <Link href="/projects">
+        <Button
+          variant="outline"
+          className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none cursor-pointer"
+        >
+          VIEW.ALL <ArrowRight className="w-4 h-4 ml-2" />
+        </Button>
+      </Link>
     </div>
 
     <div className="border-r border-b border-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

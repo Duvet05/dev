@@ -220,7 +220,7 @@ export const TetrisGame: React.FC<TetrisGameProps> = ({ onClose }) => {
           </div>
 
           {/* Tablero de juego */}
-          <div className="lg:col-span-2 order-1 lg:order-2 flex flex-col items-center">
+          <div className="lg:col-span-2 order-1 lg:order-2 flex flex-col items-center w-fit mx-auto">
             <div className="bg-black border border-secondary p-2 mb-4 w-fit">
               <div 
                 className="grid gap-0.5"

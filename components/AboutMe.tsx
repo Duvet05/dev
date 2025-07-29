@@ -31,7 +31,7 @@ export const AboutMe: React.FC<AboutMeProps> = ({ currentTime }) => (
             <a href="/cv.pdf" download>
               <Button
                 variant="outline"
-                className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none"
+                className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none cursor-pointer"
               >
                 DOWNLOAD.CV <ArrowRight className="w-4 h-4 ml-2" />
               </Button>

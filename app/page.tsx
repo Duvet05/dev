@@ -9,13 +9,11 @@ export default function CyberpunkPortfolio() {
   const [currentTime, setCurrentTime] = useState("")
   const [glitchText, setGlitchText] = useState("CUADOT")
   const [isPlaying, setIsPlaying] = useState(false)
-  const [showProjectsWindow, setShowProjectsWindow] = useState(false)
-  const [windowPosition, setWindowPosition] = useState({ x: 100, y: 100 })
-  const [isDragging, setIsDragging] = useState(false)
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
   const [currentTrack, setCurrentTrack] = useState(0)
   const [playerState, setPlayerState] = useState("STOPPED")
   const [volume, setVolume] = useState(8) // 0-8
+  const [isMuted, setIsMuted] = useState(false)
+  const [volumeBeforeMute, setVolumeBeforeMute] = useState(8)
 
   // Simulación de porcentajes dinámicos
   const [cpuUsage, setCpuUsage] = useState(87);
@@ -152,54 +150,65 @@ export default function CyberpunkPortfolio() {
     if (audioRef.current && tracks.length > 0) {
       audioRef.current.pause();
       audioRef.current.load();
-      setIsPlaying(false);
-      setPlayerState("STOPPED");
+      
+      // Si está en estado PLAYING, reproducir automáticamente la nueva pista
+      if (playerState === "PLAYING") {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            console.log("Error al reproducir automáticamente:", error);
+            setIsPlaying(false);
+            setPlayerState("STOPPED");
+          });
+        }
+      } else {
+        setIsPlaying(false);
+        setPlayerState("STOPPED");
+      }
     }
-  }, [currentTrack, tracks]);
+  }, [currentTrack, tracks, playerState]);
 
   // Control de volumen
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = volume / 8;
+      audioRef.current.volume = isMuted ? 0 : volume / 8;
     }
-  }, [volume]);
+  }, [volume, isMuted]);
+
+  // Función para silenciar/reactivar audio
+  const toggleMute = () => {
+    if (isMuted) {
+      // Reactivar sonido
+      setIsMuted(false);
+      setVolume(volumeBeforeMute);
+    } else {
+      // Silenciar
+      setVolumeBeforeMute(volume);
+      setIsMuted(true);
+    }
+  };
+
+  // Función para cambiar volumen (desactiva mute si está activo)
+  const handleSetVolume = (newVolume: number) => {
+    if (isMuted) {
+      setIsMuted(false);
+    }
+    setVolume(newVolume);
+  };
 
   // Cuando termina la canción
   const handleEnded = () => {
-    handleNext();
+    if (tracks.length === 0) return;
+    
+    // Cambiar a la siguiente pista
+    let next = currentTrack + 1;
+    if (next >= tracks.length) next = 0;
+    
+    // Actualizar el estado inmediatamente
+    setCurrentTrack(next);
+    setIsPlaying(true);
+    setPlayerState("PLAYING");
   };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true)
-    setDragOffset({
-      x: e.clientX - windowPosition.x,
-      y: e.clientY - windowPosition.y,
-    })
-  }
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (isDragging) {
-      setWindowPosition({
-        x: e.clientX - dragOffset.x,
-        y: e.clientY - dragOffset.y,
-      })
-    }
-  }
-
-  const handleMouseUp = () => {
-    setIsDragging(false)
-  }
-
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove)
-      document.addEventListener("mouseup", handleMouseUp)
-      return () => {
-        document.removeEventListener("mousemove", handleMouseMove)
-        document.removeEventListener("mouseup", handleMouseUp)
-      }
-    }
-  }, [isDragging, dragOffset])
 
   const projects = [
     {
@@ -254,34 +263,54 @@ export default function CyberpunkPortfolio() {
 
   return (
     <div className="min-h-screen bg-black text-white font-vt323 overflow-x-hidden">
-      <BrowserFrame>
-        <BrowserHeader
-          tracks={tracks}
-          currentTrack={currentTrack}
-          isPlaying={isPlaying}
-          playerState={playerState}
-          volume={volume}
-          audioRef={audioRef}
-          handlePrev={handlePrev}
-          handlePlayPause={handlePlayPause}
-          handleNext={handleNext}
-          setVolume={setVolume}
-          handleEnded={handleEnded}
-        />
-        <MainContent
-          glitchText={glitchText}
-          currentTime={currentTime}
-          cpuUsage={cpuUsage}
-          gpuUsage={gpuUsage}
-          ramUsage={ramUsage}
-          renderingProgress={renderingProgress}
-          projects={projects}
-          showProjectsWindow={showProjectsWindow}
-          setShowProjectsWindow={setShowProjectsWindow}
-          windowPosition={windowPosition}
-          handleMouseDown={handleMouseDown}
-        />
-      </BrowserFrame>
+      {/* Header sticky que ocupa todo el ancho de la pantalla */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-primary">
+        <div className="mx-4 mt-4 border-l border-r border-t border-secondary bg-black">
+          <BrowserHeader
+            tracks={tracks}
+            currentTrack={currentTrack}
+            isPlaying={isPlaying}
+            playerState={playerState}
+            volume={volume}
+            audioRef={audioRef}
+            handlePrev={handlePrev}
+            handlePlayPause={handlePlayPause}
+            handleNext={handleNext}
+            setVolume={handleSetVolume}
+            handleEnded={handleEnded}
+            toggleMute={toggleMute}
+            isMuted={isMuted}
+          />
+        </div>
+      </div>
+      
+      {/* Contenido principal con padding-top para compensar el header fijo */}
+      <div className="pt-[100px] mb-4">
+        <div className="border-l border-r border-b border-secondary mx-4">
+          <MainContent
+            glitchText={glitchText}
+            currentTime={currentTime}
+            cpuUsage={cpuUsage}
+            gpuUsage={gpuUsage}
+            ramUsage={ramUsage}
+            renderingProgress={renderingProgress}
+            projects={projects}
+          />
+        </div>
+      </div>
+      
+      {/* Audio element para el reproductor */}
+      <audio
+        ref={audioRef}
+        onEnded={handleEnded}
+        preload="metadata"
+      >
+        {tracks.length > 0 && (
+          <source src={tracks[currentTrack]?.src} type="audio/mpeg" />
+        )}
+        Tu navegador no soporta el elemento de audio.
+      </audio>
+      
       <style jsx global>{`
         html {
           scroll-behavior: smooth;

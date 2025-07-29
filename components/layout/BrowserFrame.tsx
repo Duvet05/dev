@@ -5,7 +5,7 @@ interface BrowserFrameProps {
 }
 
 export const BrowserFrame: React.FC<BrowserFrameProps> = ({ children }) => (
-  <div className="border border-secondary m-2">
+  <div className="border border-secondary">
     {children}
   </div>
 );
