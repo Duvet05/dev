@@ -15,6 +15,8 @@ import { IconType } from "react-icons"
 import Model3DViewer from "@/components/3d/Model3DViewer"
 import { SketchfabViewer } from "@/components/3d/SketchfabViewer"
 import { SKETCHFAB_CONFIG } from "@/lib/sketchfab-config"
+import { WindowHeader } from "@/components/layout/WindowHeader"
+import ReactMarkdown from "react-markdown"
 
 // Interfaz para los proyectos
 interface Project {
@@ -369,6 +371,8 @@ export default function ProjectsPage() {
     }
   };
 
+  const [modalProject, setModalProject] = useState<Project | null>(null);
+
   return (
     <div className="min-h-screen bg-black text-white font-vt323 overflow-x-hidden">
       {/* Header sticky que ocupa todo el ancho de la pantalla */}
@@ -670,14 +674,21 @@ export default function ProjectsPage() {
                             )}
                           </div>
                           {/* 3D Model Viewer - Sketchfab o local */}
-                          <div className="mb-4">
+                          <div className="mb-4 relative cursor-pointer"
+                            onClick={() => setModalProject(project)}
+                          >
                             {project.thumbnails && project.thumbnails.medium ? (
-                              <img
-                                src={project.thumbnails.large}
-                                alt={project.title}
-                                className="h-auto w-full object-cover border border-gray-600 bg-gray-900"
-                                style={{ aspectRatio: "16/9" }}
-                              />
+                              <>
+                                <img
+                                  src={project.thumbnails.large}
+                                  alt={project.title}
+                                  className="h-auto w-full object-cover border border-gray-600 bg-gray-900 peer"
+                                  style={{ aspectRatio: "16/9" }}
+                                />
+                                <div className="border border-gray-600 absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 peer-hover:opacity-100 transition-opacity pointer-events-none">
+                                  <span className="text-white text-lg font-bold font-vt323 tracking-widest">3D.PREVIEW</span>
+                                </div>
+                              </>
                             ) : (
                               <div className="aspect-[16/9] bg-gray-900 border border-gray-600 flex items-center justify-center">
                                 <div className="text-gray-400 text-sm">NO.MODEL.AVAILABLE</div>
@@ -685,7 +696,18 @@ export default function ProjectsPage() {
                             )}
                           </div>
 
-                          <p className="text-base text-gray-400 mb-2 line-clamp-3">{project.description}</p>
+                          {/* Descripción con Markdown en la card */}
+                          <div className="text-base text-gray-400 mb-2 line-clamp-3">
+                            <ReactMarkdown
+                              components={{
+                                p: ({ node, ...props }) => <p {...props} className="inline" />,
+                                strong: ({ node, ...props }) => <strong {...props} className="font-bold" />,
+                                br: () => <br />,
+                              }}
+                            >
+                              {project.description}
+                            </ReactMarkdown>
+                          </div>
 
                           {/* Tags */}
                           {project.tags && project.tags.length > 0 && (
@@ -725,43 +747,185 @@ export default function ProjectsPage() {
                             {project.triangles && (
                               <div className="flex justify-between items-center">
                                 <span className="flex items-center gap-1"><Shapes className="w-4 h-4 mr-1" />TRIANGLES:</span>
-                                <span className="text-white">{project.triangles.toLocaleString()}</span>
+                                <span className="text-white">{project.triangles.toLocaleString()} ▲</span>
                               </div>
                             )}
                             {project.vertices && (
                               <div className="flex justify-between items-center">
                                 <span className="flex items-center gap-1"><Layers className="w-4 h-4 mr-1" />VERTICES:</span>
-                                <span className="text-white">{project.vertices.toLocaleString()}</span>
+                                <span className="text-white">{project.vertices.toLocaleString()} ◼</span>
                               </div>
                             )}
                             <div className="flex justify-between items-center">
                               <span className="flex items-center gap-1"><Gauge className="w-4 h-4 mr-1" />COMPLEXITY:</span>
                               <span className={
                                 project.complexity === "EXTREME" ? "text-red-500" :
-                                  project.complexity === "HIGH" ? "text-yellow-500" :
-                                    project.complexity === "MEDIUM" ? "text-green-500" :
-                                      project.complexity === "LOW" ? "text-green-300" :
-                                        "text-gray-400"
+                                  project.complexity === "VERY_HIGH" ? "text-orange-500" :
+                                    project.complexity === "HIGH" ? "text-yellow-500" :
+                                      project.complexity === "MEDIUM" ? "text-green-500" :
+                                        project.complexity === "LOW" ? "text-green-300" :
+                                          "text-gray-400"
                               }>{project.complexity}</span>
                             </div>
                           </div>
-                          {/* Botón alineado abajo */}
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="w-full text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
-                            onClick={() => project.sketchfabUid && window.open(`https://sketchfab.com/3d-models/${project.sketchfabUid}`, '_blank')}
-                          >
-                            {project.sketchfabUid ? 'VIEW.ON.SKETCHFAB' : 'OPEN.PROJECT'} <ExternalLink className="w-3 h-3 ml-2" />
-                          </Button>
+                          {/* Botones alineados abajo */}
+                          <div className="flex gap-2 w-full">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
+                              onClick={() => setModalProject(project)}
+                            >
+                              3D.PREVIEW
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
+                              onClick={() => project.sketchfabUid && window.open(`https://sketchfab.com/3d-models/${project.sketchfabUid}`, '_blank')}
+                            >
+                              {project.sketchfabUid ? 'VIEW.ON.SKETCHFAB' : 'OPEN.PROJECT'} <ExternalLink className="w-3 h-3" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   ))}
-                </div>                
+                </div>
+                {/* MODAL DE MODELO 3D */}
               </>
             )}
-
+            {modalProject && (
+              <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+                <div className="bg-primary border border-secondary w-screen max-w-7xl max-h-[90vh] overflow-y-auto">
+                  <WindowHeader title={modalProject.title} onClose={() => setModalProject(null)} />
+                  <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 bg-primary">
+                    {/* Imagen grande o visor 3D */}
+                    <div className="flex flex-col items-center relative">
+                      {/* Corner brackets */}
+                      <div className="absolute -top-1.5 -left-1.5 w-5 h-5 pointer-events-none z-10">
+                        <div className="w-full h-full border-t-1 border-l-1 border-secondary"></div>
+                      </div>
+                      <div className="absolute -top-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
+                        <div className="w-full h-full border-t-1 border-r-1 border-secondary"></div>
+                      </div>
+                      <div className="absolute -bottom-1.5 -left-1.5 w-5 h-5 pointer-events-none z-10">
+                        <div className="w-full h-full border-b-1 border-l-1 border-secondary"></div>
+                      </div>
+                      <div className="absolute -bottom-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
+                        <div className="w-full h-full border-b-1 border-r-1 border-secondary"></div>
+                      </div>
+                      {modalProject.sketchfabUid ? (
+                        <iframe
+                          src={`https://sketchfab.com/models/${modalProject.sketchfabUid}/embed?autospin=1&autostart=1&ui_theme=dark`}
+                          title="Sketchfab 3D Viewer"
+                          frameBorder="0"
+                          allow="autoplay; fullscreen; vr"
+                          allowFullScreen
+                          className="w-full h-64 md:h-96 border border-gray-700 bg-black"
+                        />
+                      ) : (
+                        <img
+                          src={modalProject.thumbnails?.large}
+                          alt={modalProject.title}
+                          className="w-full h-64 md:h-96 object-cover border border-gray-700 bg-black"
+                        />
+                      )}
+                    </div>
+                    {/* Info del modelo */}
+                    <div className="flex flex-col gap-2">
+                      <h2 className="text-2xl text-secondary font-bauhaus-pixel mb-[-8]">{modalProject.title}</h2>
+                      <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
+                        <Calendar className="w-4 h-4 mr-1" />
+                        {modalProject.date && (() => {
+                          const d = new Date(modalProject.date);
+                          if (isNaN(d.getTime())) return modalProject.date;
+                          return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+                        })()}
+                        {modalProject.categories && modalProject.categories.length > 0 && (
+                          <div className="flex flex-wrap gap-2 ml-2">
+                            {modalProject.categories.map((cat, i) => (
+                              <div className="relative inline-block" key={i}>
+                                <Badge
+                                  variant="secondary"
+                                  className="text-sm bg-primary text-secondary rounded-none uppercase"
+                                >
+                                  {cat}
+                                </Badge>
+                                <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                                <div className="absolute top-0 right-0 w-2 h-2 border-t-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                                <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <div className="text-base text-gray-400">
+                        <ReactMarkdown
+                          components={{
+                            p: ({ node, ...props }) => <p {...props} className="mb-2" />,
+                            strong: ({ node, ...props }) => <strong {...props} className="font-bold" />,
+                            br: () => <br />,
+                          }}
+                        >
+                          {modalProject.description}
+                        </ReactMarkdown>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {modalProject.tags?.map((tag, i) => {
+                          const tagKey = tag.toLowerCase();
+                          const Icon = tagTechIcons[tagKey];
+                          if (Icon) {
+                            return (
+                              <Badge
+                                key={i}
+                                variant="secondary"
+                                className="uppercase text-xs bg-secondary text-primary rounded-none flex items-center gap-1 font-vt323"
+                              >
+                                <Icon className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />
+                                {tag}
+                              </Badge>
+                            );
+                          }
+                          return (
+                            <Badge
+                              key={i}
+                              variant="secondary"
+                              className="uppercase text-xs bg-secondary text-primary rounded-none flex items-center gap-1 font-vt323"
+                            >
+                              #{tag}
+                            </Badge>
+                          );
+                        })}
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        {/* Metadata alineada */}
+                        <div className="grid grid-cols-2 gap-2 text-xs text-gray-400 mt-4">
+                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Shapes className="w-4 h-4 mr-1" />TRIANGLES:</span><span className="text-white">{modalProject.triangles?.toLocaleString() ?? '-'} {modalProject.triangles ? '▲' : ''}</span></div>
+                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Layers className="w-4 h-4 mr-1" />VERTICES:</span><span className="text-white">{modalProject.vertices?.toLocaleString() ?? '-'} {modalProject.vertices ? '◼' : ''}</span></div>
+                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Heart className="w-4 h-4 mr-1" />LIKES:</span><span className="text-white">{modalProject.likes?.toLocaleString() ?? '-'}</span></div>
+                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Eye className="w-4 h-4 mr-1" />VIEWS:</span><span className="text-white">{modalProject.views?.toLocaleString() ?? '-'}</span></div>
+                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Gauge className="w-4 h-4 mr-1" />COMPLEXITY:</span><span className="text-white">{modalProject.complexity}</span></div>
+                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><FileText className="w-4 h-4 mr-1" />LICENSE:</span><span className="text-white">{modalProject.license}</span></div>
+                        </div>
+                        {/* Botones alineados abajo */}
+                        <div className="flex gap-2 w-full">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
+                            onClick={() => modalProject.sketchfabUid && window.open(`https://sketchfab.com/3d-models/${modalProject.sketchfabUid}`, '_blank')}
+                          >
+                            {modalProject.sketchfabUid ? 'VIEW.ON.SKETCHFAB' : 'OPEN.PROJECT'} <ExternalLink className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             {/* Footer info */}
             <div className="pt-2 mb-12">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-sm text-gray-400 w-full">
