@@ -232,7 +232,8 @@ function convertSketchfabModelsToProjects(sketchfabModels: any[]): Project[] {
       thumbnails,
       viewerUrl: model.viewerUrl,
       embedUrl: model.embedUrl,
-      publishedAt: model.publishedAt
+      publishedAt: model.publishedAt,
+      staffpickedAt: model.staffpickedAt || null
     }
   })
 }

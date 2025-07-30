@@ -48,6 +48,7 @@ interface Project {
   viewerUrl?: string;
   embedUrl?: string;
   publishedAt?: string;
+  staffpickedAt?: string | null; // <--- Añadido para soporte de staff pick
 }
 
 // Mapeo de tecnologías a iconos
@@ -416,9 +417,9 @@ export default function ProjectsPage() {
                   <h1 className="text-5xl font-bauhaus-pixel leading-none mb-[-17]">PROJECTS.ARCHIVE</h1>
                 </div>
                 <div className="text-right">
-                  <div className="flex gap-8">
+                  <div className="flex-col">
                     <div className="text-sm text-gray-400">
-                      PAGE {currentPage} OF {totalPages} • SHOWING {paginatedProjects.length} MODELS • <span className="text-green-400">TOTAL: {totalModelsFound} MODELS</span>
+                      PAGE {currentPage} OF {totalPages} • SHOWING {paginatedProjects.length} MODELS • <span className="text-green-400">TOTAL: {validModelsFound} MODELS</span>
                     </div>
                     <div className="text-sm text-gray-400">LAST.UPDATE: {currentTime}</div>
                   </div>
@@ -431,32 +432,7 @@ export default function ProjectsPage() {
               </div>
 
               {/* Línea separadora estilo terminal */}
-              <div className="border-t border-secondary mb-6"></div>
-
-              {/* Stats del portfolio (corregir uso de status) */}
-              <div className="border border-secondary grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="border-r border-secondary bg-primary p-4">
-                  <div className="text-2xl font-bold text-white">{sketchfabModels.filter(p => p.tags?.includes("COMPLETE")).length}</div>
-                  <div className="text-sm text-gray-400">COMPLETED</div>
-                </div>
-                <div className="border-r border-secondary bg-primary p-4">
-                  <div className="text-2xl font-bold text-green-500">{sketchfabModels.filter(p => p.tags?.includes("ACTIVE")).length}</div>
-                  <div className="text-sm text-gray-400">ACTIVE</div>
-                </div>
-                <div className="border-r border-secondary bg-primary p-4">
-                  <div className="text-2xl font-bold text-yellow-500">{sketchfabModels.filter(p => p.tags?.includes("BETA")).length}</div>
-                  <div className="text-sm text-gray-400">BETA</div>
-                </div>
-                <div className="bg-primary p-4">
-                  <div className="text-2xl font-bold text-white">
-                    {sketchfabModels.reduce((total, project) => {
-                      const size = parseFloat(project.fileSize?.replace(/[GB|MB]/g, "") || "0");
-                      return total + (project.fileSize?.includes("GB") ? size : size / 1000);
-                    }, 0).toFixed(1)}GB
-                  </div>
-                  <div className="text-sm text-gray-400">TOTAL.SIZE</div>
-                </div>
-              </div>
+              <div className="border-t border-secondary mb-4"></div>
             </div>
 
             {/* NUEVO: Barra de búsqueda, filtros, orden y vista */}
@@ -587,28 +563,29 @@ export default function ProjectsPage() {
                       <div className="p-6 flex flex-col h-full">
                         <div>
                           <div className="flex items-center justify-between mb-4">
-                            {/* Origen y categorías */}
                             <div className="flex w-full items-center justify-between">
-                              <a
-                                href={project.source === "SKETCHFAB" && project.sketchfabUid ? `https://sketchfab.com/3d-models/${project.sketchfabUid}` : project.source === "ARTSTATION" && project.viewerUrl ? project.viewerUrl : undefined}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="focus:outline-none"
-                              >
-                                <Badge
-                                  variant="outline"
-                                  className={`text-sm rounded-none flex items-center gap-1 cursor-pointer hover:underline ${project.source === "SKETCHFAB"
-                                    ? "border-[#00aedf] text-[#00aedf]"
-                                    : project.source === "ARTSTATION"
-                                      ? "border-[#00aedf] text-[#00aedf]"
-                                      : "border-gray-500 text-gray-500 bg-gray-900"
-                                    }`}
+                              <div className="flex items-center gap-2">
+                                <a
+                                  href={project.source === "SKETCHFAB" && project.sketchfabUid ? `https://sketchfab.com/3d-models/${project.sketchfabUid}` : project.source === "ARTSTATION" && project.viewerUrl ? project.viewerUrl : undefined}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="focus:outline-none"
                                 >
-                                  {project.source === "SKETCHFAB" && <SiSketchfab className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />}
-                                  {project.source === "ARTSTATION" && <SiArtstation className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />}
-                                  {project.source ? project.source : "UNKNOWN"}
-                                </Badge>
-                              </a>
+                                  <Badge
+                                    variant="outline"
+                                    className={`text-sm rounded-none flex items-center gap-1 cursor-pointer hover:underline ${project.source === "SKETCHFAB"
+                                      ? "border-[#00aedf] text-[#00aedf]"
+                                      : project.source === "ARTSTATION"
+                                        ? "border-[#00aedf] text-[#00aedf]"
+                                        : "border-gray-500 text-gray-500 bg-gray-900"
+                                      }`}
+                                  >
+                                    {project.source === "SKETCHFAB" && <SiSketchfab className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />}
+                                    {project.source === "ARTSTATION" && <SiArtstation className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />}
+                                    {project.source ? project.source : "UNKNOWN"}
+                                  </Badge>
+                                </a>
+                              </div>
                               <div className="flex flex-wrap gap-2 ml-auto">
                                 {project.categories && project.categories.length > 0 ? (
                                   project.categories.map((cat, i) => (
@@ -640,10 +617,19 @@ export default function ProjectsPage() {
                               rel="noopener noreferrer"
                               className="flex-1 focus:outline-none"
                             >
-                              <div className="flex items-center gap-3">
+                              <div className="flex items-center gap-2">
                                 <h3 className="text-secondary text-xl font-bold group-hover:text-gray-300 transition-colors font-bauhaus text-left hover:underline cursor-pointer">
                                   {project.title}
                                 </h3>
+                                {/* Icono de staffpick si aplica */}
+                                {project.staffpickedAt && (
+                                  <img
+                                    src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/icons/1ec49a9ae15f3f8f2d6ce895f503953c-v2.svg"
+                                    alt="Staff Picked"
+                                    title="Staff Picked"
+                                    className="w-5 h-5 drop-shadow-md"
+                                  />
+                                )}
                                 {project.date && (
                                   <span className="text-xs text-gray-400 font-normal align-middle">
                                     {(() => {
@@ -796,10 +782,10 @@ export default function ProjectsPage() {
               </>
             )}
             {modalProject && (
-              <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-                <div className="bg-primary border border-secondary w-screen max-w-7xl max-h-[90vh] overflow-y-auto">
+              <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center md:p-24 p-4">
+                <div className="bg-primary border border-secondary w-screen h-screenoverflow-y-auto">
                   <WindowHeader title={modalProject.title} onClose={() => setModalProject(null)} />
-                  <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 bg-primary">
+                  <div className="p-6 grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-6 bg-primary">
                     {/* Imagen grande o visor 3D */}
                     <div className="flex flex-col items-center relative">
                       {/* Corner brackets */}
@@ -822,7 +808,7 @@ export default function ProjectsPage() {
                           frameBorder="0"
                           allow="autoplay; fullscreen; vr"
                           allowFullScreen
-                          className="w-full h-64 md:h-96 border border-gray-700 bg-black"
+                          className="w-full h-64 md:h-156 border border-gray-700 bg-black"
                         />
                       ) : (
                         <img
@@ -834,7 +820,18 @@ export default function ProjectsPage() {
                     </div>
                     {/* Info del modelo */}
                     <div className="flex flex-col gap-2">
-                      <h2 className="text-2xl text-secondary font-bauhaus-pixel mb-[-8]">{modalProject.title}</h2>
+                      <div className="flex gap-2">
+                        <h2 className="text-2xl text-secondary font-bauhaus-pixel mb-[-8]">{modalProject.title}</h2>
+                        {/* Icono de staffpick si aplica */}
+                        {modalProject.staffpickedAt && (
+                          <img
+                            src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/icons/1ec49a9ae15f3f8f2d6ce895f503953c-v2.svg"
+                            alt="Staff Picked"
+                            title="Staff Picked"
+                            className="w-5 h-5 drop-shadow-md mt-0.5"
+                          />
+                        )}
+                      </div>
                       <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
                         <Calendar className="w-4 h-4 mr-1" />
                         {modalProject.date && (() => {
@@ -906,7 +903,21 @@ export default function ProjectsPage() {
                           <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Layers className="w-4 h-4 mr-1" />VERTICES:</span><span className="text-white">{modalProject.vertices?.toLocaleString() ?? '-'} {modalProject.vertices ? '◼' : ''}</span></div>
                           <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Heart className="w-4 h-4 mr-1" />LIKES:</span><span className="text-white">{modalProject.likes?.toLocaleString() ?? '-'}</span></div>
                           <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Eye className="w-4 h-4 mr-1" />VIEWS:</span><span className="text-white">{modalProject.views?.toLocaleString() ?? '-'}</span></div>
-                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Gauge className="w-4 h-4 mr-1" />COMPLEXITY:</span><span className="text-white">{modalProject.complexity}</span></div>
+                          <div className="flex items-center gap-1">
+                            <span className="flex items-center gap-1">
+                              <Gauge className="w-4 h-4 mr-1" />COMPLEXITY:
+                            </span>
+                            <span className={
+                              modalProject.complexity === "EXTREME" ? "text-red-500" :
+                                modalProject.complexity === "VERY_HIGH" ? "text-orange-500" :
+                                  modalProject.complexity === "HIGH" ? "text-yellow-500" :
+                                    modalProject.complexity === "MEDIUM" ? "text-green-500" :
+                                      modalProject.complexity === "LOW" ? "text-green-300" :
+                                        "text-gray-400"
+                            }>
+                              {modalProject.complexity}
+                            </span>
+                          </div>
                           <div className="flex items-center gap-1"><span className="flex items-center gap-1"><FileText className="w-4 h-4 mr-1" />LICENSE:</span><span className="text-white">{modalProject.license}</span></div>
                         </div>
                         {/* Botones alineados abajo */}
