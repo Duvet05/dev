@@ -104,13 +104,14 @@ export default function ProjectsPage() {
   const [hasPrevPage, setHasPrevPage] = useState<boolean>(false)
   const [searchText, setSearchText] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
-  const [selectedSource, setSelectedSource] = useState<string>("ALL");
+  const [selectedSource, setSelectedSource] = useState<string>("SKETCHFAB"); // Solo SKETCHFAB o ARTSTATION
   const [selectedComplexity, setSelectedComplexity] = useState<string>("ALL");
   const [orderBy, setOrderBy] = useState<string>("date-desc");
   const [gridCols, setGridCols] = useState<number>(4); // Por defecto 4x
 
   // --- INFINITE SCROLL STATES Y LÓGICA ---
   const [sketchfabModels, setSketchfabModels] = useState<Project[]>([]);
+  const [artstationModels, setArtstationModels] = useState<Project[]>([]);
   const [nextUrl, setNextUrl] = useState<string | null>(null);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -128,7 +129,11 @@ export default function ProjectsPage() {
       const data = await res.json();
       if (data.success) {
         setSketchfabModels(prev => url ? [...prev, ...data.projects] : data.projects);
-        setAllProjects(url ? [...sketchfabModels, ...data.projects] : data.projects);
+        setAllProjects(prev => {
+          // Filtramos los modelos de ArtStation que pudieran existir
+          const filtered = prev.filter(p => p.source !== "SKETCHFAB");
+          return [...filtered, ...(url ? [...sketchfabModels, ...data.projects] : data.projects)];
+        });
         setTotalModelsFound(data.totalModels || 0);
         setValidModelsFound(data.validModels || data.projects.length);
         setUsingFallback(data.usingFallback || false);
@@ -146,6 +151,67 @@ export default function ProjectsPage() {
     }
   };
 
+  // Función para cargar modelos de ArtStation
+  const fetchArtStationProjects = async () => {
+    try {
+      setIsLoadingProjects(true);
+      setProjectsError("");
+      const response = await fetch(`/api/artstation`);
+      const data = await response.json();
+
+      if (Array.isArray(data)) {
+        // Mapear los datos de ArtStation al formato Project
+        const mappedProjects: Project[] = data.map((item: any) => {
+          // Formatear título para que no sea muy largo
+          const formattedTitle = item.title.length > 25
+            ? item.title.substring(0, 25) + '...'
+            : item.title;
+
+          return {
+            title: formattedTitle.toUpperCase(),
+            source: "ARTSTATION",
+            description: item.description,
+            date: item.publishedAt || item.createdAt,
+            fileSize: "",
+            renderTime: "",
+            complexity: "MEDIUM", // Por defecto, se puede estimar por assets
+            // Info específica de ArtStation
+            viewerUrl: item.permalink,
+            embedUrl: `https://www.artstation.com/embed/${item.id}`,
+            likes: item.likesCount,
+            views: item.viewsCount,
+            author: item.user?.fullName,
+            categories: item.categories?.length > 0 ? [item.categories[0]] : [], // Solo una categoría
+            tags: (item.tags || []).slice(0, 3), // Limitar a 3 tags máximo
+            thumbnails: {
+              small: item.cover?.small_square_url || "",
+              medium: item.cover?.small_square_url || "",
+              large: item.cover?.small_square_url || "",
+            }
+          };
+        });
+
+        setArtstationModels(mappedProjects);
+        setAllProjects(prev => {
+          // Filtramos los modelos de Sketchfab que pudieran existir
+          const filtered = prev.filter(p => p.source !== "ARTSTATION");
+          return [...filtered, ...mappedProjects];
+        });
+        setValidModelsFound(prev =>
+          selectedSource === "ARTSTATION" ? mappedProjects.length :
+            selectedSource === "SKETCHFAB" ? sketchfabModels.length :
+              sketchfabModels.length + mappedProjects.length
+        );
+      } else {
+        throw new Error('Invalid data format received from ArtStation API');
+      }
+    } catch (error: any) {
+      setProjectsError(`Failed to load projects from ArtStation: ${error.message}`);
+    } finally {
+      setIsLoadingProjects(false);
+    }
+  };
+
   // Fetch de la API (limit=100 siempre)
   const fetchSketchfabProjects = async () => {
     try {
@@ -154,7 +220,12 @@ export default function ProjectsPage() {
       const response = await fetch(`/api/sketchfab-models?username=${SKETCHFAB_CONFIG.username}&page=1&limit=100&orderBy=${orderBy}`);
       const data = await response.json();
       if (data.success) {
-        setAllProjects(data.projects);
+        setSketchfabModels(data.projects);
+        setAllProjects(prev => {
+          // Filtramos los modelos de ArtStation que pudieran existir
+          const filtered = prev.filter(p => p.source !== "SKETCHFAB");
+          return [...filtered, ...data.projects];
+        });
         setValidModelsFound(data.validModels || data.projects.length);
         setCurrentPage(1);
         setUsingFallback(false);
@@ -174,11 +245,26 @@ export default function ProjectsPage() {
   // Cargar modelos al montar o cuando cambian los filtros principales
   useEffect(() => {
     setSketchfabModels([]);
+    setArtstationModels([]);
     setAllProjects([]);
     setNextUrl(null);
-    fetchSketchfabProjects();
+
+    // Cargar proyectos según la fuente seleccionada
+    if (selectedSource === "SKETCHFAB") {
+      fetchSketchfabProjects();
+      // Si cambiamos a Sketchfab y estamos en 8x, volvemos a 4x
+      if (gridCols === 8) {
+        setGridCols(4);
+      }
+    } else if (selectedSource === "ARTSTATION") {
+      fetchArtStationProjects();
+      // Si cambiamos a ArtStation, configuramos la vista automáticamente a 4x o 8x
+      if (gridCols < 4) {
+        setGridCols(4);
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orderBy]);
+  }, [orderBy, selectedSource]);
 
   // Fetch tracks para el reproductor
   const fetchTracks = async () => {
@@ -312,7 +398,7 @@ export default function ProjectsPage() {
   const filteredProjects = allProjects
     .filter(project =>
       (selectedCategory === "ALL" || (project.categories && project.categories.includes(selectedCategory))) &&
-      (selectedSource === "ALL" || project.source === selectedSource) &&
+      (project.source === selectedSource) && // Solo filtra por la fuente exacta (SKETCHFAB o ARTSTATION)
       (selectedComplexity === "ALL" || project.complexity === selectedComplexity) &&
       (searchText === "" ||
         project.title.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -370,6 +456,275 @@ export default function ProjectsPage() {
   };
 
   const [modalProject, setModalProject] = useState<Project | null>(null);
+
+  // Función para renderizar una tarjeta de ArtStation (estilo galería)
+  const renderArtStationCard = (project: Project, index: number) => {
+    return (
+      <div
+        key={index}
+        className="bg-black border-r border-b border-secondary hover:border-white transition-colors group cursor-pointer relative"
+        onClick={() => setModalProject(project)}
+      >
+        {/* Tarjeta estilo galería para ArtStation - solo imagen y overlay en hover */}
+        {project.thumbnails && project.thumbnails.medium ? (
+          <>
+            <div className="relative">
+              <img
+                src={project.thumbnails.medium}
+                alt={project.title}
+                className="h-auto w-full object-cover"
+                style={{ aspectRatio: "1/1" }}
+              />
+              {/* Overlay con título solo al hacer hover */}
+              <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 text-center">
+                <h3 className="text-lg font-bold text-white truncate mb-2 w-full">
+                  {project.title}
+                </h3>
+                <div className="flex items-center gap-1 text-gray-200 text-sm">
+                  <SiArtstation className="mr-1" />
+                  <span>ARTSTATION</span>
+                </div>
+                <div className="mt-4 px-4 py-1 border border-white text-white text-sm uppercase tracking-widest">
+                  VIEW ARTWORK
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="aspect-[1/1] bg-gray-900 border border-gray-600 flex items-center justify-center">
+            <div className="text-gray-400 text-sm">NO.ARTWORK.AVAILABLE</div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Función para renderizar una tarjeta de Sketchfab
+  const renderSketchfabCard = (project: Project, index: number) => {
+    return (
+      <div
+        key={index}
+        className="bg-primary border-r border-b border-secondary hover:border-white transition-colors group"
+      >
+        <div className="p-6 flex flex-col h-full">
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex w-full items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <a
+                    href={project.sketchfabUid ? `https://sketchfab.com/3d-models/${project.sketchfabUid}` : undefined}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="focus:outline-none"
+                  >
+                    <Badge
+                      variant="outline"
+                      className="text-sm rounded-none flex items-center gap-1 cursor-pointer hover:underline border-secondary text-gray-400"
+                    >
+                      <SiSketchfab className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />
+                      SKETCHFAB
+                    </Badge>
+                  </a>
+                </div>
+                <div className="flex flex-wrap gap-2 ml-auto">
+                  {project.categories && project.categories.length > 0 ? (
+                    project.categories.map((cat, i) => (
+                      <div className="relative inline-block" key={i}>
+                        <Badge
+                          variant="secondary"
+                          className="text-sm bg-primary text-secondary rounded-none uppercase"
+                        >
+                          {cat}
+                        </Badge>
+                        {/* Corner brackets */}
+                        <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                        <div className="absolute top-0 right-0 w-2 h-2 border-t-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                      </div>
+                    ))
+                  ) : (
+                    <span className="text-xs text-gray-400">NO.CATEGORY</span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between mb-2">
+              {/* Título a la izquierda, stats y fecha a la derecha */}
+              <a
+                href={project.sketchfabUid ? `https://sketchfab.com/3d-models/${project.sketchfabUid}` : undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 focus:outline-none"
+              >
+                <div className="flex items-center gap-2">
+                  <h3 className="text-xl font-bold group-hover:text-gray-300 transition-colors font-bauhaus text-left hover:underline cursor-pointer text-secondary truncate">
+                    {project.title}
+                  </h3>
+                  {/* Icono de staffpick si aplica */}
+                  {project.staffpickedAt && (
+                    <img
+                      src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/icons/1ec49a9ae15f3f8f2d6ce895f503953c-v2.svg"
+                      alt="Staff Picked"
+                      title="Staff Picked"
+                      className="w-5 h-5 drop-shadow-md"
+                    />
+                  )}
+                  {project.date && (
+                    <span className="text-xs text-gray-400 font-normal align-middle">
+                      {(() => {
+                        // Formatear fecha a YYYY.MM.DD
+                        const d = new Date(project.date)
+                        if (isNaN(d.getTime())) return project.date
+                        return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`
+                      })()}
+                    </span>
+                  )}
+                </div>
+              </a>
+              {(project.likes || project.views) && (
+                <div className="flex items-center gap-4 ml-4 text-gray-400">
+                  {project.likes ? (
+                    <div className="flex items-center gap-1">
+                      <Heart className="w-4 h-4" />
+                      <span>{project.likes.toLocaleString()}</span>
+                    </div>
+                  ) : null}
+                  {project.views ? (
+                    <div className="flex items-center gap-1">
+                      <Eye className="w-4 h-4" />
+                      <span>{project.views.toLocaleString()}</span>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+            </div>
+            {/* 3D Model Viewer - Sketchfab */}
+            <div className="mb-4 relative cursor-pointer"
+              onClick={() => setModalProject(project)}
+            >
+              {project.thumbnails && project.thumbnails.medium ? (
+                <>
+                  <img
+                    src={project.thumbnails.medium}
+                    alt={project.title}
+                    className="h-auto w-full object-cover border border-gray-600 bg-gray-900 peer"
+                    style={{ aspectRatio: "16/9" }}
+                  />
+                  <div className="border border-gray-600 absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 peer-hover:opacity-100 transition-opacity pointer-events-none">
+                    <span className="text-white text-lg font-bold font-vt323 tracking-widest">
+                      3D.PREVIEW
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <div className="aspect-[16/9] bg-gray-900 border border-gray-600 flex items-center justify-center">
+                  <div className="text-gray-400 text-sm">NO.MODEL.AVAILABLE</div>
+                </div>
+              )}
+            </div>
+
+            {/* Descripción con Markdown en la card */}
+            <div className="text-base text-gray-400 mb-2 line-clamp-3">
+              <ReactMarkdown
+                components={{
+                  p: ({ node, ...props }) => <p {...props} className="inline" />,
+                  strong: ({ node, ...props }) => <strong {...props} className="font-bold" />,
+                  br: () => <br />,
+                }}
+              >
+                {project.description}
+              </ReactMarkdown>
+            </div>
+
+            {/* Tags */}
+            {project.tags && project.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.tags.slice(0, 3).map((tag, tagIndex) => {
+                  const tagKey = tag.toLowerCase();
+                  const Icon = tagTechIcons[tagKey];
+                  if (Icon) {
+                    return (
+                      <Badge
+                        key={tagIndex}
+                        variant="secondary"
+                        className="uppercase text-xs bg-secondary text-primary rounded-none flex items-center gap-1"
+                      >
+                        <Icon className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />
+                        {tag}
+                      </Badge>
+                    );
+                  }
+                  return (
+                    <Badge
+                      key={tagIndex}
+                      variant="secondary"
+                      className="uppercase text-xs bg-secondary text-primary rounded-none flex items-center gap-1"
+                    >
+                      #{tag}
+                    </Badge>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <div className="mt-auto">
+            {/* Project metadata mejorada */}
+            <div className="space-y-2 mb-4 text-xs text-gray-400">
+              {project.triangles && (
+                <div className="flex justify-between items-center">
+                  <span className="flex items-center gap-1"><Shapes className="w-4 h-4 mr-1" />TRIANGLES:</span>
+                  <span className="text-white">{project.triangles.toLocaleString()} ▲</span>
+                </div>
+              )}
+              {project.vertices && (
+                <div className="flex justify-between items-center">
+                  <span className="flex items-center gap-1"><Layers className="w-4 h-4 mr-1" />VERTICES:</span>
+                  <span className="text-white">{project.vertices.toLocaleString()} ◼</span>
+                </div>
+              )}
+              <div className="flex justify-between items-center">
+                <span className="flex items-center gap-1"><Gauge className="w-4 h-4 mr-1" />COMPLEXITY:</span>
+                <span className={
+                  project.complexity === "EXTREME" ? "text-red-500" :
+                    project.complexity === "VERY_HIGH" ? "text-orange-500" :
+                      project.complexity === "HIGH" ? "text-yellow-500" :
+                        project.complexity === "MEDIUM" ? "text-green-500" :
+                          project.complexity === "LOW" ? "text-green-300" :
+                            "text-gray-400"
+                }>{project.complexity}</span>
+              </div>
+            </div>
+
+            {/* Botones alineados abajo */}
+            <div className="flex gap-2 w-full">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer animate-pulse-preview"
+                onClick={() => setModalProject(project)}
+              >
+                3D.PREVIEW
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
+                onClick={() => {
+                  if (project.sketchfabUid) {
+                    window.open(`https://sketchfab.com/3d-models/${project.sketchfabUid}`, '_blank')
+                  }
+                }}
+              >
+                VIEW.ON.SKETCHFAB <ExternalLink className="w-3 h-3" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-black text-white font-vt323 overflow-x-hidden">
@@ -434,6 +789,29 @@ export default function ProjectsPage() {
 
             {/* NUEVO: Barra de búsqueda, filtros, orden y vista */}
             <div className="mb-8 flex flex-col md:flex-row md:items-end gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-xs text-gray-400">SOURCE</label>
+                <div className="flex">
+                  <button
+                    className={`px-3 py-1.5 border rounded-none text-sm flex items-center gap-1 ${selectedSource === "SKETCHFAB"
+                      ? "border-white bg-white text-black"
+                      : "border-secondary bg-black text-white cursor-pointer hover:border-white"}`}
+                    onClick={() => setSelectedSource("SKETCHFAB")}
+                  >
+                    <SiSketchfab className="inline-block" style={{ fontSize: 14, verticalAlign: "middle" }} />
+                    SKETCHFAB
+                  </button>
+                  <button
+                    className={`px-3 py-1.5 border rounded-none text-sm flex items-center gap-1 ${selectedSource === "ARTSTATION"
+                      ? "border-white bg-white text-black"
+                      : "border-secondary bg-black text-white cursor-pointer hover:border-white"}`}
+                    onClick={() => setSelectedSource("ARTSTATION")}
+                  >
+                    <SiArtstation className="inline-block" style={{ fontSize: 14, verticalAlign: "middle" }} />
+                    ARTSTATION
+                  </button>
+                </div>
+              </div>
               <div className="flex-1 flex flex-col gap-2">
                 <label htmlFor="searchbar" className="text-xs text-gray-400">SEARCH PROJECTS</label>
                 <input
@@ -456,20 +834,6 @@ export default function ProjectsPage() {
                   <option value="ALL">ALL</option>
                   {allCategories.map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex flex-col gap-2">
-                <label htmlFor="source-filter" className="text-xs text-gray-400">SOURCE</label>
-                <select
-                  id="source-filter"
-                  value={selectedSource}
-                  onChange={e => setSelectedSource(e.target.value)}
-                  className="bg-black border border-secondary text-white px-3 py-2 rounded-none focus:outline-none focus:border-white text-sm cursor-pointer"
-                >
-                  <option value="ALL">ALL</option>
-                  {allSources.map(src => (
-                    <option key={src} value={src}>{src}</option>
                   ))}
                 </select>
               </div>
@@ -506,14 +870,30 @@ export default function ProjectsPage() {
               <div className="flex flex-col gap-2">
                 <label className="text-xs text-gray-400">VIEW</label>
                 <div className="flex">
-                  <button
-                    className={`px-2.5 py-1.5 border rounded-none text-sm ${gridCols === 2 ? "border-white bg-white text-black" : "border-secondary bg-black text-white cursor-pointer"}`}
-                    onClick={() => setGridCols(2)}
-                  >2x</button>
-                  <button
-                    className={`px-2.5 py-1.5 border rounded-none text-sm ${gridCols === 4 ? "border-white bg-white text-black" : "border-secondary bg-black text-white cursor-pointer"}`}
-                    onClick={() => setGridCols(4)}
-                  >4x</button>
+                  {selectedSource === "SKETCHFAB" && (
+                    <>
+                      <button
+                        className={`px-2.5 py-1.5 border rounded-none text-sm ${gridCols === 2 ? "border-white bg-white text-black" : "border-secondary bg-black text-white cursor-pointer"}`}
+                        onClick={() => setGridCols(2)}
+                      >2x</button>
+                      <button
+                        className={`px-2.5 py-1.5 border rounded-none text-sm ${gridCols === 4 ? "border-white bg-white text-black" : "border-secondary bg-black text-white cursor-pointer"}`}
+                        onClick={() => setGridCols(4)}
+                      >4x</button>
+                    </>
+                  )}
+                  {selectedSource === "ARTSTATION" && (
+                    <>
+                      <button
+                        className={`px-2.5 py-1.5 border rounded-none text-sm ${gridCols === 4 ? "border-white bg-white text-black" : "border-secondary bg-black text-white cursor-pointer"}`}
+                        onClick={() => setGridCols(4)}
+                      >4x</button>
+                      <button
+                        className={`px-2.5 py-1.5 border rounded-none text-sm ${gridCols === 8 ? "border-white bg-white text-black" : "border-secondary bg-black text-white cursor-pointer"}`}
+                        onClick={() => setGridCols(8)}
+                      >8x</button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -553,226 +933,7 @@ export default function ProjectsPage() {
 
                 <div className={`border-l border-t border-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${gridCols} gap-0`}>
                   {paginatedProjects.map((project, index) => (
-                    <div
-                      key={index}
-                      className="bg-primary border-r border-b border-secondary hover:border-white transition-colors group"
-                    >
-                      <div className="p-6 flex flex-col h-full">
-                        <div>
-                          <div className="flex items-center justify-between mb-4">
-                            <div className="flex w-full items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <a
-                                  href={project.source === "SKETCHFAB" && project.sketchfabUid ? `https://sketchfab.com/3d-models/${project.sketchfabUid}` : project.source === "ARTSTATION" && project.viewerUrl ? project.viewerUrl : undefined}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="focus:outline-none"
-                                >
-                                  <Badge
-                                    variant="outline"
-                                    className={`text-sm rounded-none flex items-center gap-1 cursor-pointer hover:underline ${project.source === "SKETCHFAB"
-                                      ? "border-[#00aedf] text-[#00aedf]"
-                                      : project.source === "ARTSTATION"
-                                        ? "border-[#00aedf] text-[#00aedf]"
-                                        : "border-gray-500 text-gray-500 bg-gray-900"
-                                      }`}
-                                  >
-                                    {project.source === "SKETCHFAB" && <SiSketchfab className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />}
-                                    {project.source === "ARTSTATION" && <SiArtstation className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />}
-                                    {project.source ? project.source : "UNKNOWN"}
-                                  </Badge>
-                                </a>
-                              </div>
-                              <div className="flex flex-wrap gap-2 ml-auto">
-                                {project.categories && project.categories.length > 0 ? (
-                                  project.categories.map((cat, i) => (
-                                    <div className="relative inline-block" key={i}>
-                                      <Badge
-                                        variant="secondary"
-                                        className="text-sm bg-primary text-secondary rounded-none uppercase"
-                                      >
-                                        {cat}
-                                      </Badge>
-                                      {/* Corner brackets */}
-                                      <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
-                                      <div className="absolute top-0 right-0 w-2 h-2 border-t-1 border-r-1 border-gray-400 pointer-events-none"></div>
-                                      <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
-                                      <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
-                                    </div>
-                                  ))
-                                ) : (
-                                  <span className="text-xs text-gray-400">NO.CATEGORY</span>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-between mb-2">
-                            {/* Título a la izquierda, stats y fecha a la derecha */}
-                            <a
-                              href={project.source === "SKETCHFAB" && project.sketchfabUid ? `https://sketchfab.com/3d-models/${project.sketchfabUid}` : project.source === "ARTSTATION" && project.viewerUrl ? project.viewerUrl : undefined}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex-1 focus:outline-none"
-                            >
-                              <div className="flex items-center gap-2">
-                                <h3 className="text-secondary text-xl font-bold group-hover:text-gray-300 transition-colors font-bauhaus text-left hover:underline cursor-pointer">
-                                  {project.title}
-                                </h3>
-                                {/* Icono de staffpick si aplica */}
-                                {project.staffpickedAt && (
-                                  <img
-                                    src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/icons/1ec49a9ae15f3f8f2d6ce895f503953c-v2.svg"
-                                    alt="Staff Picked"
-                                    title="Staff Picked"
-                                    className="w-5 h-5 drop-shadow-md"
-                                  />
-                                )}
-                                {project.date && (
-                                  <span className="text-xs text-gray-400 font-normal align-middle">
-                                    {(() => {
-                                      // Formatear fecha a YYYY.MM.DD
-                                      const d = new Date(project.date)
-                                      if (isNaN(d.getTime())) return project.date
-                                      return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`
-                                    })()}
-                                  </span>
-                                )}
-                              </div>
-                            </a>
-                            {(project.likes || project.views) && (
-                              <div className="flex items-center gap-4 ml-4 text-gray-400">
-                                {project.likes ? (
-                                  <div className="flex items-center gap-1">
-                                    <Heart className="w-4 h-4" />
-                                    <span>{project.likes.toLocaleString()}</span>
-                                  </div>
-                                ) : null}
-                                {project.views ? (
-                                  <div className="flex items-center gap-1">
-                                    <Eye className="w-4 h-4" />
-                                    <span>{project.views.toLocaleString()}</span>
-                                  </div>
-                                ) : null}
-                              </div>
-                            )}
-                          </div>
-                          {/* 3D Model Viewer - Sketchfab o local */}
-                          <div className="mb-4 relative cursor-pointer"
-                            onClick={() => setModalProject(project)}
-                          >
-                            {project.thumbnails && project.thumbnails.medium ? (
-                              <>
-                                <img
-                                  src={project.thumbnails.large}
-                                  alt={project.title}
-                                  className="h-auto w-full object-cover border border-gray-600 bg-gray-900 peer"
-                                  style={{ aspectRatio: "16/9" }}
-                                />
-                                <div className="border border-gray-600 absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 peer-hover:opacity-100 transition-opacity pointer-events-none">
-                                  <span className="text-white text-lg font-bold font-vt323 tracking-widest">3D.PREVIEW</span>
-                                </div>
-                              </>
-                            ) : (
-                              <div className="aspect-[16/9] bg-gray-900 border border-gray-600 flex items-center justify-center">
-                                <div className="text-gray-400 text-sm">NO.MODEL.AVAILABLE</div>
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Descripción con Markdown en la card */}
-                          <div className="text-base text-gray-400 mb-2 line-clamp-3">
-                            <ReactMarkdown
-                              components={{
-                                p: ({ node, ...props }) => <p {...props} className="inline" />,
-                                strong: ({ node, ...props }) => <strong {...props} className="font-bold" />,
-                                br: () => <br />,
-                              }}
-                            >
-                              {project.description}
-                            </ReactMarkdown>
-                          </div>
-
-                          {/* Tags */}
-                          {project.tags && project.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              {project.tags.slice(0, 4).map((tag, tagIndex) => {
-                                const tagKey = tag.toLowerCase();
-                                const Icon = tagTechIcons[tagKey];
-                                if (Icon) {
-                                  return (
-                                    <Badge
-                                      key={tagIndex}
-                                      variant="secondary"
-                                      className="uppercase text-xs bg-secondary text-primary rounded-none flex items-center gap-1"
-                                    >
-                                      <Icon className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />
-                                      {tag}
-                                    </Badge>
-                                  );
-                                }
-                                return (
-                                  <Badge
-                                    key={tagIndex}
-                                    variant="secondary"
-                                    className="uppercase text-xs bg-secondary text-primary rounded-none flex items-center gap-1"
-                                  >
-                                    #{tag}
-                                  </Badge>
-                                );
-                              })}
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="mt-auto">
-                          {/* Project metadata mejorada */}
-                          <div className="space-y-2 mb-4 text-xs text-gray-400">
-                            {project.triangles && (
-                              <div className="flex justify-between items-center">
-                                <span className="flex items-center gap-1"><Shapes className="w-4 h-4 mr-1" />TRIANGLES:</span>
-                                <span className="text-white">{project.triangles.toLocaleString()} ▲</span>
-                              </div>
-                            )}
-                            {project.vertices && (
-                              <div className="flex justify-between items-center">
-                                <span className="flex items-center gap-1"><Layers className="w-4 h-4 mr-1" />VERTICES:</span>
-                                <span className="text-white">{project.vertices.toLocaleString()} ◼</span>
-                              </div>
-                            )}
-                            <div className="flex justify-between items-center">
-                              <span className="flex items-center gap-1"><Gauge className="w-4 h-4 mr-1" />COMPLEXITY:</span>
-                              <span className={
-                                project.complexity === "EXTREME" ? "text-red-500" :
-                                  project.complexity === "VERY_HIGH" ? "text-orange-500" :
-                                    project.complexity === "HIGH" ? "text-yellow-500" :
-                                      project.complexity === "MEDIUM" ? "text-green-500" :
-                                        project.complexity === "LOW" ? "text-green-300" :
-                                          "text-gray-400"
-                              }>{project.complexity}</span>
-                            </div>
-                          </div>
-                          {/* Botones alineados abajo */}
-                          <div className="flex gap-2 w-full">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer animate-pulse-preview"
-                              onClick={() => setModalProject(project)}
-                            >
-                              3D.PREVIEW
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
-                              onClick={() => project.sketchfabUid && window.open(`https://sketchfab.com/3d-models/${project.sketchfabUid}`, '_blank')}
-                            >
-                              {project.sketchfabUid ? 'VIEW.ON.SKETCHFAB' : 'OPEN.PROJECT'} <ExternalLink className="w-3 h-3" />
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    selectedSource === "ARTSTATION" ? renderArtStationCard(project, index) : renderSketchfabCard(project, index)
                   ))}
                 </div>
                 {/* MODAL DE MODELO 3D */}
@@ -780,8 +941,11 @@ export default function ProjectsPage() {
             )}
             {modalProject && (
               <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center md:p-24 p-4">
-                <div className="bg-primary border border-secondary w-screen h-screenoverflow-y-auto">
-                  <WindowHeader title={modalProject.title} onClose={() => setModalProject(null)} />
+                <div className="bg-primary w-screen h-screenoverflow-y-auto border border-secondary">
+                  <WindowHeader
+                    title={modalProject.title}
+                    onClose={() => setModalProject(null)}
+                  />
                   <div className="p-6 grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-6 bg-primary">
                     {/* Imagen grande o visor 3D */}
                     <div className="flex flex-col items-center relative">
@@ -798,7 +962,9 @@ export default function ProjectsPage() {
                       <div className="absolute -bottom-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
                         <div className="w-full h-full border-b-1 border-r-1 border-secondary"></div>
                       </div>
-                      {modalProject.sketchfabUid ? (
+
+                      {/* Contenido diferente según el tipo de proyecto */}
+                      {modalProject.source === "SKETCHFAB" && modalProject.sketchfabUid ? (
                         <iframe
                           src={`https://sketchfab.com/models/${modalProject.sketchfabUid}/embed?autospin=1&autostart=1&ui_theme=dark`}
                           title="Sketchfab 3D Viewer"
@@ -807,18 +973,29 @@ export default function ProjectsPage() {
                           allowFullScreen
                           className="w-full h-64 md:h-156 border border-gray-700 bg-black"
                         />
+                      ) : modalProject.source === "ARTSTATION" && modalProject.embedUrl ? (
+                        <iframe
+                          src={modalProject.embedUrl}
+                          title="ArtStation Embed"
+                          frameBorder="0"
+                          allow="autoplay; fullscreen"
+                          allowFullScreen
+                          className="w-full h-64 md:h-156 border border-gray-700 bg-black"
+                        />
                       ) : (
                         <img
                           src={modalProject.thumbnails?.large}
                           alt={modalProject.title}
-                          className="w-full h-64 md:h-96 object-cover border border-gray-700 bg-black"
+                          className="w-full h-64 md:h-96 object-cover bg-black border border-gray-700"
                         />
                       )}
                     </div>
                     {/* Info del modelo */}
                     <div className="flex flex-col gap-2">
                       <div className="flex gap-2">
-                        <h2 className="text-2xl text-secondary font-bauhaus-pixel mb-[-8]">{modalProject.title}</h2>
+                        <h2 className="text-2xl font-bauhaus-pixel mb-[-8] text-secondary">
+                          {modalProject.title}
+                        </h2>
                         {/* Icono de staffpick si aplica */}
                         {modalProject.staffpickedAt && (
                           <img
@@ -836,20 +1013,28 @@ export default function ProjectsPage() {
                           if (isNaN(d.getTime())) return modalProject.date;
                           return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
                         })()}
+
+                        {/* Mostrar autor para ArtStation */}
+                        {modalProject.source === "ARTSTATION" && modalProject.author && (
+                          <span className="ml-2">by <span className="text-gray-200">{modalProject.author}</span></span>
+                        )}
+
                         {modalProject.categories && modalProject.categories.length > 0 && (
                           <div className="flex flex-wrap gap-2 ml-2">
                             {modalProject.categories.map((cat, i) => (
                               <div className="relative inline-block" key={i}>
                                 <Badge
                                   variant="secondary"
-                                  className="text-sm bg-primary text-secondary rounded-none uppercase"
+                                  className="text-sm rounded-none uppercase bg-primary text-secondary"
                                 >
                                   {cat}
                                 </Badge>
-                                <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
-                                <div className="absolute top-0 right-0 w-2 h-2 border-t-1 border-r-1 border-gray-400 pointer-events-none"></div>
-                                <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
-                                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                                <>
+                                  <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                                  <div className="absolute top-0 right-0 w-2 h-2 border-t-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                                  <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                                </>
                               </div>
                             ))}
                           </div>
@@ -875,7 +1060,7 @@ export default function ProjectsPage() {
                               <Badge
                                 key={i}
                                 variant="secondary"
-                                className="uppercase text-xs bg-secondary text-primary rounded-none flex items-center gap-1 font-vt323"
+                                className="uppercase text-xs rounded-none flex items-center gap-1 font-vt323 bg-secondary text-primary"
                               >
                                 <Icon className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />
                                 {tag}
@@ -886,7 +1071,7 @@ export default function ProjectsPage() {
                             <Badge
                               key={i}
                               variant="secondary"
-                              className="uppercase text-xs bg-secondary text-primary rounded-none flex items-center gap-1 font-vt323"
+                              className="uppercase text-xs rounded-none flex items-center gap-1 font-vt323 bg-secondary text-primary"
                             >
                               #{tag}
                             </Badge>
@@ -894,39 +1079,73 @@ export default function ProjectsPage() {
                         })}
                       </div>
                       <div className="flex flex-col gap-4">
-                        {/* Metadata alineada */}
-                        <div className="grid grid-cols-2 gap-2 text-xs text-gray-400 mt-4">
-                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Shapes className="w-4 h-4 mr-1" />TRIANGLES:</span><span className="text-white">{modalProject.triangles?.toLocaleString() ?? '-'} {modalProject.triangles ? '▲' : ''}</span></div>
-                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Layers className="w-4 h-4 mr-1" />VERTICES:</span><span className="text-white">{modalProject.vertices?.toLocaleString() ?? '-'} {modalProject.vertices ? '◼' : ''}</span></div>
-                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Heart className="w-4 h-4 mr-1" />LIKES:</span><span className="text-white">{modalProject.likes?.toLocaleString() ?? '-'}</span></div>
-                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Eye className="w-4 h-4 mr-1" />VIEWS:</span><span className="text-white">{modalProject.views?.toLocaleString() ?? '-'}</span></div>
-                          <div className="flex items-center gap-1">
-                            <span className="flex items-center gap-1">
-                              <Gauge className="w-4 h-4 mr-1" />COMPLEXITY:
-                            </span>
-                            <span className={
-                              modalProject.complexity === "EXTREME" ? "text-red-500" :
-                                modalProject.complexity === "VERY_HIGH" ? "text-orange-500" :
-                                  modalProject.complexity === "HIGH" ? "text-yellow-500" :
-                                    modalProject.complexity === "MEDIUM" ? "text-green-500" :
-                                      modalProject.complexity === "LOW" ? "text-green-300" :
-                                        "text-gray-400"
-                            }>
-                              {modalProject.complexity}
-                            </span>
+                        {/* Metadata alineada - diferente según tipo de proyecto */}
+                        {modalProject.source === "SKETCHFAB" ? (
+                          <div className="grid grid-cols-2 gap-2 text-xs text-gray-400 mt-4">
+                            <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Shapes className="w-4 h-4 mr-1" />TRIANGLES:</span><span className="text-white">{modalProject.triangles?.toLocaleString() ?? '-'} {modalProject.triangles ? '▲' : ''}</span></div>
+                            <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Layers className="w-4 h-4 mr-1" />VERTICES:</span><span className="text-white">{modalProject.vertices?.toLocaleString() ?? '-'} {modalProject.vertices ? '◼' : ''}</span></div>
+                            <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Heart className="w-4 h-4 mr-1" />LIKES:</span><span className="text-white">{modalProject.likes?.toLocaleString() ?? '-'}</span></div>
+                            <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Eye className="w-4 h-4 mr-1" />VIEWS:</span><span className="text-white">{modalProject.views?.toLocaleString() ?? '-'}</span></div>
+                            <div className="flex items-center gap-1">
+                              <span className="flex items-center gap-1">
+                                <Gauge className="w-4 h-4 mr-1" />COMPLEXITY:
+                              </span>
+                              <span className={
+                                modalProject.complexity === "EXTREME" ? "text-red-500" :
+                                  modalProject.complexity === "VERY_HIGH" ? "text-orange-500" :
+                                    modalProject.complexity === "HIGH" ? "text-yellow-500" :
+                                      modalProject.complexity === "MEDIUM" ? "text-green-500" :
+                                        modalProject.complexity === "LOW" ? "text-green-300" :
+                                          "text-gray-400"
+                              }>
+                                {modalProject.complexity}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1"><span className="flex items-center gap-1"><FileText className="w-4 h-4 mr-1" />LICENSE:</span><span className="text-white">{modalProject.license}</span></div>
                           </div>
-                          <div className="flex items-center gap-1"><span className="flex items-center gap-1"><FileText className="w-4 h-4 mr-1" />LICENSE:</span><span className="text-white">{modalProject.license}</span></div>
-                        </div>
+                        ) : (
+                          <div className="grid grid-cols-2 gap-2 text-xs text-gray-400 mt-4">
+                            <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Heart className="w-4 h-4 mr-1" />LIKES:</span><span className="text-white">{modalProject.likes?.toLocaleString() ?? '-'}</span></div>
+                            <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Eye className="w-4 h-4 mr-1" />VIEWS:</span><span className="text-white">{modalProject.views?.toLocaleString() ?? '-'}</span></div>
+                            <div className="col-span-2 flex items-center gap-1">
+                              <span className="flex items-center gap-1">
+                                <Gauge className="w-4 h-4 mr-1" />COMPLEXITY:
+                              </span>
+                              <span className={
+                                modalProject.complexity === "EXTREME" ? "text-red-500" :
+                                  modalProject.complexity === "VERY_HIGH" ? "text-orange-500" :
+                                    modalProject.complexity === "HIGH" ? "text-yellow-500" :
+                                      modalProject.complexity === "MEDIUM" ? "text-green-500" :
+                                        modalProject.complexity === "LOW" ? "text-green-300" :
+                                          "text-gray-400"
+                              }>
+                                {modalProject.complexity}
+                              </span>
+                            </div>
+                          </div>
+                        )}
+
                         {/* Botones alineados abajo */}
                         <div className="flex gap-2 w-full">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
-                            onClick={() => modalProject.sketchfabUid && window.open(`https://sketchfab.com/3d-models/${modalProject.sketchfabUid}`, '_blank')}
-                          >
-                            {modalProject.sketchfabUid ? 'VIEW.ON.SKETCHFAB' : 'OPEN.PROJECT'} <ExternalLink className="w-3 h-3" />
-                          </Button>
+                          {modalProject.source === "SKETCHFAB" ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
+                              onClick={() => modalProject.sketchfabUid && window.open(`https://sketchfab.com/3d-models/${modalProject.sketchfabUid}`, '_blank')}
+                            >
+                              VIEW.ON.SKETCHFAB <ExternalLink className="w-3 h-3" />
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-400 hover:border-white transition-all cursor-pointer"
+                              onClick={() => modalProject.viewerUrl && window.open(modalProject.viewerUrl, '_blank')}
+                            >
+                              VIEW.ON.ARTSTATION <ExternalLink className="w-3 h-3" />
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1020,6 +1239,8 @@ export default function ProjectsPage() {
         .animate-pulse-preview {
           animation: pulse-preview 1.5s ease-in-out infinite;
         }
+        
+        /* No se necesitan estilos específicos para ArtStation, se usa el estilo unificado */
       `}</style>
     </div>
   )
