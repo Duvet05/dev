@@ -793,7 +793,7 @@ export default function ProjectsPage() {
                 <label className="text-xs text-gray-400">SOURCE</label>
                 <div className="flex">
                   <button
-                    className={`px-3 py-1.5 border rounded-none text-sm flex items-center gap-1 ${selectedSource === "SKETCHFAB"
+                    className={`px-3 py-1.5 border rounded-none text-sm flex items-center gap-2 ${selectedSource === "SKETCHFAB"
                       ? "border-white bg-white text-black"
                       : "border-secondary bg-black text-white cursor-pointer hover:border-white"}`}
                     onClick={() => setSelectedSource("SKETCHFAB")}
@@ -802,7 +802,7 @@ export default function ProjectsPage() {
                     SKETCHFAB
                   </button>
                   <button
-                    className={`px-3 py-1.5 border rounded-none text-sm flex items-center gap-1 ${selectedSource === "ARTSTATION"
+                    className={`px-3 py-1.5 border rounded-none text-sm flex items-center gap-2 ${selectedSource === "ARTSTATION"
                       ? "border-white bg-white text-black"
                       : "border-secondary bg-black text-white cursor-pointer hover:border-white"}`}
                     onClick={() => setSelectedSource("ARTSTATION")}
