@@ -139,8 +139,6 @@ export default function ProjectsPage() {
     } catch (error) {
       setProjectsError(`Failed to load projects from @${SKETCHFAB_CONFIG.username}`);
       setUsingFallback(true);
-      setSketchfabModels(SKETCHFAB_CONFIG.fallbackProjects);
-      setAllProjects(SKETCHFAB_CONFIG.fallbackProjects);
       setNextUrl(null);
     } finally {
       setIsLoadingProjects(false);
@@ -165,7 +163,6 @@ export default function ProjectsPage() {
       }
     } catch (error) {
       setProjectsError(`Failed to load projects from @${SKETCHFAB_CONFIG.username}`);
-      setAllProjects(SKETCHFAB_CONFIG.fallbackProjects);
       setValidModelsFound(0);
       setCurrentPage(1);
       setUsingFallback(true);
@@ -537,7 +534,7 @@ export default function ProjectsPage() {
                 <Button
                   onClick={fetchSketchfabProjects}
                   variant="outline"
-                  className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white"
+                  className="cursor-pointer bg-primary rounded-none border-red-500 text-red-400 hover:bg-red-500 hover:text-white"
                 >
                   RETRY.LOAD
                 </Button>
@@ -759,7 +756,7 @@ export default function ProjectsPage() {
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
+                              className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer animate-pulse-preview"
                               onClick={() => setModalProject(project)}
                             >
                               3D.PREVIEW
@@ -1009,6 +1006,21 @@ export default function ProjectsPage() {
           Tu navegador no soporta el elemento de audio.
         </audio>
       </div>
+      <style jsx global>{`
+        @keyframes pulse-preview {
+          0%, 100% {
+            color: #fff;
+            text-shadow: 0 0 0px #fff;
+          }
+          50% {
+            color: #fff;
+            text-shadow: 0 0 8px #fff, 0 0 2px #fff;
+          }
+        }
+        .animate-pulse-preview {
+          animation: pulse-preview 1.5s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   )
 }
