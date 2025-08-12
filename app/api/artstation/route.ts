@@ -22,7 +22,10 @@ export interface ArtStationProject {
   slug: string
   tags: string[]
   categories: string[]
-  softwareUsed: string[]
+  softwareUsed: {
+    name: string;
+    iconUrl: string;
+  }[]
   medium: string
   liked: boolean
   user: {
@@ -76,7 +79,10 @@ function mapArtStationProject(json: any): ArtStationProject {
     slug: json.slug,
     tags: json.tags || [],
     categories: json.categories?.map((c: any) => c.name) || [],
-    softwareUsed: json.software_items?.map((s: any) => s.name) || [],
+    softwareUsed: json.software_items?.map((s: any) => ({
+      name: s.name,
+      iconUrl: s.icon_url
+    })) || [],
     medium: json.medium?.name || '',
     liked: json.liked,
     user: {

@@ -3,6 +3,32 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Estilos para tooltips de iconos de software */
+.tooltip-container {
+  position: relative;
+}
+
+.tooltip {
+  z-index: 100;
+  transition: opacity 0.2s, transform 0.2s;
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+}
+
+/* Flecha del tooltip */
+.tooltip:after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid black;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

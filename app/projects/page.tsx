@@ -39,6 +39,11 @@ interface Project {
   license?: string;
   categories?: string[];
   tags?: string[];
+  // Software utilizado (para ArtStation)
+  softwareUsed?: {
+    name: string;
+    iconUrl: string;
+  }[];
   // Previews de imágenes de la API
   thumbnails?: {
     small: string;      // 200x200
@@ -170,7 +175,7 @@ export default function ProjectsPage() {
           return {
             title: formattedTitle.toUpperCase(),
             source: "ARTSTATION",
-            description: item.description,
+            description: item.descriptionHtml || item.description, // Usar HTML para un mejor renderizado
             date: item.publishedAt || item.createdAt,
             fileSize: "",
             renderTime: "",
@@ -183,6 +188,8 @@ export default function ProjectsPage() {
             author: item.user?.fullName,
             categories: item.categories?.length > 0 ? [item.categories[0]] : [], // Solo una categoría
             tags: (item.tags || []).slice(0, 3), // Limitar a 3 tags máximo
+            // Software utilizado
+            softwareUsed: item.softwareUsed || [],
             thumbnails: {
               small: item.coverUrl || "",
               medium: item.coverUrl || "",
@@ -252,9 +259,7 @@ export default function ProjectsPage() {
     // Cargar proyectos según la fuente seleccionada
     if (selectedSource === "SKETCHFAB") {
       fetchSketchfabProjects();
-      if (gridCols === 8) {
-        setGridCols(4);
-      }
+      setGridCols(4); // Siempre 4x al cambiar a Sketchfab
       setCurrentPage(1); // Reiniciar paginación
     } else if (selectedSource === "ARTSTATION") {
       fetchArtStationProjects();
@@ -485,7 +490,8 @@ export default function ProjectsPage() {
                   <SiArtstation className="mr-1" />
                   <span>ARTSTATION</span>
                 </div>
-                <div className="mt-4 px-4 py-1 border border-white text-white text-sm uppercase tracking-widest">
+
+                <div className="mt-3 px-4 py-1 border border-white text-white text-sm uppercase tracking-widest">
                   VIEW ARTWORK
                 </div>
               </div>
@@ -772,7 +778,7 @@ export default function ProjectsPage() {
                 <div className="text-right">
                   <div className="flex-col">
                     <div className="text-sm text-gray-400">
-                      PAGE {currentPage} OF {totalPages} • SHOWING {paginatedProjects.length} MODELS • <span className="text-green-400">TOTAL: {validModelsFound} MODELS</span>
+                      PAGE {currentPage} OF {totalPages} • SHOWING {paginatedProjects.length} PROJECTS • <span className="text-green-400">TOTAL: {validModelsFound} PROJECTS</span>
                     </div>
                     <div className="text-sm text-gray-400">LAST.UPDATE: {currentTime}</div>
                   </div>
@@ -934,13 +940,12 @@ export default function ProjectsPage() {
                   </div>
                 )}
 
-                <div className={`border-l border-t border-secondary grid gap-0 ${
-                  selectedSource === "ARTSTATION" 
-                    ? gridCols === 3 
-                      ? "grid-cols-1 sm:grid-cols-3" 
+                <div className={`border-l border-t border-secondary grid gap-0 ${selectedSource === "ARTSTATION"
+                    ? gridCols === 3
+                      ? "grid-cols-1 sm:grid-cols-3"
                       : "grid-cols-1 sm:grid-cols-6"
                     : `grid-cols-1 md:grid-cols-2 lg:grid-cols-${gridCols}`
-                }`}>
+                  }`}>
                   {paginatedProjects.map((project, index) => (
                     selectedSource === "ARTSTATION"
                       ? renderArtStationCard(project, index)
@@ -1030,39 +1035,69 @@ export default function ProjectsPage() {
                           <span className="ml-2">by <span className="text-gray-200">{modalProject.author}</span></span>
                         )}
 
-                        {modalProject.categories && modalProject.categories.length > 0 && (
-                          <div className="flex flex-wrap gap-2 ml-2">
-                            {modalProject.categories.map((cat, i) => (
-                              <div className="relative inline-block" key={i}>
-                                <Badge
-                                  variant="secondary"
-                                  className="text-sm rounded-none uppercase bg-primary text-secondary"
+                        <div className="flex flex-wrap gap-2 ml-2 items-center">
+                          {/* Categorías */}
+                          {modalProject.categories && modalProject.categories.length > 0 && (
+                            <>
+                              {modalProject.categories.map((cat, i) => (
+                                <div className="relative inline-block" key={i}>
+                                  <Badge
+                                    variant="secondary"
+                                    className="text-sm rounded-none uppercase bg-primary text-secondary"
+                                  >
+                                    {cat}
+                                  </Badge>
+                                  <>
+                                    <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                                    <div className="absolute top-0 right-0 w-2 h-2 border-t-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                                    <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                                    <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                                  </>
+                                </div>
+                              ))}
+                            </>
+                          )}
+                          
+                          {/* Software utilizado (solo para ArtStation) - al lado de categorías */}
+                          {modalProject.source === "ARTSTATION" && modalProject.softwareUsed && modalProject.softwareUsed.length > 0 && (
+                            <>
+                              <div className="ml-1 flex items-center gap-1 text-xs text-gray-400">
+                                {modalProject.softwareUsed.map((software, i) => (
+                                <div
+                                  key={i}
+                                  className="flex items-center border border-gray-700 px-1 py-1 tooltip-container"
+                                  title={software.name}
                                 >
-                                  {cat}
-                                </Badge>
-                                <>
-                                  <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
-                                  <div className="absolute top-0 right-0 w-2 h-2 border-t-1 border-r-1 border-gray-400 pointer-events-none"></div>
-                                  <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
-                                  <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
-                                </>
+                                  <img
+                                    src={software.iconUrl}
+                                    alt={software.name}
+                                    className="w-4 h-4 object-contain"
+                                  />
+                                </div>
+                              ))}
                               </div>
-                            ))}
-                          </div>
-                        )}
+                              
+                            </>
+                          )}
+                        </div>
                       </div>
                       <div className="text-base text-gray-400">
-                        <ReactMarkdown
-                          components={{
-                            p: ({ node, ...props }) => <p {...props} className="mb-2" />,
-                            strong: ({ node, ...props }) => <strong {...props} className="font-bold" />,
-                            br: () => <br />,
-                          }}
-                        >
-                          {modalProject.description}
-                        </ReactMarkdown>
+                        {modalProject.source === "ARTSTATION" ? (
+                          <div dangerouslySetInnerHTML={{ __html: modalProject.description || "" }} />
+                        ) : (
+                          <ReactMarkdown
+                            components={{
+                              p: ({ node, ...props }) => <p {...props} className="mb-2" />,
+                              strong: ({ node, ...props }) => <strong {...props} className="font-bold" />,
+                              br: () => <br />,
+                            }}
+                          >
+                            {modalProject.description || ""}
+                          </ReactMarkdown>
+                        )}
                       </div>
-                      <div className="flex flex-wrap gap-2">
+
+                      <div className="flex flex-wrap gap-2 mb-4">
                         {modalProject.tags?.map((tag, i) => {
                           const tagKey = tag.toLowerCase();
                           const Icon = tagTechIcons[tagKey];
@@ -1118,21 +1153,6 @@ export default function ProjectsPage() {
                           <div className="grid grid-cols-2 gap-2 text-xs text-gray-400 mt-4">
                             <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Heart className="w-4 h-4 mr-1" />LIKES:</span><span className="text-white">{modalProject.likes?.toLocaleString() ?? '-'}</span></div>
                             <div className="flex items-center gap-1"><span className="flex items-center gap-1"><Eye className="w-4 h-4 mr-1" />VIEWS:</span><span className="text-white">{modalProject.views?.toLocaleString() ?? '-'}</span></div>
-                            <div className="col-span-2 flex items-center gap-1">
-                              <span className="flex items-center gap-1">
-                                <Gauge className="w-4 h-4 mr-1" />COMPLEXITY:
-                              </span>
-                              <span className={
-                                modalProject.complexity === "EXTREME" ? "text-red-500" :
-                                  modalProject.complexity === "VERY_HIGH" ? "text-orange-500" :
-                                    modalProject.complexity === "HIGH" ? "text-yellow-500" :
-                                      modalProject.complexity === "MEDIUM" ? "text-green-500" :
-                                        modalProject.complexity === "LOW" ? "text-green-300" :
-                                          "text-gray-400"
-                              }>
-                                {modalProject.complexity}
-                              </span>
-                            </div>
                           </div>
                         )}
 
