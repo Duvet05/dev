@@ -115,8 +115,8 @@ export default function ProjectsPage() {
   const [nextUrl, setNextUrl] = useState<string | null>(null);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  // Fijar modelos por página en 8
-  const MODELS_PER_PAGE = 8;
+  // Fijar modelos por página en 8 para Sketchfab, 12 para ArtStation
+  const MODELS_PER_PAGE = selectedSource === "ARTSTATION" ? 12 : 8;
 
   // Nueva función para cargar modelos (infinite scroll)
   const loadSketchfabModels = async (url?: string) => {
@@ -184,9 +184,9 @@ export default function ProjectsPage() {
             categories: item.categories?.length > 0 ? [item.categories[0]] : [], // Solo una categoría
             tags: (item.tags || []).slice(0, 3), // Limitar a 3 tags máximo
             thumbnails: {
-              small: item.cover?.small_square_url || "",
-              medium: item.cover?.small_square_url || "",
-              large: item.cover?.small_square_url || "",
+              small: item.coverUrl || "",
+              medium: item.coverUrl || "",
+              large: item.coverUrl || "",
             }
           };
         });
@@ -252,16 +252,17 @@ export default function ProjectsPage() {
     // Cargar proyectos según la fuente seleccionada
     if (selectedSource === "SKETCHFAB") {
       fetchSketchfabProjects();
-      // Si cambiamos a Sketchfab y estamos en 8x, volvemos a 4x
       if (gridCols === 8) {
         setGridCols(4);
       }
+      setCurrentPage(1); // Reiniciar paginación
     } else if (selectedSource === "ARTSTATION") {
       fetchArtStationProjects();
-      // Si cambiamos a ArtStation, configuramos la vista automáticamente a 4x o 8x
-      if (gridCols < 4) {
-        setGridCols(4);
+      if (gridCols !== 6) {
+        setGridCols(6); // Vista horizontal 6x por defecto
       }
+      setCurrentPage(1); // Reiniciar paginación
+      setSelectedComplexity("ALL"); // Quitar filtro de complexity
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderBy, selectedSource]);
@@ -477,7 +478,7 @@ export default function ProjectsPage() {
               />
               {/* Overlay con título solo al hacer hover */}
               <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 text-center">
-                <h3 className="text-lg font-bold text-white truncate mb-2 w-full">
+                <h3 className="text-lg font-bold text-white truncate mb-2 w-full overflow-hidden whitespace-nowrap">
                   {project.title}
                 </h3>
                 <div className="flex items-center gap-1 text-gray-200 text-sm">
@@ -519,7 +520,7 @@ export default function ProjectsPage() {
                   >
                     <Badge
                       variant="outline"
-                      className="text-sm rounded-none flex items-center gap-1 cursor-pointer hover:underline border-secondary text-gray-400"
+                      className="text-sm rounded-none flex items-center gap-1 cursor-pointer hover:underline border-[#13aff0] text-[#13aff0]"
                     >
                       <SiSketchfab className="inline-block mr-1" style={{ fontSize: 16, verticalAlign: "middle" }} />
                       SKETCHFAB
@@ -558,7 +559,7 @@ export default function ProjectsPage() {
                 className="flex-1 focus:outline-none"
               >
                 <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-bold group-hover:text-gray-300 transition-colors font-bauhaus text-left hover:underline cursor-pointer text-secondary truncate">
+                  <h3 className="text-xl font-bold group-hover:text-gray-300 transition-colors font-bauhaus text-left hover:underline cursor-pointer text-secondary truncate overflow-hidden whitespace-nowrap">
                     {project.title}
                   </h3>
                   {/* Icono de staffpick si aplica */}
@@ -837,20 +838,22 @@ export default function ProjectsPage() {
                   ))}
                 </select>
               </div>
-              <div className="flex flex-col gap-2">
-                <label htmlFor="complexity-filter" className="text-xs text-gray-400">COMPLEXITY</label>
-                <select
-                  id="complexity-filter"
-                  value={selectedComplexity}
-                  onChange={e => setSelectedComplexity(e.target.value)}
-                  className="bg-black border border-secondary text-white px-3 py-2 rounded-none focus:outline-none focus:border-white text-sm cursor-pointer uppercase"
-                >
-                  <option value="ALL">ALL</option>
-                  {allComplexities.map(complexity => (
-                    <option key={complexity} value={complexity}>{complexity}</option>
-                  ))}
-                </select>
-              </div>
+              {selectedSource !== "ARTSTATION" && (
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="complexity-filter" className="text-xs text-gray-400">COMPLEXITY</label>
+                  <select
+                    id="complexity-filter"
+                    value={selectedComplexity}
+                    onChange={e => setSelectedComplexity(e.target.value)}
+                    className="bg-black border border-secondary text-white px-3 py-2 rounded-none focus:outline-none focus:border-white text-sm cursor-pointer uppercase"
+                  >
+                    <option value="ALL">ALL</option>
+                    {allComplexities.map(complexity => (
+                      <option key={complexity} value={complexity}>{complexity}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
               <div className="flex flex-col gap-2">
                 <label htmlFor="order-by" className="text-xs text-gray-400">ORDER BY</label>
                 <select
@@ -885,13 +888,13 @@ export default function ProjectsPage() {
                   {selectedSource === "ARTSTATION" && (
                     <>
                       <button
-                        className={`px-2.5 py-1.5 border rounded-none text-sm ${gridCols === 4 ? "border-white bg-white text-black" : "border-secondary bg-black text-white cursor-pointer"}`}
-                        onClick={() => setGridCols(4)}
-                      >4x</button>
+                        className={`px-2.5 py-1.5 border rounded-none text-sm ${gridCols === 3 ? "border-white bg-white text-black" : "border-secondary bg-black text-white cursor-pointer"}`}
+                        onClick={() => setGridCols(3)}
+                      >3x</button>
                       <button
-                        className={`px-2.5 py-1.5 border rounded-none text-sm ${gridCols === 8 ? "border-white bg-white text-black" : "border-secondary bg-black text-white cursor-pointer"}`}
-                        onClick={() => setGridCols(8)}
-                      >8x</button>
+                        className={`px-2.5 py-1.5 border rounded-none text-sm ${gridCols === 6 ? "border-white bg-white text-black" : "border-secondary bg-black text-white cursor-pointer"}`}
+                        onClick={() => setGridCols(6)}
+                      >6x</button>
                     </>
                   )}
                 </div>
@@ -901,9 +904,9 @@ export default function ProjectsPage() {
             {/* Grid de proyectos */}
             {isLoadingProjects ? (
               <div className="border border-secondary p-12 text-center">
-                <div className="text-gray-400 text-lg animate-pulse mb-4">LOADING.SKETCHFAB.PROJECTS...</div>
+                <div className="text-gray-400 text-lg animate-pulse mb-4">LOADING.CUADOT.PROJECTS...</div>
                 <div className="text-gray-500 text-sm mb-2">
-                  {currentPage > 1 ? `Loading page ${currentPage}...` : `Fetching models from @${SKETCHFAB_CONFIG.username} profile`}
+                  {currentPage > 1 ? `Loading page ${currentPage}...` : `Fetching projects from @${SKETCHFAB_CONFIG.username} profile`}
                 </div>
                 <div className="text-gray-500 text-xs">Please wait...</div>
               </div>
@@ -931,9 +934,17 @@ export default function ProjectsPage() {
                   </div>
                 )}
 
-                <div className={`border-l border-t border-secondary grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${gridCols} gap-0`}>
+                <div className={`border-l border-t border-secondary grid gap-0 ${
+                  selectedSource === "ARTSTATION" 
+                    ? gridCols === 3 
+                      ? "grid-cols-1 sm:grid-cols-3" 
+                      : "grid-cols-1 sm:grid-cols-6"
+                    : `grid-cols-1 md:grid-cols-2 lg:grid-cols-${gridCols}`
+                }`}>
                   {paginatedProjects.map((project, index) => (
-                    selectedSource === "ARTSTATION" ? renderArtStationCard(project, index) : renderSketchfabCard(project, index)
+                    selectedSource === "ARTSTATION"
+                      ? renderArtStationCard(project, index)
+                      : renderSketchfabCard(project, index)
                   ))}
                 </div>
                 {/* MODAL DE MODELO 3D */}

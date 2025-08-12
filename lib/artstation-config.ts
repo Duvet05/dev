@@ -7,7 +7,7 @@ export const ARTSTATION_CONFIG = {
 	userId: 175617,
 
 	// Límite de proyectos a cargar (para evitar sobrecarga)
-	maxProjects: 10,
+	maxProjects: 50,
 
 	// Configuración de cache (en minutos)
 	cacheExpiry: 30,
