@@ -6,7 +6,7 @@ import { BrowserFrame } from "@/components/layout/BrowserFrame"
 import { Footer } from "@/components/layout/Footer"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, ExternalLink, Shapes, Layers, FileText, Gauge, Calendar, Heart, Eye } from "lucide-react"
+import { ArrowLeft, ExternalLink, Shapes, Layers, FileText, Gauge, Calendar, Heart, Eye, ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { SiBlender, SiAutodesk, SiAdobephotoshop, SiUnity, SiUnrealengine, SiWebgl, SiAdobe, SiFigma, SiCss3, SiHoudini, SiMarvelapp, SiSketchfab, SiArtstation } from "react-icons/si"
 import { TbBrandThreejs } from "react-icons/tb"
@@ -43,6 +43,16 @@ interface Project {
   softwareUsed?: {
     name: string;
     iconUrl: string;
+  }[];
+  // Assets del proyecto (para ArtStation)
+  assets?: {
+    id: number;
+    title?: string;
+    imageUrl: string;
+    width: number;
+    height: number;
+    type: 'image' | 'cover' | 'model3d' | 'video_clip';
+    playerEmbedded?: string | null;
   }[];
   // Previews de imágenes de la API
   thumbnails?: {
@@ -190,6 +200,8 @@ export default function ProjectsPage() {
             tags: (item.tags || []).slice(0, 3), // Limitar a 3 tags máximo
             // Software utilizado
             softwareUsed: item.softwareUsed || [],
+            // Assets del proyecto
+            assets: item.assets || [],
             thumbnails: {
               small: item.coverUrl || "",
               medium: item.coverUrl || "",
@@ -462,6 +474,106 @@ export default function ProjectsPage() {
   };
 
   const [modalProject, setModalProject] = useState<Project | null>(null);
+  const [selectedAssetIndex, setSelectedAssetIndex] = useState<number>(0);
+  const assetsScrollRef = useRef<HTMLDivElement>(null);
+
+  // Funciones para navegar por los assets
+  const scrollAssetsLeft = () => {
+    if (assetsScrollRef.current) {
+      assetsScrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const scrollAssetsRight = () => {
+    if (assetsScrollRef.current) {
+      assetsScrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    }
+  };
+
+  // Función para renderizar un asset de ArtStation
+  const renderArtStationAsset = (asset: any, isLarge: boolean = false) => {
+    // Solo mostrar imágenes (no covers) y videos
+    if (asset.type === 'image') {
+      if (isLarge) {
+        // Para el asset principal, crear un contenedor 1:1 con fondo desenfocado
+        return (
+          <div className="relative w-full h-full overflow-hidden">
+            {/* Fondo desenfocado */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${asset.imageUrl})`,
+                filter: 'blur(20px)',
+                transform: 'scale(1.1)' // Evitar bordes del desenfoque
+              }}
+            />
+            {/* Overlay oscuro para mejorar contraste */}
+            <div className="absolute inset-0 bg-black/30" />
+            {/* Imagen principal centrada */}
+            <div className="relative w-full h-full flex items-center justify-center">
+              <img
+                src={asset.imageUrl}
+                alt={asset.title || "Asset"}
+                className="max-w-full max-h-full object-contain"
+                style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))' }}
+              />
+            </div>
+          </div>
+        );
+      } else {
+        // Para thumbnails, mantener el comportamiento actual
+        return (
+          <img
+            src={asset.imageUrl}
+            alt={asset.title || "Asset"}
+            className="w-full h-full object-cover"
+          />
+        );
+      }
+    } else if (asset.type === 'video_clip' && asset.playerEmbedded) {
+      if (isLarge) {
+        // Para videos grandes, también usar formato 1:1 con fondo
+        return (
+          <div className="relative w-full h-full overflow-hidden">
+            {/* Fondo oscuro para videos */}
+            <div className="absolute inset-0 bg-gray-900" />
+            {/* Video centrado */}
+            <div className="relative w-full h-full flex items-center justify-center p-4">
+              <div 
+                className="w-full max-w-full max-h-full"
+                dangerouslySetInnerHTML={{ __html: asset.playerEmbedded }}
+              />
+            </div>
+          </div>
+        );
+      } else {
+        // Para el thumbnail del video, mostrar imagen del asset si está disponible
+        return (
+          <div className="relative w-full h-full overflow-hidden">
+            {asset.imageUrl ? (
+              <img
+                src={asset.imageUrl}
+                alt={asset.title || "Video"}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center justify-center text-gray-400 h-full">
+                <div className="text-lg mb-1">▶️</div>
+                <div className="text-xs text-center">VIDEO</div>
+              </div>
+            )}
+            {/* Overlay de play para indicar que es video */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+              <div className="text-white text-xl">▶️</div>
+            </div>
+          </div>
+        );
+      }
+    }
+    
+    // No mostrar covers, modelos 3D u otros tipos
+    return null;
+  };
 
   // Función para renderizar una tarjeta de ArtStation (estilo galería)
   const renderArtStationCard = (project: Project, index: number) => {
@@ -469,7 +581,10 @@ export default function ProjectsPage() {
       <div
         key={index}
         className="bg-black border-r border-b border-secondary hover:border-white transition-colors group cursor-pointer relative"
-        onClick={() => setModalProject(project)}
+        onClick={() => {
+          setModalProject(project);
+          setSelectedAssetIndex(0);
+        }}
       >
         {/* Tarjeta estilo galería para ArtStation - solo imagen y overlay en hover */}
         {project.thumbnails && project.thumbnails.medium ? (
@@ -957,54 +1072,144 @@ export default function ProjectsPage() {
             )}
             {modalProject && (
               <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center md:p-24 p-4">
-                <div className="bg-primary w-screen h-screenoverflow-y-auto border border-secondary">
+                <div className="bg-primary max-w-6xl w-full max-h-full overflow-y-auto border border-secondary">
                   <WindowHeader
                     title={modalProject.title}
                     onClose={() => setModalProject(null)}
                   />
-                  <div className="p-6 grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-6 bg-primary">
+                  <div className="p-6 flex flex-col lg:flex-row gap-6 bg-primary">
                     {/* Imagen grande o visor 3D */}
-                    <div className="flex flex-col items-center relative">
-                      {/* Corner brackets */}
-                      <div className="absolute -top-1.5 -left-1.5 w-5 h-5 pointer-events-none z-10">
-                        <div className="w-full h-full border-t-1 border-l-1 border-secondary"></div>
-                      </div>
-                      <div className="absolute -top-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
-                        <div className="w-full h-full border-t-1 border-r-1 border-secondary"></div>
-                      </div>
-                      <div className="absolute -bottom-1.5 -left-1.5 w-5 h-5 pointer-events-none z-10">
-                        <div className="w-full h-full border-b-1 border-l-1 border-secondary"></div>
-                      </div>
-                      <div className="absolute -bottom-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
-                        <div className="w-full h-full border-b-1 border-r-1 border-secondary"></div>
-                      </div>
+                    <div className="flex flex-col items-center relative flex-shrink-0">
+                      {/* Contenedor que se adapta al asset */}
+                      <div className="w-full max-w-lg relative">
+                        {/* Corner brackets */}
+                        <div className="absolute -top-1.5 -left-1.5 w-5 h-5 pointer-events-none z-10">
+                          <div className="w-full h-full border-t-1 border-l-1 border-secondary"></div>
+                        </div>
+                        <div className="absolute -top-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
+                          <div className="w-full h-full border-t-1 border-r-1 border-secondary"></div>
+                        </div>
+                        <div className="absolute -bottom-1.5 -left-1.5 w-5 h-5 pointer-events-none z-10">
+                          <div className="w-full h-full border-b-1 border-l-1 border-secondary"></div>
+                        </div>
+                        <div className="absolute -bottom-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
+                          <div className="w-full h-full border-b-1 border-r-1 border-secondary"></div>
+                        </div>
 
-                      {/* Contenido diferente según el tipo de proyecto */}
-                      {modalProject.source === "SKETCHFAB" && modalProject.sketchfabUid ? (
-                        <iframe
-                          src={`https://sketchfab.com/models/${modalProject.sketchfabUid}/embed?autospin=1&autostart=1&ui_theme=dark`}
-                          title="Sketchfab 3D Viewer"
-                          frameBorder="0"
-                          allow="autoplay; fullscreen; vr"
-                          allowFullScreen
-                          className="w-full h-64 md:h-156 border border-gray-700 bg-black"
-                        />
-                      ) : modalProject.source === "ARTSTATION" && modalProject.embedUrl ? (
-                        <iframe
-                          src={modalProject.embedUrl}
-                          title="ArtStation Embed"
-                          frameBorder="0"
-                          allow="autoplay; fullscreen"
-                          allowFullScreen
-                          className="w-full h-64 md:h-156 border border-gray-700 bg-black"
-                        />
+                        {/* Contenido diferente según el tipo de proyecto */}
+                        {modalProject.source === "SKETCHFAB" && modalProject.sketchfabUid ? (
+                          <iframe
+                            src={`https://sketchfab.com/models/${modalProject.sketchfabUid}/embed?autospin=1&autostart=1&ui_theme=dark`}
+                            title="Sketchfab 3D Viewer"
+                            frameBorder="0"
+                            allow="autoplay; fullscreen; vr"
+                            allowFullScreen
+                            className="w-full aspect-square border border-gray-700 bg-black"
+                          />
+                        ) : modalProject.source === "ARTSTATION" ? (
+                          <div className="w-full">
+                            {/* Asset principal */}
+                            <div className="mb-1">
+                              {modalProject.assets && (() => {
+                                // Filtrar solo imágenes (no covers) y videos válidos
+                                const validAssets = modalProject.assets.filter(asset => 
+                                  (asset.type === 'image') || 
+                                  (asset.type === 'video_clip' && asset.playerEmbedded)
+                                );
+                                return validAssets.length > 0;
+                              })() ? (
+                                <div className="w-full aspect-square border border-gray-700 bg-black flex items-center justify-center overflow-hidden">
+                                  {(() => {
+                                    const validAssets = modalProject.assets.filter(asset => 
+                                      (asset.type === 'image') || 
+                                      (asset.type === 'video_clip' && asset.playerEmbedded)
+                                    );
+                                    const selectedAsset = validAssets[Math.min(selectedAssetIndex, validAssets.length - 1)];
+                                    return renderArtStationAsset(selectedAsset, true);
+                                  })()}
+                                </div>
+                              ) : (
+                                <img
+                                  src={modalProject.thumbnails?.large}
+                                  alt={modalProject.title}
+                                  className="w-full aspect-square object-cover bg-black border border-gray-700"
+                                />
+                              )}
+                            </div>
+                          
+                          {/* Galería de assets */}
+                          {modalProject.assets && (() => {
+                            // Filtrar solo imágenes (no covers) y videos válidos
+                            const validAssets = modalProject.assets.filter(asset => 
+                              (asset.type === 'image') || 
+                              (asset.type === 'video_clip' && asset.playerEmbedded)
+                            );
+                            return validAssets.length > 1;
+                          })() && (
+                            <div className="space-y-2">
+
+                              <div className="flex items-center gap-1">
+                                <div 
+                                  ref={assetsScrollRef}
+                                  className="flex gap-1 overflow-x-auto flex-1"
+                                  style={{ 
+                                    scrollbarWidth: 'none',
+                                    msOverflowStyle: 'none' 
+                                  }}
+                                >
+                                  {modalProject.assets
+                                    .filter(asset => 
+                                      (asset.type === 'image') || 
+                                      (asset.type === 'video_clip' && asset.playerEmbedded)
+                                    )
+                                    .map((asset, index) => (
+                                    <div
+                                      key={index}
+                                      className={`flex-shrink-0 w-16 h-16 border cursor-pointer transition-all overflow-hidden ${
+                                        index === selectedAssetIndex 
+                                          ? "border-white shadow-lg ring-1 ring-white/50" 
+                                          : "border-gray-600 hover:border-gray-400 hover:shadow-md"
+                                      }`}
+                                      onClick={() => setSelectedAssetIndex(index)}
+                                      title={asset.title || `Asset ${index + 1}`}
+                                    >
+                                      {renderArtStationAsset(asset, false)}
+                                    </div>
+                                  ))}
+                                </div>
+                                {modalProject.assets.filter(asset => 
+                                  (asset.type === 'image') || 
+                                  (asset.type === 'video_clip' && asset.playerEmbedded)
+                                ).length > 5 && (
+                                  <div className="flex flex-col gap-1">
+                                    <button
+                                      onClick={scrollAssetsLeft}
+                                      className="w-7.5 h-7.5 border border-gray-600 bg-black hover:border-white hover:bg-gray-900 transition-colors flex items-center justify-center"
+                                      title="Scroll left"
+                                    >
+                                      <ChevronLeft className="w-3 h-3 text-gray-400" />
+                                    </button>
+                                    <button
+                                      onClick={scrollAssetsRight}
+                                      className="w-7.5 h-7.5 border border-gray-600 bg-black hover:border-white hover:bg-gray-900 transition-colors flex items-center justify-center"
+                                      title="Scroll right"
+                                    >
+                                      <ChevronRight className="w-3 h-3 text-gray-400" />
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       ) : (
                         <img
                           src={modalProject.thumbnails?.large}
                           alt={modalProject.title}
-                          className="w-full h-64 md:h-96 object-cover bg-black border border-gray-700"
+                          className="w-full aspect-square object-cover bg-black border border-gray-700"
                         />
                       )}
+                      </div>
                     </div>
                     {/* Info del modelo */}
                     <div className="flex flex-col gap-2">
@@ -1057,28 +1262,6 @@ export default function ProjectsPage() {
                               ))}
                             </>
                           )}
-                          
-                          {/* Software utilizado (solo para ArtStation) - al lado de categorías */}
-                          {modalProject.source === "ARTSTATION" && modalProject.softwareUsed && modalProject.softwareUsed.length > 0 && (
-                            <>
-                              <div className="ml-1 flex items-center gap-1 text-xs text-gray-400">
-                                {modalProject.softwareUsed.map((software, i) => (
-                                <div
-                                  key={i}
-                                  className="flex items-center border border-gray-700 px-1 py-1 tooltip-container"
-                                  title={software.name}
-                                >
-                                  <img
-                                    src={software.iconUrl}
-                                    alt={software.name}
-                                    className="w-4 h-4 object-contain"
-                                  />
-                                </div>
-                              ))}
-                              </div>
-                              
-                            </>
-                          )}
                         </div>
                       </div>
                       <div className="text-base text-gray-400">
@@ -1123,6 +1306,26 @@ export default function ProjectsPage() {
                             </Badge>
                           );
                         })}
+                        
+                        {/* Software utilizado (solo para ArtStation) - junto con los tags */}
+                        {modalProject.source === "ARTSTATION" && modalProject.softwareUsed && modalProject.softwareUsed.length > 0 && (
+                          <>
+                            {modalProject.softwareUsed.map((software, i) => (
+                              <Badge
+                                key={`software-${i}`}
+                                variant="secondary"
+                                className="text-xs rounded-none flex items-center gap-1 font-vt323 bg-gray-800 text-gray-200 border border-gray-600"
+                              >
+                                <img
+                                  src={software.iconUrl}
+                                  alt={software.name}
+                                  className="w-4 h-4 object-contain"
+                                />
+                                {software.name.toUpperCase()}
+                              </Badge>
+                            ))}
+                          </>
+                        )}
                       </div>
                       <div className="flex flex-col gap-4">
                         {/* Metadata alineada - diferente según tipo de proyecto */}
@@ -1269,6 +1472,11 @@ export default function ProjectsPage() {
         }
         .animate-pulse-preview {
           animation: pulse-preview 1.5s ease-in-out infinite;
+        }
+        
+        /* Ocultar scrollbar en contenedor de assets */
+        div[style*="scrollbarWidth"]::-webkit-scrollbar {
+          display: none;
         }
         
         /* No se necesitan estilos específicos para ArtStation, se usa el estilo unificado */

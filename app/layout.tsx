@@ -25,6 +25,9 @@ const bauhausPixel = localFont({
 export const metadata: Metadata = {
   title: "Cuadot | 3D Artist",
   description: "3D Artist & Developer Portfolio for Cuadot",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
