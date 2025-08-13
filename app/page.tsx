@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { BrowserHeader } from "@/components/BrowserHeader"
 import { MainContent } from "@/components/MainContent"
 import { BrowserFrame } from "@/components/layout/BrowserFrame"
+import ArtstationInfiniteCarousel from "@/components/ArtstationInfiniteCarousel"
 
 export default function CyberpunkPortfolio() {
   const [currentTime, setCurrentTime] = useState("")
@@ -150,7 +151,7 @@ export default function CyberpunkPortfolio() {
     if (audioRef.current && tracks.length > 0) {
       audioRef.current.pause();
       audioRef.current.load();
-      
+
       // Si está en estado PLAYING, reproducir automáticamente la nueva pista
       if (playerState === "PLAYING") {
         const playPromise = audioRef.current.play();
@@ -199,11 +200,11 @@ export default function CyberpunkPortfolio() {
   // Cuando termina la canción
   const handleEnded = () => {
     if (tracks.length === 0) return;
-    
+
     // Cambiar a la siguiente pista
     let next = currentTrack + 1;
     if (next >= tracks.length) next = 0;
-    
+
     // Actualizar el estado inmediatamente
     setCurrentTrack(next);
     setIsPlaying(true);
@@ -283,9 +284,13 @@ export default function CyberpunkPortfolio() {
           />
         </div>
       </div>
-      
+
+      <div className="pt-[100px] mx-4">
+        <ArtstationInfiniteCarousel />
+      </div>
+
       {/* Contenido principal con padding-top para compensar el header fijo */}
-      <div className="pt-[100px] mb-4">
+      <div className="mb-4">
         <div className="border-l border-r border-b border-secondary mx-4">
           <MainContent
             glitchText={glitchText}
@@ -298,7 +303,7 @@ export default function CyberpunkPortfolio() {
           />
         </div>
       </div>
-      
+
       {/* Audio element para el reproductor */}
       <audio
         ref={audioRef}
@@ -310,7 +315,7 @@ export default function CyberpunkPortfolio() {
         )}
         Tu navegador no soporta el elemento de audio.
       </audio>
-      
+
       <style jsx global>{`
         html {
           scroll-behavior: smooth;

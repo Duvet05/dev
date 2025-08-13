@@ -7,6 +7,7 @@ import { Skills } from "@/components/Skills";
 import { Brands } from "@/components/Brands";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/layout/Footer";
+import ArtstationInfiniteCarousel from "./ArtstationInfiniteCarousel";
 
 interface MainContentProps {
   glitchText: string;
@@ -28,6 +29,7 @@ export const MainContent: React.FC<MainContentProps> = ({
   projects,
 }) => (
   <div className="p-8">
+
     <div id="home">
       <HeroSection
         glitchText={glitchText}
@@ -36,7 +38,7 @@ export const MainContent: React.FC<MainContentProps> = ({
         gpuUsage={gpuUsage}
         ramUsage={ramUsage}
         renderingProgress={renderingProgress}
-      />
+      />      
     </div>
     <div className="flex flex-col md:flex-row mb-12 gap-8 items-stretch h-full md:justify-between">
       <div id="about">

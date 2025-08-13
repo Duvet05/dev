@@ -43,7 +43,12 @@ interface ProjectsProps {
 export const Projects: React.FC<ProjectsProps> = ({ projects }) => (
   <div id="projects" className="mb-12">
     <div className="flex items-center justify-between mb-4">
-      <h2 className="text-4xl font-bauhaus-pixel leading-none">PROJECTS</h2>
+      <Link href="/projects" passHref legacyBehavior>
+        <a className="text-4xl font-bauhaus-pixel leading-none text-white cursor-pointer animate-projects-glow transition-all relative group" style={{ textShadow: '0 0 12px #fff, 0 0 24px #fff' }}>
+          PROJECTS
+          <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-white scale-x-0 group-hover:scale-x-100 origin-left"></span>
+        </a>
+      </Link>
       <Link href="/projects">
         <Button
           variant="outline"
@@ -98,5 +103,18 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => (
         </div>
       ))}
     </div>
+    <style jsx global>{`
+  @keyframes projects-glow {
+    0%, 100% {
+      text-shadow: 0 0 6px #fff, 0 0 12px #fff;
+    }
+    50% {
+      text-shadow: 0 0 12px #fff, 0 0 24px #fff;
+    }
+  }
+  .animate-projects-glow {
+    animation: projects-glow 1.8s ease-in-out infinite;
+  }
+`}</style>
   </div>
 );

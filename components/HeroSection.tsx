@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Cpu, MonitorSmartphone, MemoryStick, Torus, Calendar, Clock, Layers, HardDrive, Zap } from "lucide-react";
 import { DonutAnimation } from "./DonutAnimation";
 import { TetrisGame } from "./TetrisGame";
+import ArtstationInfiniteCarousel from "./ArtstationInfiniteCarousel";
 
 interface HeroSectionProps {
   glitchText: string;
@@ -179,7 +180,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
 
   return (
     <div className="relative mb-12">
-      <div className="grid grid-cols-12 mb-8">
+      <div className="grid grid-cols-12">
         <div className="col-span-12 lg:col-span-8">
           <div className="relative h-full bg-primary border border-secondary overflow-hidden">
             {/* Grid pattern de fondo completo */}
