@@ -45,50 +45,56 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
   onClose,
   tagTechIcons
 }) => {
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center md:p-24 p-4">
+    <div 
+      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center md:p-24 p-4"
+      onClick={handleBackdropClick}
+    >
       <div className="bg-primary max-w-6xl w-full max-h-full overflow-y-auto border border-secondary">
         <WindowHeader
           title={project.title}
           onClose={onClose}
         />
-        <div className="p-6 flex flex-col lg:flex-row gap-6 bg-primary">
+        <div className="p-6 grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-6 bg-primary">
           {/* Imagen grande o visor 3D */}
-          <div className="flex flex-col items-center relative flex-shrink-0">
-            {/* Contenedor que se adapta al asset */}
-            <div className="w-full max-w-lg relative">
-              {/* Corner brackets */}
-              <div className="absolute -top-1.5 -left-1.5 w-5 h-5 pointer-events-none z-10">
-                <div className="w-full h-full border-t-1 border-l-1 border-secondary"></div>
-              </div>
-              <div className="absolute -top-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
-                <div className="w-full h-full border-t-1 border-r-1 border-secondary"></div>
-              </div>
-              <div className="absolute -bottom-1.5 -left-1.5 w-5 h-5 pointer-events-none z-10">
-                <div className="w-full h-full border-b-1 border-l-1 border-secondary"></div>
-              </div>
-              <div className="absolute -bottom-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
-                <div className="w-full h-full border-b-1 border-r-1 border-secondary"></div>
-              </div>
-
-              {/* Contenido del visor 3D de Sketchfab */}
-              {project.sketchfabUid ? (
-                <iframe
-                  src={`https://sketchfab.com/models/${project.sketchfabUid}/embed?autospin=1&autostart=1&ui_theme=dark`}
-                  title="Sketchfab 3D Viewer"
-                  frameBorder="0"
-                  allow="autoplay; fullscreen; vr"
-                  allowFullScreen
-                  className="w-full aspect-square border border-gray-700 bg-black"
-                />
-              ) : (
-                <img
-                  src={project.thumbnails?.large}
-                  alt={project.title}
-                  className="w-full aspect-square object-cover bg-black border border-gray-700"
-                />
-              )}
+          <div className="flex flex-col items-center relative">
+            {/* Corner brackets */}
+            <div className="absolute -top-1.5 -left-1.5 w-5 h-5 pointer-events-none z-10">
+              <div className="w-full h-full border-t-1 border-l-1 border-secondary"></div>
             </div>
+            <div className="absolute -top-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
+              <div className="w-full h-full border-t-1 border-r-1 border-secondary"></div>
+            </div>
+            <div className="absolute -bottom-1.5 -left-1.5 w-5 h-5 pointer-events-none z-10">
+              <div className="w-full h-full border-b-1 border-l-1 border-secondary"></div>
+            </div>
+            <div className="absolute -bottom-1.5 -right-1.5 w-5 h-5 pointer-events-none z-10">
+              <div className="w-full h-full border-b-1 border-r-1 border-secondary"></div>
+            </div>
+
+            {/* Contenido del visor 3D de Sketchfab */}
+            {project.sketchfabUid ? (
+              <iframe
+                src={`https://sketchfab.com/models/${project.sketchfabUid}/embed?autospin=1&autostart=1&ui_theme=dark`}
+                title="Sketchfab 3D Viewer"
+                frameBorder="0"
+                allow="autoplay; fullscreen; vr"
+                allowFullScreen
+                className="w-full h-64 md:h-156 border border-gray-700 bg-black"
+              />
+            ) : (
+              <img
+                src={project.thumbnails?.large}
+                alt={project.title}
+                className="w-full h-64 md:h-96 object-cover bg-black border border-gray-700"
+              />
+            )}
           </div>
           
           {/* Info del modelo */}
@@ -115,31 +121,27 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
                 return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
               })()}
 
-              <div className="flex flex-wrap gap-2 ml-2 items-center">
-                {/* Categorías */}
-                {project.categories && project.categories.length > 0 && (
-                  <>
-                    {project.categories.map((cat, i) => (
-                      <div className="relative inline-block" key={i}>
-                        <Badge
-                          variant="secondary"
-                          className="text-sm rounded-none uppercase bg-primary text-secondary"
-                        >
-                          {cat}
-                        </Badge>
-                        <>
-                          <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
-                          <div className="absolute top-0 right-0 w-2 h-2 border-t-1 border-r-1 border-gray-400 pointer-events-none"></div>
-                          <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
-                          <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
-                        </>
-                      </div>
-                    ))}
-                  </>
-                )}
-              </div>
+              {project.categories && project.categories.length > 0 && (
+                <div className="flex flex-wrap gap-2 ml-2">
+                  {project.categories.map((cat, i) => (
+                    <div className="relative inline-block" key={i}>
+                      <Badge
+                        variant="secondary"
+                        className="text-sm rounded-none uppercase bg-primary text-secondary"
+                      >
+                        {cat}
+                      </Badge>
+                      <>
+                        <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                        <div className="absolute top-0 right-0 w-2 h-2 border-t-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                      </>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-            
             <div className="text-base text-gray-400">
               <ReactMarkdown
                 components={{
@@ -151,8 +153,7 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
                 {project.description || ""}
               </ReactMarkdown>
             </div>
-
-            <div className="flex flex-wrap gap-2 mb-4">
+            <div className="flex flex-wrap gap-2">
               {project.tags?.map((tag, i) => {
                 const tagKey = tag.toLowerCase();
                 const Icon = tagTechIcons[tagKey];
@@ -179,7 +180,6 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
                 );
               })}
             </div>
-            
             <div className="flex flex-col gap-4">
               {/* Metadata alineada para Sketchfab */}
               <div className="grid grid-cols-2 gap-2 text-xs text-gray-400 mt-4">

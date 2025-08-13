@@ -64,8 +64,17 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
   scrollAssetsRight,
   renderArtStationAsset
 }) => {
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center md:p-24 p-4">
+    <div 
+      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center md:p-24 p-4"
+      onClick={handleBackdropClick}
+    >
       <div className="bg-primary max-w-6xl w-full max-h-full overflow-y-auto border border-secondary">
         <WindowHeader
           title={project.title}

@@ -652,13 +652,14 @@ export default function ProjectsPage() {
                 </div>
                 <div className="flex flex-wrap gap-2 ml-auto">
                   {project.categories && project.categories.length > 0 ? (
-                    project.categories.map((cat, i) => (
-                      <div className="relative inline-block" key={i}>
+                    <>
+                      {/* Mostrar solo la primera categoría */}
+                      <div className="relative inline-block">
                         <Badge
                           variant="secondary"
                           className="text-sm bg-primary text-secondary rounded-none uppercase"
                         >
-                          {cat}
+                          {project.categories[0]}
                         </Badge>
                         {/* Corner brackets */}
                         <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
@@ -666,7 +667,24 @@ export default function ProjectsPage() {
                         <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
                         <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
                       </div>
-                    ))
+                      {/* Mostrar indicador +N si hay más categorías */}
+                      {project.categories.length > 1 && (
+                        <div className="relative inline-block">
+                          <Badge
+                            variant="secondary"
+                            className="text-sm bg-primary text-secondary rounded-none uppercase"
+                            title={`Additional categories: ${project.categories.slice(1).join(', ')}`}
+                          >
+                            +{project.categories.length - 1}
+                          </Badge>
+                          {/* Corner brackets */}
+                          <div className="absolute top-0 left-0 w-2 h-2 border-t-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                          <div className="absolute top-0 right-0 w-2 h-2 border-t-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                          <div className="absolute bottom-0 left-0 w-2 h-2 border-b-1 border-l-1 border-gray-400 pointer-events-none"></div>
+                          <div className="absolute bottom-0 right-0 w-2 h-2 border-b-1 border-r-1 border-gray-400 pointer-events-none"></div>
+                        </div>
+                      )}
+                    </>
                   ) : (
                     <span className="text-xs text-gray-400">NO.CATEGORY</span>
                   )}
