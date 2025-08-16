@@ -595,48 +595,9 @@ export default function ProjectsPage() {
           />
         );
       }
-    } else if (asset.type === 'video_clip' && asset.playerEmbedded) {
-      if (isLarge) {
-        // Para videos grandes, también usar formato 1:1 con fondo
-        return (
-          <div className="relative w-full h-full overflow-hidden">
-            {/* Fondo oscuro para videos */}
-            <div className="absolute inset-0 bg-gray-900" />
-            {/* Video centrado */}
-            <div className="relative w-full h-full flex items-center justify-center p-4">
-              <div 
-                className="w-full max-w-full max-h-full"
-                dangerouslySetInnerHTML={{ __html: asset.playerEmbedded }}
-              />
-            </div>
-          </div>
-        );
-      } else {
-        // Para el thumbnail del video, mostrar imagen del asset si está disponible
-        return (
-          <div className="relative w-full h-full overflow-hidden">
-            {asset.imageUrl ? (
-              <img
-                src={asset.imageUrl}
-                alt={asset.title || "Video"}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="flex flex-col items-center justify-center text-gray-400 h-full">
-                <div className="text-lg mb-1">▶️</div>
-                <div className="text-xs text-center">VIDEO</div>
-              </div>
-            )}
-            {/* Overlay de play para indicar que es video */}
-            <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-              <div className="text-white text-xl">▶️</div>
-            </div>
-          </div>
-        );
-      }
-    }
+    } 
     
-    // No mostrar covers, modelos 3D u otros tipos
+    // No mostrar videos, covers, modelos 3D u otros tipos
     return null;
   };
 
@@ -754,16 +715,16 @@ export default function ProjectsPage() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-between mb-2">
-              {/* Título a la izquierda, stats y fecha a la derecha */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-2">
+              {/* Título a la izquierda */}
               <a
                 href={project.sketchfabUid ? `https://sketchfab.com/3d-models/${project.sketchfabUid}` : undefined}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 focus:outline-none"
+                className="flex-1 min-w-0 focus:outline-none"
               >
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-bold group-hover:text-gray-300 transition-colors font-bauhaus text-left hover:underline cursor-pointer text-secondary truncate overflow-hidden whitespace-nowrap">
+                <div className="flex items-center gap-2 min-w-0">
+                  <h3 className="text-xl font-bold group-hover:text-gray-300 transition-colors font-bauhaus text-left hover:underline cursor-pointer text-secondary truncate flex-1 min-w-0">
                     {project.title}
                   </h3>
                   {/* Icono de staffpick si aplica */}
@@ -772,37 +733,50 @@ export default function ProjectsPage() {
                       src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/icons/1ec49a9ae15f3f8f2d6ce895f503953c-v2.svg"
                       alt="Staff Picked"
                       title="Staff Picked"
-                      className="w-5 h-5 drop-shadow-md"
+                      className="w-5 h-5 drop-shadow-md flex-shrink-0"
                     />
                   )}
-                  {project.date && (
-                    <span className="text-xs text-gray-400 font-normal align-middle">
-                      {(() => {
-                        // Formatear fecha a YYYY.MM.DD
-                        const d = new Date(project.date)
-                        if (isNaN(d.getTime())) return project.date
-                        return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`
-                      })()}
-                    </span>
-                  )}
                 </div>
+                {project.date && (
+                  <span className="text-xs text-gray-400 font-normal block sm:hidden mt-1">
+                    {(() => {
+                      // Formatear fecha a YYYY.MM.DD
+                      const d = new Date(project.date)
+                      if (isNaN(d.getTime())) return project.date
+                      return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`
+                    })()}
+                  </span>
+                )}
               </a>
-              {(project.likes || project.views) && (
-                <div className="flex items-center gap-4 ml-4 text-gray-400">
-                  {project.likes ? (
-                    <div className="flex items-center gap-1">
-                      <Heart className="w-4 h-4" />
-                      <span>{project.likes.toLocaleString()}</span>
-                    </div>
-                  ) : null}
-                  {project.views ? (
-                    <div className="flex items-center gap-1">
-                      <Eye className="w-4 h-4" />
-                      <span>{project.views.toLocaleString()}</span>
-                    </div>
-                  ) : null}
-                </div>
-              )}
+              {/* Stats y fecha a la derecha */}
+              <div className="flex items-center gap-3 flex-shrink-0">
+                {project.date && (
+                  <span className="text-xs text-gray-400 font-normal hidden sm:inline">
+                    {(() => {
+                      // Formatear fecha a YYYY.MM.DD
+                      const d = new Date(project.date)
+                      if (isNaN(d.getTime())) return project.date
+                      return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`
+                    })()}
+                  </span>
+                )}
+                {(project.likes || project.views) && (
+                  <div className="flex items-center gap-3 text-gray-400 text-sm">
+                    {project.likes ? (
+                      <div className="flex items-center gap-1">
+                        <Heart className="w-4 h-4" />
+                        <span>{project.likes.toLocaleString()}</span>
+                      </div>
+                    ) : null}
+                    {project.views ? (
+                      <div className="flex items-center gap-1">
+                        <Eye className="w-4 h-4" />
+                        <span>{project.views.toLocaleString()}</span>
+                      </div>
+                    ) : null}
+                  </div>
+                )}
+              </div>
             </div>
             {/* 3D Model Viewer - Sketchfab */}
             <div className="mb-4 relative cursor-pointer"

@@ -1,6 +1,6 @@
 "use client"
-import React from 'react';
-import { Calendar, Heart, Eye, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { Calendar, Heart, Eye, ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { WindowHeader } from '@/components/layout/WindowHeader';
@@ -64,10 +64,70 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
   scrollAssetsRight,
   renderArtStationAsset
 }) => {
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [imageModalSrc, setImageModalSrc] = useState('');
+
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
+  };
+
+  const handleImageClick = (imageUrl: string) => {
+    setImageModalSrc(imageUrl);
+    setImageModalOpen(true);
+  };
+
+  const handleCloseImageModal = () => {
+    setImageModalOpen(false);
+    setImageModalSrc('');
+  };
+
+  // Función para renderizar assets en el modal (solo imágenes)
+  const renderAssetInModal = (asset: any, isLarge: boolean = false) => {
+    if (asset.type === 'image') {
+      if (isLarge) {
+        return (
+          <div className="relative w-full h-full overflow-hidden">
+            {/* Fondo desenfocado */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${asset.imageUrl})`,
+                filter: 'blur(20px)',
+                transform: 'scale(1.1)'
+              }}
+            />
+            {/* Overlay oscuro */}
+            <div className="absolute inset-0 bg-black/30" />
+            {/* Imagen principal centrada */}
+            <div className="relative w-full h-full flex items-center justify-center">
+              <img
+                src={asset.imageUrl}
+                alt={asset.title || "Asset"}
+                className="max-w-full max-h-full object-contain cursor-pointer"
+                style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))' }}
+                onClick={() => handleImageClick(asset.imageUrl)}
+              />
+            </div>
+            {/* Indicador de click */}
+            <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
+              Click to enlarge
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <img
+            src={asset.imageUrl}
+            alt={asset.title || "Asset"}
+            className="w-full h-full object-cover"
+          />
+        );
+      }
+    }
+    
+    return null;
   };
 
   return (
@@ -104,38 +164,36 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
                 {/* Asset principal */}
                 <div className="mb-1">
                   {project.assets && (() => {
-                    // Filtrar solo imágenes (no covers) y videos válidos
+                    // Filtrar solo imágenes (no covers) - omitir videos
                     const validAssets = project.assets.filter(asset => 
-                      (asset.type === 'image') || 
-                      (asset.type === 'video_clip' && asset.playerEmbedded)
+                      asset.type === 'image'
                     );
                     return validAssets.length > 0;
                   })() ? (
                     <div className="w-full aspect-square border border-gray-700 bg-black flex items-center justify-center overflow-hidden">
                       {(() => {
                         const validAssets = project.assets.filter(asset => 
-                          (asset.type === 'image') || 
-                          (asset.type === 'video_clip' && asset.playerEmbedded)
+                          asset.type === 'image'
                         );
                         const selectedAsset = validAssets[Math.min(selectedAssetIndex, validAssets.length - 1)];
-                        return renderArtStationAsset(selectedAsset, true);
+                        return renderAssetInModal(selectedAsset, true);
                       })()}
                     </div>
                   ) : (
                     <img
                       src={project.thumbnails?.large}
                       alt={project.title}
-                      className="w-full aspect-square object-cover bg-black border border-gray-700"
+                      className="w-full aspect-square object-cover bg-black border border-gray-700 cursor-pointer"
+                      onClick={() => project.thumbnails?.large && handleImageClick(project.thumbnails.large)}
                     />
                   )}
                 </div>
               
                 {/* Galería de assets */}
                 {project.assets && (() => {
-                  // Filtrar solo imágenes (no covers) y videos válidos
+                  // Filtrar solo imágenes (no covers) - omitir videos
                   const validAssets = project.assets.filter(asset => 
-                    (asset.type === 'image') || 
-                    (asset.type === 'video_clip' && asset.playerEmbedded)
+                    asset.type === 'image'
                   );
                   return validAssets.length > 1;
                 })() && (
@@ -150,10 +208,7 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
                         }}
                       >
                         {project.assets
-                          .filter(asset => 
-                            (asset.type === 'image') || 
-                            (asset.type === 'video_clip' && asset.playerEmbedded)
-                          )
+                          .filter(asset => asset.type === 'image')
                           .map((asset, index) => (
                           <div
                             key={index}
@@ -162,17 +217,14 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
                                 ? "border-white shadow-lg ring-1 ring-white/50" 
                                 : "border-gray-600 hover:border-gray-400 hover:shadow-md"
                             }`}
-                            onClick={() => setSelectedAssetIndex(index)}
+                            onClick={e => { e.stopPropagation(); setSelectedAssetIndex(index); }}
                             title={asset.title || `Asset ${index + 1}`}
                           >
-                            {renderArtStationAsset(asset, false)}
+                            {renderAssetInModal(asset, false)}
                           </div>
                         ))}
                       </div>
-                      {project.assets.filter(asset => 
-                        (asset.type === 'image') || 
-                        (asset.type === 'video_clip' && asset.playerEmbedded)
-                      ).length > 5 && (
+                      {project.assets.filter(asset => asset.type === 'image').length > 5 && (
                         <div className="flex flex-col gap-1">
                           <button
                             onClick={scrollAssetsLeft}
@@ -316,6 +368,29 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Modal de imagen fullscreen */}
+      {imageModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black/90 z-[60] flex items-center justify-center p-4"
+          onClick={handleCloseImageModal}
+        >
+          <div className="relative max-w-full max-h-full">
+            <button
+              onClick={handleCloseImageModal}
+              className="cursor-pointer absolute top-4 right-4 z-10 bg-black/50 text-white p-2 rounded hover:bg-black/70 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <img
+              src={imageModalSrc}
+              alt="Fullscreen view"
+              className="max-w-[95vw] max-h-[95vh] object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
