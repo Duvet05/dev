@@ -16,7 +16,7 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTime, cpuUsage, gpuUsage, ramUsage, renderingProgress }) => {
   const STAR_SPEED_MULTIPLIER = 4;
-  
+
   useEffect(() => {
     const dynamicStyles = `
       @keyframes pixel-float {
@@ -105,14 +105,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
     styleSheet.textContent = dynamicStyles;
     document.head.appendChild(styleSheet);
   }, [STAR_SPEED_MULTIPLIER]);
-  
+
   const [showTetris, setShowTetris] = useState(false);
   const [showEnterHint, setShowEnterHint] = useState(false);
   const [renderTime, setRenderTime] = useState(74);
   const [polyCount, setPolyCount] = useState(557);
   const [memUsage, setMemUsage] = useState(2.3);
   const [samples, setSamples] = useState(128);
-  
+
   // Estados para viewports dinámicos
   const [cameraPos, setCameraPos] = useState({ x: 0.00, y: 2.15, z: 8.50 });
   const [lightIntensity, setLightIntensity] = useState(1.2);
@@ -130,14 +130,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
         const changes = [128, 256, 512, 1024];
         return changes[Math.floor(Math.random() * changes.length)];
       });
-      
+
       // Actualizar datos de viewports
       setCameraPos(prev => ({
         x: Math.max(-5, Math.min(5, prev.x + (Math.random() * 0.4 - 0.2))),
         y: Math.max(0, Math.min(5, prev.y + (Math.random() * 0.2 - 0.1))),
         z: Math.max(5, Math.min(15, prev.z + (Math.random() * 0.6 - 0.3)))
       }));
-      
+
       setLightIntensity(prev => Math.max(0.5, Math.min(2.0, prev + (Math.random() * 0.2 - 0.1))));
       setMeshCount(prev => prev + Math.floor(Math.random() * 3 - 1)); // Varía ±1
       setSubdivLevel(prev => {
@@ -150,7 +150,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
       });
       setMaterialNodes(prev => prev + Math.floor(Math.random() * 5 - 2)); // Varía ±2
     }, 3000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -213,7 +213,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                   }}
                 ></div>
               ))}
-              
+
               {/* Estrellas medianas */}
               {[...Array(20)].map((_, i) => (
                 <div
@@ -230,7 +230,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                   }}
                 ></div>
               ))}
-              
+
               {/* Estrellas grandes lentas */}
               {[...Array(10)].map((_, i) => (
                 <div
@@ -247,7 +247,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                   }}
                 ></div>
               ))}
-              
+
               {/* Estrellas de colores cyberpunk */}
               {[...Array(8)].map((_, i) => {
                 const colors = ['#00ffff', '#ff00ff', '#ffff00', '#00ff00'];
@@ -269,7 +269,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                   ></div>
                 );
               })}
-              
+
               {/* Partículas de polvo espacial */}
               {[...Array(15)].map((_, i) => (
                 <div
@@ -332,9 +332,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
             <div className="p-3 h-full flex flex-col">
               <div className="flex-1 border border-gray-600 bg-black/40 relative overflow-hidden">
                 {/* Scanning line */}
-                <div className="absolute left-0 right-0 h-0.5 bg-secondary/30" 
-                     style={{ animation: 'scanLine 3s linear infinite' }}></div>
-                
+                <div className="absolute left-0 right-0 h-0.5 bg-secondary/30"
+                  style={{ animation: 'scanLine 3s linear infinite' }}></div>
+
                 {/* Viewports en las esquinas */}
                 {/* Arriba Izquierda - CAMERA.POS */}
                 <div className="absolute top-3 left-4 text-xs text-gray-400 font-vt323">
@@ -343,7 +343,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                   <div>Y: {cameraPos.y.toFixed(2)}</div>
                   <div>Z: {cameraPos.z.toFixed(2)}</div>
                 </div>
-                
+
                 {/* Arriba Derecha - LIGHTING */}
                 <div className="absolute top-3 right-4 text-xs text-gray-400 font-vt323 text-right">
                   <div className="text-xs text-secondary mb-1 font-vt323">LIGHTING</div>
@@ -351,7 +351,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                   <div>ENG: {renderEngine}</div>
                   <div>NOD: {materialNodes}</div>
                 </div>
-                
+
                 {/* Abajo Izquierda - GEOMETRY */}
                 <div className="absolute bottom-15 left-4 text-xs text-gray-400 font-vt323">
                   <div className="text-xs text-secondary mb-1 font-vt323">GEOMETRY</div>
@@ -359,7 +359,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                   <div>SUB: {subdivLevel}</div>
                   <div>TRI: {(polyCount * 2).toFixed(0)}K</div>
                 </div>
-                
+
                 {/* Abajo Derecha - RENDER.OUT */}
                 <div className="absolute bottom-15 right-4 text-xs text-gray-400 font-vt323 text-right">
                   <div className="text-xs text-secondary mb-1 font-vt323">RENDER.OUT</div>
@@ -378,16 +378,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
 
 
             {/* Contenido central */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
+            <div className="absolute inset-0 flex items-center justify-center px-1 sm:px-4">
+              <div className="text-center max-w-full w-full">
                 {/*<h1 className="text-6xl font-bold glitch-text font-bauhaus-pixel">{glitchText}</h1>*/}
-                <h1 className="text-8xl font-bauhaus-pixel mb-[-18]">{glitchText}</h1>
-                <p className="text-2xl text-gray-400 mb-6">3D.ARTIST.DEVELOPER</p>
-                <div className="flex justify-center space-x-4">
-                  <Badge variant="outline" className="text-sm border-white text-white rounded-none">
+                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bauhaus-pixel mb-[-4px] sm:mb-[-8px] md:mb-[-12px] lg:mb-[-16px] xl:mb-[-18px] leading-none overflow-hidden">{glitchText}</h1>
+                <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-gray-400 mb-3 sm:mb-6">3D.ARTIST.DEVELOPER</p>
+                <div className="flex justify-center space-x-1 sm:space-x-4 flex-wrap gap-y-1">
+                  <Badge variant="outline" className="text-xs border-white text-white rounded-none whitespace-nowrap">
                     ONLINE
                   </Badge>
-                  <Badge variant="outline" className="text-sm border-gray-600 text-gray-400 rounded-none">
+                  <Badge variant="outline" className="text-xs border-gray-600 text-gray-400 rounded-none whitespace-nowrap">
                     GMT-6 {currentTime}
                   </Badge>
                 </div>
@@ -395,12 +395,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                 {/* Hint para activar Tetris */}
                 {showEnterHint && (
                   <div className="mt-4 animate-pulse">
-                    <Badge 
-                      variant="outline" 
+                    <Badge
+                      variant="outline"
                       className="text-xs border-green-500 text-green-500 rounded-none cursor-pointer hover:bg-green-500/10 transition-colors"
                       onClick={() => setShowTetris(true)}
                     >
-                      PRESS ENTER TO PLAY TETRIS
+                      <span className="hidden sm:inline">PRESS ENTER TO PLAY TETRIS</span>
+                      <span className="sm:hidden">TAP TO PLAY TETRIS</span>
                     </Badge>
                   </div>
                 )}
@@ -422,36 +423,35 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
             </div>
           </div>
         </div>
-        <div className="col-span-12 lg:col-span-4 border-t border-b border-r border-secondary">
-          <div className="text-secondary bg-primary border-b border-secondary p-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-400">SYSTEM.STATUS</span>
-              <div className="w-2 h-2 bg-green-500 animate-pulse"></div>
+        <div className="col-span-12 lg:col-span-4 border-l lg:border-l-0 border-t border-b border-r border-secondary">          <div className="text-secondary bg-primary border-b border-secondary p-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm text-gray-400">SYSTEM.STATUS</span>
+            <div className="w-2 h-2 bg-green-500 animate-pulse"></div>
+          </div>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between items-center">
+              <span className="flex items-center gap-2"><Cpu className="w-4 h-4 text-secondary" />CPU</span>
+              <span className="text-white">{cpuUsage}%</span>
             </div>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between items-center">
-                <span className="flex items-center gap-2"><Cpu className="w-4 h-4 text-secondary" />CPU</span>
-                <span className="text-white">{cpuUsage}%</span>
-              </div>
-              <div className="w-full bg-secondary h-1 mb-2">
-                <div className="bg-green-500 h-1" style={{ width: `${cpuUsage}%` }}></div>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="flex items-center gap-2"><MonitorSmartphone className="w-4 h-4 text-secondary" />GPU</span>
-                <span className="text-white">{gpuUsage}%</span>
-              </div>
-              <div className="w-full bg-secondary h-1 mb-2">
-                <div className="bg-blue-500 h-1" style={{ width: `${gpuUsage}%` }}></div>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="flex items-center gap-2"><MemoryStick className="w-4 h-4 text-secondary" />RAM</span>
-                <span className="text-white">{ramUsage}GB</span>
-              </div>
-              <div className="w-full bg-secondary h-1">
-                <div className="bg-yellow-500 h-1" style={{ width: `${(ramUsage / 64) * 100}%` }}></div>
-              </div>
+            <div className="w-full bg-secondary h-1 mb-2">
+              <div className="bg-green-500 h-1" style={{ width: `${cpuUsage}%` }}></div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="flex items-center gap-2"><MonitorSmartphone className="w-4 h-4 text-secondary" />GPU</span>
+              <span className="text-white">{gpuUsage}%</span>
+            </div>
+            <div className="w-full bg-secondary h-1 mb-2">
+              <div className="bg-blue-500 h-1" style={{ width: `${gpuUsage}%` }}></div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="flex items-center gap-2"><MemoryStick className="w-4 h-4 text-secondary" />RAM</span>
+              <span className="text-white">{ramUsage}GB</span>
+            </div>
+            <div className="w-full bg-secondary h-1">
+              <div className="bg-yellow-500 h-1" style={{ width: `${(ramUsage / 64) * 100}%` }}></div>
             </div>
           </div>
+        </div>
           <div className="bg-primary flex">
             <div className="flex-1 p-4">
               <div className="text-sm text-gray-400 mb-2">CURRENT.PROJECT</div>
@@ -503,7 +503,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                 </div>
               </div>
             </div>
-            <div className="border-l border-secondary flex flex-col justify-start min-w-fit">
+            <div className="hidden lg:flex border-l border-secondary flex-col justify-start min-w-fit">
               <div className="text-sm text-gray-400 mb-2 px-4 pt-4">ASCII.DONUT.PREVIEW</div>
               <div className="px-8 pb-4">
                 <DonutAnimation width={20} height={20} />

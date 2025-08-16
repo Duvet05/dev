@@ -106,8 +106,8 @@ export const Navigation: React.FC<NavigationProps> = ({
           <button onClick={handleProjectsNavigation} className="text-gray-400 hover:text-white hover:underline cursor-pointer bg-transparent border-none animate-pulse-green transition-colors">PROJECTS</button>
         </div>
         
-        {/* Mini reproductor de música funcional estilo terminal/pixel art */}
-        <div className="flex items-center space-x-3 md:space-x-3 space-x-1 rounded-none font-vt323 text-white min-w-[260px] md:min-w-[260px] min-w-[120px] bg-black">
+        {/* Mini reproductor de música funcional estilo terminal/pixel art - Solo en desktop */}
+        <div className="hidden md:flex items-center space-x-3 rounded-none font-vt323 text-white min-w-[260px] bg-black">
         {tracks.length > 0 ? (
           <audio
             ref={audioRef}

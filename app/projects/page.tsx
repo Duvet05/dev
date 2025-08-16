@@ -53,19 +53,29 @@ interface Project {
     imageUrl: string;
     width: number;
     height: number;
-    type: 'image' | 'cover' | 'model3d' | 'video_clip';
+    type: "image" | "video_clip" | "cover" | "model3d";
     playerEmbedded?: string | null;
   }[];
-  // Previews de imágenes de la API
+  // URL del proyecto (para ArtStation/Sketchfab)
+  projectUrl?: string;
   thumbnails?: {
-    small: string;      // 200x200
-    medium: string;     // 640x360 o 720x405
-    large: string;      // 1024x576
+    small: string;
+    medium: string;
+    large: string;
   };
   viewerUrl?: string;
   embedUrl?: string;
   publishedAt?: string;
-  staffpickedAt?: string | null; // <--- Añadido para soporte de staff pick
+  staffpickedAt?: string | null;
+}
+
+// Interfaz para las estadísticas globales
+interface SketchfabStats {
+  totalViews: number;
+  totalLikes: number;
+  totalTriangles: number;
+  totalVertices: number;
+  totalModels: number;
 }
 
 // Mapeo de tecnologías a iconos
@@ -108,6 +118,15 @@ export default function ProjectsPage() {
   const [isMuted, setIsMuted] = useState(false)
   const [volumeBeforeMute, setVolumeBeforeMute] = useState(8)
 
+  // Estado para las estadísticas globales
+  const [sketchfabStats, setSketchfabStats] = useState<SketchfabStats>({
+    totalViews: 0,
+    totalLikes: 0,
+    totalTriangles: 0,
+    totalVertices: 0,
+    totalModels: 0,
+  })
+
   const audioRef = useRef<HTMLAudioElement>(null)
   const [tracks, setTracks] = useState<{ name: string, src: string }[]>([])
   const [allProjects, setAllProjects] = useState<Project[]>([])
@@ -149,7 +168,29 @@ export default function ProjectsPage() {
         setAllProjects(prev => {
           // Filtramos los modelos de ArtStation que pudieran existir
           const filtered = prev.filter(p => p.source !== "SKETCHFAB");
-          return [...filtered, ...(url ? [...sketchfabModels, ...data.projects] : data.projects)];
+          
+          // Calcular estadísticas globales
+          const projects = data.projects as Project[];
+          const statsObj: SketchfabStats = {
+            totalViews: 0,
+            totalLikes: 0,
+            totalTriangles: 0,
+            totalVertices: 0,
+            totalModels: 0,
+          };
+          
+          projects.forEach(model => {
+            statsObj.totalViews += (model.views || 0);
+            statsObj.totalLikes += (model.likes || 0);
+            statsObj.totalTriangles += (model.triangles || 0);
+            statsObj.totalVertices += (model.vertices || 0);
+            statsObj.totalModels += 1;
+          });
+
+          // Actualizar las estadísticas globales
+          setSketchfabStats(statsObj);
+          
+          return [...filtered, ...data.projects];
         });
         setTotalModelsFound(data.totalModels || 0);
         setValidModelsFound(data.validModels || data.projects.length);
@@ -245,6 +286,28 @@ export default function ProjectsPage() {
         setAllProjects(prev => {
           // Filtramos los modelos de ArtStation que pudieran existir
           const filtered = prev.filter(p => p.source !== "SKETCHFAB");
+          
+          // Calcular estadísticas globales
+          const projects = data.projects as Project[];
+          const statsObj: SketchfabStats = {
+            totalViews: 0,
+            totalLikes: 0,
+            totalTriangles: 0,
+            totalVertices: 0,
+            totalModels: 0,
+          };
+          
+          projects.forEach(model => {
+            statsObj.totalViews += (model.views || 0);
+            statsObj.totalLikes += (model.likes || 0);
+            statsObj.totalTriangles += (model.triangles || 0);
+            statsObj.totalVertices += (model.vertices || 0);
+            statsObj.totalModels += 1;
+          });
+
+          // Actualizar las estadísticas globales
+          setSketchfabStats(statsObj);
+          
           return [...filtered, ...data.projects];
         });
         setValidModelsFound(data.validModels || data.projects.length);
@@ -896,26 +959,31 @@ export default function ProjectsPage() {
         <div className="border-l border-r border-b border-secondary mx-4">
           <div className="p-8">
             {/* Header de la página */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-6">
+            <div className="mb-6">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
                   <Link href="/">
                     <Button
                       variant="outline"
-                      className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none flex items-center gap-2 cursor-pointer"
+                      className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none flex items-center gap-2 cursor-pointer w-fit"
                     >
                       <ArrowLeft className="w-4 h-4" />
-                      BACK.TO.MAIN
+                      <span className="hidden sm:inline">BACK.TO.MAIN</span>
+                      <span className="sm:hidden">BACK</span>
                     </Button>
                   </Link>
-                  <h1 className="text-5xl font-bauhaus-pixel leading-none mb-[-17]">PROJECTS.ARCHIVE</h1>
+                  <h1 className="mb-[-16] text-4xl sm:text-3xl lg:text-5xl font-bauhaus-pixel leading-none">PROJECTS.ARCHIVE</h1>
                 </div>
-                <div className="text-right">
-                  <div className="flex-col">
-                    <div className="text-sm text-gray-400">
-                      PAGE {currentPage} OF {totalPages} • SHOWING {paginatedProjects.length} PROJECTS • <span className="text-green-400">TOTAL: {validModelsFound} PROJECTS</span>
+                <div className="text-left lg:text-right">
+                  <div className="flex flex-col gap-1">
+                    <div className="text-xs sm:text-sm text-gray-400 break-words">
+                      <span className="block sm:inline">PAGE {currentPage} OF {totalPages}</span>
+                      <span className="hidden sm:inline"> • </span>
+                      <span className="block sm:inline">SHOWING {paginatedProjects.length}</span>
+                      <span className="hidden sm:inline"> • </span>
+                      <span className="block sm:inline text-green-400">TOTAL: {validModelsFound}</span>
                     </div>
-                    <div className="text-sm text-gray-400">LAST.UPDATE: {currentTime}</div>
+                    <div className="text-xs sm:text-sm text-gray-400">LAST.UPDATE: {currentTime}</div>
                   </div>
                   {usingFallback && (
                     <div className="text-xs text-yellow-400 mt-1">
@@ -926,8 +994,41 @@ export default function ProjectsPage() {
               </div>
 
               {/* Línea separadora estilo terminal */}
-              <div className="border-t border-secondary mb-4"></div>
+              <div className="border-t border-secondary"></div>
             </div>
+
+
+              <div className="mb-4 bg-black/40 backdrop-blur-sm">
+                <div className="grid grid-cols-2 md:grid-cols-4">
+                  <div className="flex flex-col items-center p-3 bg-black/60 border border-secondary">
+                    <Eye className="w-6 h-6 text-blue-400 mb-1" />
+                    <div className="text-xl font-bold text-white">
+                      {sketchfabStats.totalViews.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-400">TOTAL VIEWS</div>
+                  </div>
+                  <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary">
+                    <Heart className="w-6 h-6 text-red-400 mb-1" />
+                    <div className="text-xl font-bold text-white">
+                      {sketchfabStats.totalLikes.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-400">TOTAL LIKES</div>
+                  </div>
+<div className="flex flex-col items-center p-3 bg-black/60 border-l border-r border-y border-secondary">                    <Shapes className="w-6 h-6 text-yellow-400 mb-1" />
+                    <div className="text-xl font-bold text-white">
+                      {sketchfabStats.totalTriangles.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-400">TOTAL TRIANGLES</div>
+                  </div>
+                  <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary">
+                    <Layers className="w-6 h-6 text-purple-400 mb-1" />
+                    <div className="text-xl font-bold text-white">
+                      {sketchfabStats.totalVertices.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-400">TOTAL VERTICES</div>
+                  </div>
+                </div>
+              </div>
 
             {/* NUEVO: Barra de búsqueda, filtros, orden y vista */}
             <div className="mb-8 flex flex-col md:flex-row md:items-end gap-4">
