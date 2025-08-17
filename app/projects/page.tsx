@@ -2,20 +2,15 @@
 
 import { useState, useEffect, useRef } from "react"
 import { BrowserHeader } from "@/components/BrowserHeader"
-import { BrowserFrame } from "@/components/layout/BrowserFrame"
 import { Footer } from "@/components/layout/Footer"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, ExternalLink, Shapes, Layers, FileText, Gauge, Calendar, Heart, Eye, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowLeft, ExternalLink, Shapes, Layers, Gauge, Heart, Eye } from "lucide-react"
 import Link from "next/link"
-import { SiBlender, SiAutodesk, SiAdobephotoshop, SiUnity, SiUnrealengine, SiWebgl, SiAdobe, SiFigma, SiCss3, SiHoudini, SiMarvelapp, SiSketchfab, SiArtstation } from "react-icons/si"
-import { TbBrandThreejs } from "react-icons/tb"
+import { SiBlender, SiAdobe, SiSketchfab, SiArtstation } from "react-icons/si"
 import { FaPaintBrush } from "react-icons/fa"
 import { IconType } from "react-icons"
-import Model3DViewer from "@/components/3d/Model3DViewer"
-import { SketchfabViewer } from "@/components/3d/SketchfabViewer"
 import { SKETCHFAB_CONFIG } from "@/lib/sketchfab-config"
-import { WindowHeader } from "@/components/layout/WindowHeader"
 import ReactMarkdown from "react-markdown"
 import { SketchfabModal } from "@/components/modals/SketchfabModal"
 import { ArtStationModal } from "@/components/modals/ArtStationModal"
@@ -79,27 +74,27 @@ interface SketchfabStats {
 }
 
 // Mapeo de tecnologías a iconos
-const techIcons: Record<string, IconType> = {
-  BLENDER: SiBlender,
-  MAYA: SiAutodesk,
-  "3DS MAX": SiAutodesk,
-  ZBRUSH: FaPaintBrush,
-  SUBSTANCE: SiAdobe,
-  PHOTOSHOP: SiAdobephotoshop,
-  UNITY: SiUnity,
-  UNREAL: SiUnrealengine,
-  WEBGL: SiWebgl,
-  MARVELOUS: SiMarvelapp,
-  HOUDINI: SiHoudini,
-  FIGMA: SiFigma,
-  "AFTER.EFFECTS": SiAdobe,
-  CSS: SiCss3,
-  "THREE.JS": TbBrandThreejs,
-  GLSL: SiWebgl,
-  SKETCHFAB: SiSketchfab,
-  PBR: SiWebgl,
-  LOWPOLY: SiWebgl,
-}
+// const techIcons: Record<string, IconType> = {
+//   BLENDER: SiBlender,
+//   MAYA: SiAutodesk,
+//   "3DS MAX": SiAutodesk,
+//   ZBRUSH: FaPaintBrush,
+//   SUBSTANCE: SiAdobe,
+//   PHOTOSHOP: SiAdobephotoshop,
+//   UNITY: SiUnity,
+//   UNREAL: SiUnrealengine,
+//   WEBGL: SiWebgl,
+//   MARVELOUS: SiMarvelapp,
+//   HOUDINI: SiHoudini,
+//   FIGMA: SiFigma,
+//   "AFTER.EFFECTS": SiAdobe,
+//   CSS: SiCss3,
+//   "THREE.JS": TbBrandThreejs,
+//   GLSL: SiWebgl,
+//   SKETCHFAB: SiSketchfab,
+//   PBR: SiWebgl,
+//   LOWPOLY: SiWebgl,
+// }
 
 // Mapeo de tecnologías a iconos (estandarizado para tags)
 const tagTechIcons: Record<string, IconType> = {
@@ -132,12 +127,10 @@ export default function ProjectsPage() {
   const [allProjects, setAllProjects] = useState<Project[]>([])
   const [isLoadingProjects, setIsLoadingProjects] = useState(true)
   const [projectsError, setProjectsError] = useState<string>('')
-  const [totalModelsFound, setTotalModelsFound] = useState<number>(0)
+  const [totalModelsFound] = useState<number>(0)
   const [validModelsFound, setValidModelsFound] = useState<number>(0)
   const [usingFallback, setUsingFallback] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [hasNextPage, setHasNextPage] = useState<boolean>(false)
-  const [hasPrevPage, setHasPrevPage] = useState<boolean>(false)
   const [searchText, setSearchText] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [selectedSource, setSelectedSource] = useState<string>("SKETCHFAB"); // Solo SKETCHFAB o ARTSTATION
@@ -145,69 +138,63 @@ export default function ProjectsPage() {
   const [orderBy, setOrderBy] = useState<string>("date-desc");
   const [gridCols, setGridCols] = useState<number>(4); // Por defecto 4x
 
-  // --- INFINITE SCROLL STATES Y LÓGICA ---
-  const [sketchfabModels, setSketchfabModels] = useState<Project[]>([]);
-  const [artstationModels, setArtstationModels] = useState<Project[]>([]);
-  const [nextUrl, setNextUrl] = useState<string | null>(null);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-
   // Fijar modelos por página en 8 para Sketchfab, 12 para ArtStation
   const MODELS_PER_PAGE = selectedSource === "ARTSTATION" ? 12 : 8;
 
   // Nueva función para cargar modelos (infinite scroll)
-  const loadSketchfabModels = async (url?: string) => {
-    try {
-      setIsLoadingProjects(true);
-      setProjectsError("");
-      setIsLoadingMore(!!url);
-      const endpoint = url || `/api/sketchfab-models?username=${SKETCHFAB_CONFIG.username}&limit=100&orderBy=${orderBy}`;
-      const res = await fetch(endpoint);
-      const data = await res.json();
-      if (data.success) {
-        setSketchfabModels(prev => url ? [...prev, ...data.projects] : data.projects);
-        setAllProjects(prev => {
-          // Filtramos los modelos de ArtStation que pudieran existir
-          const filtered = prev.filter(p => p.source !== "SKETCHFAB");
+  // const loadSketchfabModels = async (url?: string) => {
+  //   try {
+  //     setIsLoadingProjects(true);
+  //     setProjectsError("");
+  //     setIsLoadingMore(!!url);
+  //     const endpoint = url || `/api/sketchfab-models?username=${SKETCHFAB_CONFIG.username}&limit=100&orderBy=${orderBy}`;
+  //     const res = await fetch(endpoint);
+  //     const data = await res.json();
+  //     if (data.success) {
+  //       setSketchfabModels(prev => url ? [...prev, ...data.projects] : data.projects);
+  //       setAllProjects(prev => {
+  //         // Filtramos los modelos de ArtStation que pudieran existir
+  //         const filtered = prev.filter(p => p.source !== "SKETCHFAB");
           
-          // Calcular estadísticas globales
-          const projects = data.projects as Project[];
-          const statsObj: SketchfabStats = {
-            totalViews: 0,
-            totalLikes: 0,
-            totalTriangles: 0,
-            totalVertices: 0,
-            totalModels: 0,
-          };
+  //         // Calcular estadísticas globales
+  //         const projects = data.projects as Project[];
+  //         const statsObj: SketchfabStats = {
+  //           totalViews: 0,
+  //           totalLikes: 0,
+  //           totalTriangles: 0,
+  //           totalVertices: 0,
+  //           totalModels: 0,
+  //         };
           
-          projects.forEach(model => {
-            statsObj.totalViews += (model.views || 0);
-            statsObj.totalLikes += (model.likes || 0);
-            statsObj.totalTriangles += (model.triangles || 0);
-            statsObj.totalVertices += (model.vertices || 0);
-            statsObj.totalModels += 1;
-          });
+  //         projects.forEach(model => {
+  //           statsObj.totalViews += (model.views || 0);
+  //           statsObj.totalLikes += (model.likes || 0);
+  //           statsObj.totalTriangles += (model.triangles || 0);
+  //           statsObj.totalVertices += (model.vertices || 0);
+  //           statsObj.totalModels += 1;
+  //         });
 
-          // Actualizar las estadísticas globales
-          setSketchfabStats(statsObj);
+  //         // Actualizar las estadísticas globales
+  //         setSketchfabStats(statsObj);
           
-          return [...filtered, ...data.projects];
-        });
-        setTotalModelsFound(data.totalModels || 0);
-        setValidModelsFound(data.validModels || data.projects.length);
-        setUsingFallback(data.usingFallback || false);
-        setNextUrl(data.next || null);
-      } else {
-        throw new Error(data.error || 'Failed to fetch projects');
-      }
-    } catch (error) {
-      setProjectsError(`Failed to load projects from @${SKETCHFAB_CONFIG.username}`);
-      setUsingFallback(true);
-      setNextUrl(null);
-    } finally {
-      setIsLoadingProjects(false);
-      setIsLoadingMore(false);
-    }
-  };
+  //         return [...filtered, ...data.projects];
+  //       });
+  //       setTotalModelsFound(data.totalModels || 0);
+  //       setValidModelsFound(data.validModels || data.projects.length);
+  //       setUsingFallback(data.usingFallback || false);
+  //       setNextUrl(data.next || null);
+  //     } else {
+  //       throw new Error(data.error || 'Failed to fetch projects');
+  //     }
+  //   } catch (error) {
+  //     setProjectsError(`Failed to load projects from @${SKETCHFAB_CONFIG.username}`);
+  //     setUsingFallback(true);
+  //     setNextUrl(null);
+  //   } finally {
+  //     setIsLoadingProjects(false);
+  //     setIsLoadingMore(false);
+  //   }
+  // };
 
   // Función para cargar modelos de ArtStation
   const fetchArtStationProjects = async () => {
@@ -219,56 +206,55 @@ export default function ProjectsPage() {
 
       if (Array.isArray(data)) {
         // Mapear los datos de ArtStation al formato Project
-        const mappedProjects: Project[] = data.map((item: any) => {
-          // Formatear título para que no sea muy largo
-          const formattedTitle = item.title.length > 25
-            ? item.title.substring(0, 25) + '...'
-            : item.title;
-
+        const mappedProjects: Project[] = data.map((item: unknown) => {
+          if (typeof item !== 'object' || item === null) return null;
+          const safeItem = item as Record<string, unknown>;
+          const title = typeof safeItem.title === 'string' ? safeItem.title : '';
           return {
-            title: formattedTitle.toUpperCase(),
-            source: "ARTSTATION",
-            description: item.descriptionHtml || item.description, // Usar HTML para un mejor renderizado
-            date: item.publishedAt || item.createdAt,
-            fileSize: "",
-            renderTime: "",
-            complexity: "MEDIUM", // Por defecto, se puede estimar por assets
-            // Info específica de ArtStation
-            viewerUrl: item.permalink,
-            embedUrl: `https://www.artstation.com/embed/${item.id}`,
-            likes: item.likesCount,
-            views: item.viewsCount,
-            author: item.user?.fullName,
-            categories: item.categories?.length > 0 ? [item.categories[0]] : [], // Solo una categoría
-            tags: (item.tags || []).slice(0, 3), // Limitar a 3 tags máximo
-            // Software utilizado
-            softwareUsed: item.softwareUsed || [],
-            // Assets del proyecto
-            assets: item.assets || [],
+            title: title.length > 25 ? title.substring(0, 25) + '...' : title.toUpperCase(),
+            source: 'ARTSTATION',
+            description: (safeItem.descriptionHtml as string) || (safeItem.description as string) || '',
+            date: (safeItem.publishedAt as string) || (safeItem.createdAt as string) || '',
+            fileSize: '',
+            renderTime: '',
+            complexity: 'MEDIUM',
+            viewerUrl: safeItem.permalink as string,
+            embedUrl: `https://www.artstation.com/embed/${safeItem.id}`,
+            likes: safeItem.likesCount as number,
+            views: safeItem.viewsCount as number,
+            author: (safeItem.user && typeof safeItem.user === 'object') ? 
+              ((safeItem.user as Record<string, unknown>).fullName as string) : undefined,
+            categories: Array.isArray(safeItem.categories) && safeItem.categories.length > 0 ? 
+              [safeItem.categories[0] as string] : [],
+            tags: Array.isArray(safeItem.tags) ? 
+              (safeItem.tags as string[]).slice(0, 3) : [],
+            softwareUsed: Array.isArray(safeItem.softwareUsed) ? 
+              (safeItem.softwareUsed as Array<{name: string; iconUrl: string}>) : [],
+            assets: Array.isArray(safeItem.assets) ? 
+              (safeItem.assets as Array<{id: number; title?: string; imageUrl: string; width: number; height: number; type: string; playerEmbedded?: string | null}>) : [],
             thumbnails: {
-              small: item.coverUrl || "",
-              medium: item.coverUrl || "",
-              large: item.coverUrl || "",
+              small: (safeItem.coverUrl as string) || '',
+              medium: (safeItem.coverUrl as string) || '',
+              large: (safeItem.coverUrl as string) || '',
             }
-          };
-        });
+          }
+        }).filter(Boolean) as Project[];
 
-        setArtstationModels(mappedProjects);
         setAllProjects(prev => {
           // Filtramos los modelos de Sketchfab que pudieran existir
           const filtered = prev.filter(p => p.source !== "ARTSTATION");
           return [...filtered, ...mappedProjects];
         });
-        setValidModelsFound(prev =>
-          selectedSource === "ARTSTATION" ? mappedProjects.length :
-            selectedSource === "SKETCHFAB" ? sketchfabModels.length :
-              sketchfabModels.length + mappedProjects.length
-        );
       } else {
         throw new Error('Invalid data format received from ArtStation API');
       }
-    } catch (error: any) {
-      setProjectsError(`Failed to load projects from ArtStation: ${error.message}`);
+    } catch (error: unknown) {
+      // setProjectsError(`Failed to load projects from ArtStation: ${error.message}`); // Cambiar a error: unknown y usar type guard
+      if (error instanceof Error) {
+        setProjectsError(`Failed to load projects from ArtStation: ${error.message}`);
+      } else {
+        setProjectsError(`Failed to load projects from ArtStation`);
+      }
     } finally {
       setIsLoadingProjects(false);
     }
@@ -282,7 +268,6 @@ export default function ProjectsPage() {
       const response = await fetch(`/api/sketchfab-models?username=${SKETCHFAB_CONFIG.username}&page=1&limit=100&orderBy=${orderBy}`);
       const data = await response.json();
       if (data.success) {
-        setSketchfabModels(data.projects);
         setAllProjects(prev => {
           // Filtramos los modelos de ArtStation que pudieran existir
           const filtered = prev.filter(p => p.source !== "SKETCHFAB");
@@ -316,7 +301,7 @@ export default function ProjectsPage() {
       } else {
         throw new Error(data.error || 'Failed to fetch projects');
       }
-    } catch (error) {
+    } catch (_error) {
       setProjectsError(`Failed to load projects from @${SKETCHFAB_CONFIG.username}`);
       setValidModelsFound(0);
       setCurrentPage(1);
@@ -328,10 +313,7 @@ export default function ProjectsPage() {
 
   // Cargar modelos al montar o cuando cambian los filtros principales
   useEffect(() => {
-    setSketchfabModels([]);
-    setArtstationModels([]);
     setAllProjects([]);
-    setNextUrl(null);
 
     // Cargar proyectos según la fuente seleccionada
     if (selectedSource === "SKETCHFAB") {
@@ -356,7 +338,7 @@ export default function ProjectsPage() {
       if (!res.ok) throw new Error("No se pudo cargar la música")
       const data: { name: string, src: string }[] = await res.json()
       setTracks(data)
-    } catch (err) {
+    } catch {
       setTracks([])
     }
   }
@@ -473,7 +455,7 @@ export default function ProjectsPage() {
 
   // Obtener todas las categorías y fuentes únicas de los proyectos
   const allCategories = Array.from(new Set(allProjects.flatMap(p => p.categories || [])));
-  const allSources = Array.from(new Set(allProjects.map(p => p.source || "UNKNOWN")));
+  // const allSources = Array.from(new Set(allProjects.map(p => p.source || "UNKNOWN")));
   const complexityOrder = ["LOW", "MEDIUM", "HIGH", "VERY_HIGH", "EXTREME"];
   const allComplexities = complexityOrder.filter(c => allProjects.some(p => p.complexity === c));
 
@@ -556,7 +538,11 @@ export default function ProjectsPage() {
   };
 
   // Función para renderizar un asset de ArtStation
-  const renderArtStationAsset = (asset: any, isLarge: boolean = false) => {
+  const renderArtStationAsset = (asset: {
+    type: string;
+    imageUrl: string;
+    title?: string;
+  }, isLarge: boolean = false) => {
     // Solo mostrar imágenes (no covers) y videos
     if (asset.type === 'image') {
       if (isLarge) {
@@ -807,8 +793,8 @@ export default function ProjectsPage() {
             <div className="text-base text-gray-400 mb-2 line-clamp-3">
               <ReactMarkdown
                 components={{
-                  p: ({ node, ...props }) => <p {...props} className="inline" />,
-                  strong: ({ node, ...props }) => <strong {...props} className="font-bold" />,
+                  p: (props) => <p {...props} className="inline" />,
+                  strong: (props) => <strong {...props} className="font-bold" />,
                   br: () => <br />,
                 }}
               >
@@ -819,7 +805,8 @@ export default function ProjectsPage() {
             {/* Tags */}
             {project.tags && project.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags.slice(0, 3).map((tag, tagIndex) => {
+                {project.tags.slice(0, 3).map((tag: unknown, tagIndex: number) => {
+                  if (typeof tag !== 'string') return null;
                   const tagKey = tag.toLowerCase();
                   const Icon = tagTechIcons[tagKey];
                   if (Icon) {

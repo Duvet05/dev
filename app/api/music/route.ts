@@ -11,6 +11,7 @@ export async function GET() {
       .filter(f => f.endsWith('.mp3'))
       .map(f => ({ name: f, src: `/music/${f}` }));
   } catch (err) {
+    console.error('Error leyendo la carpeta de música:', err)
     return NextResponse.json({ error: 'No se pudo leer la carpeta de música.' }, { status: 500 });
   }
   return NextResponse.json(files);

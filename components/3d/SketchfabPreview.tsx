@@ -40,7 +40,7 @@ export const SketchfabPreview: React.FC<SketchfabPreviewProps> = ({
     setHasError(false)
   }
 
-  const handleImageError = (e: any) => {
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     setIsLoading(false)
     setHasError(true)
     console.error('❌ Error cargando imagen SketchfabPreview:', imageUrl, e)

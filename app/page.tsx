@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react"
 import { BrowserHeader } from "@/components/BrowserHeader"
 import { MainContent } from "@/components/MainContent"
-import { BrowserFrame } from "@/components/layout/BrowserFrame"
 import ArtstationInfiniteCarousel from "@/components/ArtstationInfiniteCarousel"
 
 export default function CyberpunkPortfolio() {
@@ -24,12 +23,8 @@ export default function CyberpunkPortfolio() {
   // Estado para la barra de rendering
   const [renderingProgress, setRenderingProgress] = useState(73);
 
-  // Estado para la rotación de skills
-  const [skillAngles, setSkillAngles] = useState([0, 0, 0, 0]);
-
   const audioRef = useRef<HTMLAudioElement>(null);
   const [tracks, setTracks] = useState<{ name: string, src: string }[]>([]);
-  const [isLoadingArt, setIsLoadingArt] = useState(false);
 
   // --- Reproductor de música mejorado estilo pixel/cyberpunk ---
   // Solo muestra el nombre del archivo mp3
@@ -39,7 +34,7 @@ export default function CyberpunkPortfolio() {
       if (!res.ok) throw new Error("No se pudo cargar la música");
       const data: { name: string, src: string }[] = await res.json();
       setTracks(data);
-    } catch (err) {
+    } catch {
       setTracks([]);
     }
   };
@@ -103,14 +98,6 @@ export default function CyberpunkPortfolio() {
         return prev + 1;
       });
     }, 1000); // Sube cada segundo
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    // Bajo FPS: 16 frames por segundo
-    const interval = setInterval(() => {
-      setSkillAngles(prev => prev.map(angle => (angle + 22.5) % 360));
-    }, 62); // ~16 FPS
     return () => clearInterval(interval);
   }, []);
 

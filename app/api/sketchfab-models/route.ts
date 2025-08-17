@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { SKETCHFAB_CONFIG } from '@/lib/sketchfab-config'
 
-// Cache simple en memoria
-const cache = new Map<string, { data: any, timestamp: number }>()
-const CACHE_DURATION = 5 * 60 * 1000 // 5 minutos
-
 // Constantes de la API de Sketchfab v3
 const SKETCHFAB_API_BASE = 'https://api.sketchfab.com/v3'
 
@@ -72,56 +68,56 @@ async function fetchModelsFromSketchfabAPIInfinite({ username, nextUrl, limit = 
 
 // Función para obtener TODOS los modelos públicos usando paginación cursor (next)
 async function fetchAllModelsFromSketchfabAPI({ username, orderBy = "date-desc" }: { username: string, orderBy?: string }) {
-  let allModels: any[] = [];
+  let allModels: unknown[] = [];
   let nextUrl: string | undefined = undefined;
-  let page = 1;
-  let limit = 100;
+  const limit = 100;
   do {
     const { models, next } = await fetchModelsFromSketchfabAPIInfinite({ username, nextUrl, limit, orderBy });
     allModels = allModels.concat(models);
     nextUrl = next;
-    page++;
+    // page++; // Eliminado porque no se usa
   } while (nextUrl);
   return allModels;
 }
 
 // Función para convertir la respuesta de la API a nuestro formato Project
-function convertSketchfabModelsToProjects(sketchfabModels: any[]): Project[] {
-  return sketchfabModels.map((model) => {
+function convertSketchfabModelsToProjects(sketchfabModels: unknown[]): Project[] {
+  return sketchfabModels.map((modelRaw) => {
+    const model = modelRaw as Record<string, unknown>;
     // Extraer thumbnails en diferentes tamaños
-    const thumbnails = extractThumbnails(model.thumbnails?.images || [])
+    const thumbnails = extractThumbnails((model.thumbnails as { images: unknown[] } | undefined)?.images || []);
     // Formatear el título para el estilo del portfolio
-    const title = formatTitle(model.name || `Model ${model.uid.substring(0, 8)}`)
+    const title = formatTitle((model.name as string) || `Model ${(model.uid as string).substring(0, 8)}`);
     // Formatear la fecha
-    const date = formatAPIDate(model.publishedAt)
+    const date = formatAPIDate(model.publishedAt as string);
     return {
       title,
       source: "SKETCHFAB",
-      description: model.description || `3D model \"${model.name}\" created by ${model.user?.displayName || model.user?.username || 'Unknown'}`,
+      description: (model.description as string) || `3D model \"${model.name as string}\" created by ${(model.user as { displayName?: string, username?: string })?.displayName || (model.user as { username?: string })?.username || 'Unknown'}`,
       date,
-      fileSize: estimateFileSize(model.faceCount || 0),
+      fileSize: estimateFileSize((model.faceCount as number) || 0),
       renderTime: "Live",
-      complexity: getComplexityFromFaceCount(model.faceCount || 0),
-      sketchfabUid: model.uid,
-      triangles: model.faceCount || 0,
-      vertices: model.vertexCount || 0,
-      likes: model.likeCount || 0,
-      views: model.viewCount || 0,
-      downloads: model.downloadCount || 0,
-      author: model.user?.displayName || model.user?.username || 'Unknown',
-      license: model.license?.label || model.license?.fullName || 'Standard License',
-      categories: model.categories?.map((cat: any) => cat.name) || [],
-      tags: model.tags?.map((tag: any) => tag.name).slice(0, 5) || [],
+      complexity: getComplexityFromFaceCount((model.faceCount as number) || 0),
+      sketchfabUid: model.uid as string,
+      triangles: model.faceCount as number || 0,
+      vertices: model.vertexCount as number || 0,
+      likes: model.likeCount as number || 0,
+      views: model.viewCount as number || 0,
+      downloads: model.downloadCount as number || 0,
+      author: (model.user as { displayName?: string, username?: string })?.displayName || (model.user as { username?: string })?.username || 'Unknown',
+      license: (model.license as { label?: string, fullName?: string })?.label || (model.license as { fullName?: string })?.fullName || 'Standard License',
+      categories: Array.isArray(model.categories) ? (model.categories as { name: string }[]).map((cat) => cat.name) : [],
+      tags: Array.isArray(model.tags) ? (model.tags as { name: string }[]).map((tag) => tag.name).slice(0, 5) : [],
       thumbnails,
-      viewerUrl: model.viewerUrl,
-      embedUrl: model.embedUrl,
-      publishedAt: model.publishedAt,
-      staffpickedAt: model.staffpickedAt || null
+      viewerUrl: model.viewerUrl as string,
+      embedUrl: model.embedUrl as string,
+      publishedAt: model.publishedAt as string,
+      staffpickedAt: (model as { staffpickedAt?: string | null }).staffpickedAt || null
     }
-  })
+  });
 }
 
-function extractThumbnails(images: any[]) {
+function extractThumbnails(images: unknown[]): { small: string; medium: string; large: string } {
   if (!images || images.length === 0) {
     return {
       small: '/placeholder-model.svg',
@@ -129,9 +125,10 @@ function extractThumbnails(images: any[]) {
       large: '/placeholder-model.svg'
     }
   }
-  const small = images.find(img => img.width >= 200 && img.width <= 250)?.url || images.find(img => img.width >= 100)?.url || images[0]?.url
-  const medium = images.find(img => img.width >= 640 && img.width <= 720)?.url || images.find(img => img.width >= 400)?.url || images[0]?.url
-  const large = images.find(img => img.width >= 1024)?.url || images.find(img => img.width >= 800)?.url || images[0]?.url
+  const imgs = images as { width: number; url: string }[];
+  const small = imgs.find(img => img.width >= 200 && img.width <= 250)?.url || imgs.find(img => img.width >= 100)?.url || imgs[0]?.url;
+  const medium = imgs.find(img => img.width >= 640 && img.width <= 720)?.url || imgs.find(img => img.width >= 400)?.url || imgs[0]?.url;
+  const large = imgs.find(img => img.width >= 1024)?.url || imgs.find(img => img.width >= 800)?.url || imgs[0]?.url;
   return {
     small: small || '/placeholder-model.svg',
     medium: medium || '/placeholder-model.svg',
@@ -155,7 +152,7 @@ function formatAPIDate(apiDate: string): string {
   try {
     const date = new Date(apiDate)
     return date.toISOString().split('T')[0].replace(/-/g, '.')
-  } catch (error) {
+  } catch {
     return new Date().toISOString().split('T')[0].replace(/-/g, '.')
   }
 }

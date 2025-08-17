@@ -7,7 +7,7 @@ interface AboutMeProps {
   currentTime: string;
 }
 
-export const AboutMe: React.FC<AboutMeProps> = ({ currentTime }) => (
+export const AboutMe: React.FC<AboutMeProps> = () => (
   <div id="about" className="flex-[3] h-full self-stretch flex flex-col">
     <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">ABOUT.ME</h2>
     

@@ -11,8 +11,30 @@ interface SketchfabViewerProps {
 // Declara el tipo global para Sketchfab
 declare global {
   interface Window {
-    Sketchfab: any
-    sketchfabAPIinstances: any[]
+    Sketchfab: new (iframe: HTMLIFrameElement) => SketchfabClient
+    sketchfabAPIinstances: SketchfabAPI[]
+  }
+
+  // Tipos para la API de Sketchfab
+  interface SketchfabClient {
+    init: (
+      modelUid: string,
+      options: SketchfabInitOptions
+    ) => void;
+  }
+
+  interface SketchfabInitOptions {
+    success: (api: SketchfabAPI) => void;
+    error: (error: Error | string) => void;
+    [key: string]: any;
+  }
+
+  interface SketchfabAPI {
+    addEventListener: (event: string, callback: (error?: Error) => void) => void;
+    removeEventListener: (event: string, callback: (error?: Error) => void) => void;
+    start: () => void;
+    stop: () => void;
+    [key: string]: any;
   }
 }
 
@@ -25,7 +47,7 @@ export const SketchfabViewer: React.FC<SketchfabViewerProps> = ({
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const [api, setApi] = useState<any>(null)
+  const [api, setApi] = useState<SketchfabAPI | null>(null)
   const initializationAttempted = useRef(false)
   const retryCount = useRef(0)
   const maxRetries = 2
@@ -76,10 +98,11 @@ export const SketchfabViewer: React.FC<SketchfabViewerProps> = ({
         setHasError(false)
         setErrorMessage('')
 
+        if (!iframeRef.current) return;
         const client = new window.Sketchfab(iframeRef.current)
 
         client.init(modelUid, {
-          success: function(api: any) {
+          success: function(api: SketchfabAPI) {
             console.log('Sketchfab API initialized successfully for model:', modelUid)
             setApi(api)
             retryCount.current = 0 // Reset retry count on success
@@ -97,14 +120,14 @@ export const SketchfabViewer: React.FC<SketchfabViewerProps> = ({
             })
 
             // Listener para errores del viewer
-            api.addEventListener('error', function(error: any) {
+            api.addEventListener('error', function(error?: Error) {
               console.error('Sketchfab viewer error:', error)
               setHasError(true)
               setErrorMessage('Error al cargar el modelo 3D')
               setIsLoading(false)
             })
           },
-          error: function(error: any) {
+          error: function(error: Error | string) {
             console.error('Failed to initialize Sketchfab for model:', modelUid, error)
             
             // Intentar retry si no hemos excedido el límite
