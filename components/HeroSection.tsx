@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import { Badge } from "@/components/ui/badge";
 import { Cpu, MonitorSmartphone, MemoryStick, Torus, Calendar, Clock, Layers, HardDrive, Zap } from "lucide-react";
 import { DonutAnimation } from "./DonutAnimation";
-import { TetrisGame } from "./TetrisGame";
+import TRexGame from "./TRexGame";
 import ArtstationInfiniteCarousel from "./ArtstationInfiniteCarousel";
 
 interface HeroSectionProps {
@@ -106,7 +106,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
     document.head.appendChild(styleSheet);
   }, [STAR_SPEED_MULTIPLIER]);
 
-  const [showTetris, setShowTetris] = useState(false);
+  const [showTRexGame, setShowTRexGame] = useState(false);
   const [showEnterHint, setShowEnterHint] = useState(false);
   const [renderTime, setRenderTime] = useState(74);
   const [polyCount, setPolyCount] = useState(557);
@@ -154,20 +154,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
     return () => clearInterval(interval);
   }, []);
 
-  // Detectar tecla Enter
+  // Detectar tecla SPACE para T-Rex game
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === 'Enter' && !showTetris) {
-        setShowTetris(true);
+      if (event.code === 'Space' && !showTRexGame) {
+        event.preventDefault();
+        setShowTRexGame(true);
       }
-      if (event.key === 'Escape' && showTetris) {
-        setShowTetris(false);
+      if (event.key === 'Escape' && showTRexGame) {
+        setShowTRexGame(false);
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [showTetris]);
+  }, [showTRexGame]);
 
   // Mostrar hint después de 3 segundos
   useEffect(() => {
@@ -180,10 +181,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
 
   return (
     // Mantener la sección hero con una altura mínima consistente para evitar compresión en móviles
-    <div className="relative mb-12 min-h-[520px] md:min-h-[520px] lg:min-h-[480px]">
+    <div className="relative mb-4 min-h-[520px] md:min-h-[520px] lg:min-h-[480px]">
       <div className="grid grid-cols-12">
         <div className="col-span-12 lg:col-span-8">
-          <div className="relative bg-primary border border-secondary overflow-hidden">
+            <div className="relative bg-primary border border-secondary overflow-hidden h-full border-b-0 lg:border-b">
             {/* Grid pattern de fondo completo */}
             <div
               className="absolute inset-0"
@@ -337,43 +338,47 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                 <div className="absolute left-0 right-0 h-0.5 bg-secondary/30"
                   style={{ animation: 'scanLine 3s linear infinite' }}></div>
 
-                {/* Viewports en las esquinas */}
-                {/* Arriba Izquierda - CAMERA.POS */}
-                <div className="absolute top-3 left-4 text-xs text-gray-400 font-vt323">
-                  <div className="text-xs text-secondary mb-1 font-vt323">CAMERA.POS</div>
-                  <div>X: {cameraPos.x.toFixed(2)}</div>
-                  <div>Y: {cameraPos.y.toFixed(2)}</div>
-                  <div>Z: {cameraPos.z.toFixed(2)}</div>
-                </div>
+                {/* Viewports en las esquinas - se ocultan cuando el juego está activo */}
+                {!showTRexGame && (
+                  <>
+                    {/* Arriba Izquierda - CAMERA.POS */}
+                    <div className="absolute top-3 left-4 text-xs text-gray-400 font-vt323">
+                      <div className="text-xs text-secondary mb-1 font-vt323">CAMERA.POS</div>
+                      <div>X: {cameraPos.x.toFixed(2)}</div>
+                      <div>Y: {cameraPos.y.toFixed(2)}</div>
+                      <div>Z: {cameraPos.z.toFixed(2)}</div>
+                    </div>
 
-                {/* Arriba Derecha - LIGHTING */}
-                <div className="absolute top-3 right-4 text-xs text-gray-400 font-vt323 text-right">
-                  <div className="text-xs text-secondary mb-1 font-vt323">LIGHTING</div>
-                  <div>INT: {lightIntensity.toFixed(1)}</div>
-                  <div>ENG: {renderEngine}</div>
-                  <div>NOD: {materialNodes}</div>
-                </div>
+                    {/* Arriba Derecha - LIGHTING */}
+                    <div className="absolute top-3 right-4 text-xs text-gray-400 font-vt323 text-right">
+                      <div className="text-xs text-secondary mb-1 font-vt323">LIGHTING</div>
+                      <div>INT: {lightIntensity.toFixed(1)}</div>
+                      <div>ENG: {renderEngine}</div>
+                      <div>NOD: {materialNodes}</div>
+                    </div>
 
-                {/* Abajo Izquierda - GEOMETRY */}
-                <div className="absolute bottom-15 left-4 text-xs text-gray-400 font-vt323">
-                  <div className="text-xs text-secondary mb-1 font-vt323">GEOMETRY</div>
-                  <div>MSH: {meshCount}</div>
-                  <div>SUB: {subdivLevel}</div>
-                  <div>TRI: {(polyCount * 2).toFixed(0)}K</div>
-                </div>
+                    {/* Abajo Izquierda - GEOMETRY */}
+                    <div className="absolute bottom-15 left-4 text-xs text-gray-400 font-vt323">
+                      <div className="text-xs text-secondary mb-1 font-vt323">GEOMETRY</div>
+                      <div>MSH: {meshCount}</div>
+                      <div>SUB: {subdivLevel}</div>
+                      <div>TRI: {(polyCount * 2).toFixed(0)}K</div>
+                    </div>
 
-                {/* Abajo Derecha - RENDER.OUT */}
-                <div className="absolute bottom-15 right-4 text-xs text-gray-400 font-vt323 text-right">
-                  <div className="text-xs text-secondary mb-1 font-vt323">RENDER.OUT</div>
-                  <div>RES: 1920x1080</div>
-                  <div>FMT: PNG</div>
-                  <div>BIT: 32</div>
-                </div>
-                {/* Corner brackets */}
-                <div className="absolute top-1 left-1 w-3 h-3 border-t border-l border-secondary"></div>
-                <div className="absolute top-1 right-1 w-3 h-3 border-t border-r border-secondary"></div>
-                <div className="absolute bottom-1 left-1 w-3 h-3 border-b border-l border-secondary"></div>
-                <div className="absolute bottom-1 right-1 w-3 h-3 border-b border-r border-secondary"></div>
+                    {/* Abajo Derecha - RENDER.OUT */}
+                    <div className="absolute bottom-15 right-4 text-xs text-gray-400 font-vt323 text-right">
+                      <div className="text-xs text-secondary mb-1 font-vt323">RENDER.OUT</div>
+                      <div>RES: 1920x1080</div>
+                      <div>FMT: PNG</div>
+                      <div>BIT: 32</div>
+                    </div>
+                    {/* Corner brackets */}
+                    <div className="absolute top-1 left-1 w-3 h-3 border-t border-l border-secondary"></div>
+                    <div className="absolute top-1 right-1 w-3 h-3 border-t border-r border-secondary"></div>
+                    <div className="absolute bottom-1 left-1 w-3 h-3 border-b border-l border-secondary"></div>
+                    <div className="absolute bottom-1 right-1 w-3 h-3 border-b border-r border-secondary"></div>
+                  </>
+                )}
               </div>
             </div>
 
@@ -382,34 +387,39 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
             {/* Contenido central */}
             {/* Añadir padding vertical para evitar que el texto se comprima en alturas pequeñas */}
             <div className="absolute inset-0 flex items-center justify-center px-1 sm:px-4 py-6">
-               <div className="text-center max-w-full w-full">
-                {/*<h1 className="text-6xl font-bold glitch-text font-bauhaus-pixel">{glitchText}</h1>*/}
-                {/* Evitar márgenes negativos en pantallas pequeñas; aplicarlos solo desde md en adelante */}
-                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bauhaus-pixel mb-0 md:mb-[-12px] lg:mb-[-16px] xl:mb-[-18px] leading-none overflow-hidden">{glitchText}</h1>
-                <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-gray-400 mb-3 sm:mb-6">3D.ARTIST.DEVELOPER</p>
-                <div className="flex justify-center space-x-1 sm:space-x-4 flex-wrap gap-y-1">
-                  <Badge variant="outline" className="text-xs border-white text-white rounded-none whitespace-nowrap">
-                    ONLINE
-                  </Badge>
-                  <Badge variant="outline" className="text-xs border-gray-600 text-gray-400 rounded-none whitespace-nowrap">
-                    GMT-6 {currentTime}
-                  </Badge>
-                </div>
-
-                {/* Hint para activar Tetris */}
-                {showEnterHint && (
-                  <div className="mt-4 animate-pulse">
-                    <Badge
-                      variant="outline"
-                      className="text-xs border-green-500 text-green-500 rounded-none cursor-pointer hover:bg-green-500/10 transition-colors"
-                      onClick={() => setShowTetris(true)}
-                    >
-                      <span className="hidden sm:inline">PRESS ENTER TO PLAY TETRIS</span>
-                      <span className="sm:hidden">TAP TO PLAY TETRIS</span>
+              {/* Renderizar el juego T-Rex cuando esté activo */}
+              {showTRexGame ? (
+                <TRexGame onClose={() => setShowTRexGame(false)} isActive={showTRexGame} />
+              ) : (
+                <div className="text-center max-w-full w-full">
+                  {/*<h1 className="text-6xl font-bold glitch-text font-bauhaus-pixel">{glitchText}</h1>*/}
+                  {/* Evitar márgenes negativos en pantallas pequeñas; aplicarlos solo desde md en adelante */}
+                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bauhaus-pixel mb-0 md:mb-[-12px] lg:mb-[-16px] xl:mb-[-18px] leading-none overflow-hidden">{glitchText}</h1>
+                  <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-gray-400 mb-3 sm:mb-6">3D.ARTIST.DEVELOPER</p>
+                  <div className="flex justify-center space-x-1 sm:space-x-4 flex-wrap gap-y-1">
+                    <Badge variant="outline" className="text-xs border-white text-white rounded-none whitespace-nowrap">
+                      ONLINE
+                    </Badge>
+                    <Badge variant="outline" className="text-xs border-gray-600 text-gray-400 rounded-none whitespace-nowrap">
+                      GMT-6 {currentTime}
                     </Badge>
                   </div>
-                )}
-              </div>
+
+                  {/* Hint para activar T-Rex Game */}
+                  {showEnterHint && (
+                    <div className="mt-4 animate-pulse">
+                      <Badge
+                        variant="outline"
+                        className="text-xs border-green-500 text-green-500 rounded-none cursor-pointer hover:bg-green-500/10 transition-colors"
+                        onClick={() => setShowTRexGame(true)}
+                      >
+                        <span className="hidden sm:inline">PRESS SPACE TO PLAY T-REX</span>
+                        <span className="sm:hidden">TAP TO PLAY T-REX</span>
+                      </Badge>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="p-2 absolute bottom-4 left-4 right-4">
@@ -517,10 +527,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
         </div>
       </div>
 
-      {/* Tetris Game Modal */}
-      {showTetris && (
-        <TetrisGame onClose={() => setShowTetris(false)} />
-      )}
+      {/* T-Rex Game se renderiza directamente en el área central */}
 
       {/* Styles for animations */}
       <style jsx global>{`

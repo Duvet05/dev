@@ -1,0 +1,79 @@
+{
+  "name": "react-chrome-dino-ts",
+  "version": "0.1.2",
+  "description": "React component to include the dino game from Google in your site.",
+  "author": "Kasey Culmback <me@kasey.culmback.com>",
+  "license": "MIT",
+  "homepage": "https://kculmback.github.io/react-chrome-dino-ts/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kculmback/react-chrome-dino-ts",
+    "directory": "packages/react-chrome-dino-ts"
+  },
+  "keywords": [
+    "react",
+    "chrome",
+    "dino",
+    "game",
+    "react-components"
+  ],
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./index.css": "./src/Dino.css"
+  },
+  "scripts": {
+    "build": "tsup src --dts",
+    "dev": "tsup src --watch",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore"
+  },
+  "peerDependencies": {
+    "react": "^17 || ^18",
+    "react-dom": "^17 || ^18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "clean-package": "^2.2.0",
+    "eslint-config-dino": "workspace:*",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "tsconfig-dino": "workspace:*",
+    "tsup": "^5.10.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "clean-package": {
+    "replace": {
+      "main": "dist/index.js",
+      "module": "dist/index.mjs",
+      "types": "dist/index.d.ts",
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.ts",
+          "import": "./dist/index.mjs",
+          "require": "./dist/index.js"
+        },
+        "./index.css": "./dist/index.css",
+        "./package.json": "./package.json"
+      }
+    }
+  },
+  "tsup": {
+    "clean": true,
+    "target": "es2019",
+    "format": [
+      "cjs",
+      "esm"
+    ]
+  }
+}

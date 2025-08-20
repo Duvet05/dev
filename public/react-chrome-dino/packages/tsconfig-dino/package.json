@@ -1,0 +1,12 @@
+{
+  "name": "tsconfig-dino",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "base.json",
+    "react-library.json",
+    "vite.json",
+    "vite-node.json"
+  ]
+}
