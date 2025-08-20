@@ -179,10 +179,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
   }, []);
 
   return (
-    <div className="relative mb-12">
+    // Mantener la sección hero con una altura mínima consistente para evitar compresión en móviles
+    <div className="relative mb-12 min-h-[520px] md:min-h-[520px] lg:min-h-[480px]">
       <div className="grid grid-cols-12">
         <div className="col-span-12 lg:col-span-8">
-          <div className="relative h-full bg-primary border border-secondary overflow-hidden">
+          <div className="relative bg-primary border border-secondary overflow-hidden">
             {/* Grid pattern de fondo completo */}
             <div
               className="absolute inset-0"
@@ -329,7 +330,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
             </div>
 
             {/* Panel de Fondo */}
-            <div className="p-3 h-full flex flex-col">
+            {/* usar flex-1 y min-height interno para que el contenido central pueda centrar correctamente */}
+            <div className="p-3 flex-1 flex flex-col min-h-[360px] md:min-h-[420px]">
               <div className="flex-1 border border-gray-600 bg-black/40 relative overflow-hidden">
                 {/* Scanning line */}
                 <div className="absolute left-0 right-0 h-0.5 bg-secondary/30"
@@ -378,10 +380,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
 
 
             {/* Contenido central */}
-            <div className="absolute inset-0 flex items-center justify-center px-1 sm:px-4">
-              <div className="text-center max-w-full w-full">
+            {/* Añadir padding vertical para evitar que el texto se comprima en alturas pequeñas */}
+            <div className="absolute inset-0 flex items-center justify-center px-1 sm:px-4 py-6">
+               <div className="text-center max-w-full w-full">
                 {/*<h1 className="text-6xl font-bold glitch-text font-bauhaus-pixel">{glitchText}</h1>*/}
-                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bauhaus-pixel mb-[-4px] sm:mb-[-8px] md:mb-[-12px] lg:mb-[-16px] xl:mb-[-18px] leading-none overflow-hidden">{glitchText}</h1>
+                {/* Evitar márgenes negativos en pantallas pequeñas; aplicarlos solo desde md en adelante */}
+                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bauhaus-pixel mb-0 md:mb-[-12px] lg:mb-[-16px] xl:mb-[-18px] leading-none overflow-hidden">{glitchText}</h1>
                 <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-gray-400 mb-3 sm:mb-6">3D.ARTIST.DEVELOPER</p>
                 <div className="flex justify-center space-x-1 sm:space-x-4 flex-wrap gap-y-1">
                   <Badge variant="outline" className="text-xs border-white text-white rounded-none whitespace-nowrap">
