@@ -65,7 +65,7 @@ export const BrowserHeader: React.FC<BrowserHeaderProps> = (props) => {
             </Button>
           </a>
           <a
-            href="https://instagram.com/cuadot.art"
+            href="https://instagram.com/cuadot.3d"
             target="_blank"
             rel="noopener noreferrer"
           >

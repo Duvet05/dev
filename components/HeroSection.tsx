@@ -503,7 +503,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                 </div>
               </div>
             </div>
-            <div className="hidden lg:flex border-l border-secondary flex-col justify-start min-w-fit">
+            <div className="donut-hide-1115 hidden lg:flex border-l border-secondary flex-col justify-start min-w-fit">
               <div className="text-sm text-gray-400 mb-2 px-4 pt-4">ASCII.DONUT.PREVIEW</div>
               <div className="px-8 pb-4">
                 <DonutAnimation width={20} height={20} />
@@ -560,6 +560,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
             opacity: 0.2;
             transform: scale(0.5);
           }
+        }
+
+        @media (max-width: 1115px) {
+          .donut-hide-1115 { display: none !important; }
         }
       `}</style>
     </div>
