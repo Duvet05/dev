@@ -1,0 +1,181 @@
+{
+  "liked": false,
+  "tags": [
+    "Robot",
+    "Baseball",
+    "Character",
+    "Toon",
+    "RobotToon",
+    "Blender"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23027474,
+      "title": "Watch my new bate",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EWatch my new bate\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/023/027/474/large/victor-cuadot-robot2-pose2-postpo.jpg?1577778023",
+      "width": 1920,
+      "height": 1080,
+      "position": 0,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214434,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/covers/images/070/214/434/large/victor-cuadot-victor-cuadot-robotbaseball.jpg?1701996304",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23027470,
+      "title": "The champiosnship!",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EThe champiosnship!\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/023/027/470/large/victor-cuadot-robot2-pose3-pp.jpg?1577778023",
+      "width": 1080,
+      "height": 1920,
+      "position": 1,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23027472,
+      "title": "See all my vies!",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003ESee all my vies!\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/023/027/472/large/victor-cuadot-robot2.jpg?1577778023",
+      "width": 1920,
+      "height": 1080,
+      "position": 2,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23027471,
+      "title": "Looking at the sun!",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003ELooking at the sun!\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/023/027/471/large/victor-cuadot-robot-1final-postpo.jpg?1577777908",
+      "width": 1920,
+      "height": 1080,
+      "position": 3,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe allowfullscreen=\"\" webkitallowfullscreen=\"true\" frameborder=\"0\" width=\"640\" mozallowfullscreen=\"true\" allowvr=\"\" height=\"360\" class=\"\" src=\"https://sketchfab.com/models/2230f50c1a1145e59938f25669733925/embed\" allow=\"autoplay; fullscreen; vr\" onmousewheel=\"\" title=\"\"\u003E\u003C/iframe\u003E",
+      "oembed": {
+
+      },
+      "id": 23027479,
+      "title": "BaseBallRobotronic",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EBaseBallRobotronic\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/model3ds/images/023/027/479/large/victor-cuadot-6e5f710685354c8598d21e0f0b90e692.jpg?1577777937",
+      "width": 720,
+      "height": 405,
+      "position": 4,
+      "asset_type": "model3d",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": {
+    "name": "Digital 3D",
+    "id": 2
+  },
+  "mediums": [
+    {
+      "name": "Digital 3D",
+      "id": 2
+    }
+  ],
+  "categories": [
+    {
+      "name": "Character Modeling",
+      "id": 66
+    }
+  ],
+  "software_items": [
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/041/default/pt_appicon_noshadow_512.png?1627397594",
+      "name": "Substance 3D Painter"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/042/default/ds_appicon_noshadow_512.png?1627397498",
+      "name": "Substance 3D Designer"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/032/default/Photoshop.png?1608144074",
+      "name": "Photoshop"
+    }
+  ],
+  "id": 6366204,
+  "user_id": 175617,
+  "title": "Baseball Robot!",
+  "description": "\u003Cp\u003EThis work was made just by fun!, had a raw idea about a baseball player from other world.\n\u003Cbr /\u003EAll modeling was made on blender, textures were made on substance painter and substance designer, compositing was made in blender and photoshop, for the renders i used the screenshot skecthfab and blender cycles.\n\u003Cbr /\u003EHad so much fun while doing this!\u003C/p\u003E",
+  "description_html": "\u003Cp\u003EThis work was made just by fun!, had a raw idea about a baseball player from other world.\n\u003Cbr /\u003EAll modeling was made on blender, textures were made on substance painter and substance designer, compositing was made in blender and photoshop, for the renders i used the screenshot skecthfab and blender cycles.\n\u003Cbr /\u003EHad so much fun while doing this!\u003C/p\u003E",
+  "created_at": "2019-12-31T01:42:28.050-06:00",
+  "updated_at": "2024-03-16T06:39:49.558-05:00",
+  "views_count": 349,
+  "likes_count": 52,
+  "comments_count": 2,
+  "permalink": "https://www.artstation.com/artwork/qAVyER",
+  "cover_url": "https://cdna.artstation.com/p/assets/covers/images/070/214/434/medium/victor-cuadot-victor-cuadot-robotbaseball.jpg?1701996304",
+  "published_at": "2019-12-31T01:42:28.014-06:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "baseball-robot-3",
+  "suppressed": false,
+  "hash_id": "qAVyER",
+  "visible": true,
+  "is_promotional": false
+}

@@ -1,0 +1,211 @@
+{
+  "liked": false,
+  "tags": [
+    "toy",
+    "woodenhorse",
+    "Sketchfab",
+    "Modeling",
+    "Animation",
+    "Marmoset"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe width=\"640\" height=\"360\" src=\"https://www.artstation.com/embed/27180396\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" onmousewheel=\"\" scrolling=\"no\"\u003E \u003C/iframe\u003E",
+      "oembed": {
+        "width": 640,
+        "height": 360,
+        "provider_name": "Artstation"
+      },
+      "id": 27180396,
+      "title": "Wooden Toy Horse!",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EWooden Toy Horse!\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/marmosets/images/027/180/396/large/victor-cuadot-mview-image20200529-22826-q1hnic.jpg?1590803300",
+      "width": 768,
+      "height": 400,
+      "position": 0,
+      "asset_type": "marmoset",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214426,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/covers/images/070/214/426/large/victor-cuadot-victor-cuadot-horse.jpg?1701996254",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 27180408,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/027/180/408/large/victor-cuadot-1rst.jpg?1590803331",
+      "width": 1080,
+      "height": 1080,
+      "position": 2,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 27180409,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/027/180/409/large/victor-cuadot-top-final.jpg?1590803333",
+      "width": 1080,
+      "height": 1080,
+      "position": 3,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 27180410,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/027/180/410/large/victor-cuadot-2nd.jpg?1590803333",
+      "width": 1080,
+      "height": 1080,
+      "position": 4,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 27180412,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/027/180/412/large/victor-cuadot-4th.jpg?1590803337",
+      "width": 1080,
+      "height": 1080,
+      "position": 6,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 27180414,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/027/180/414/large/victor-cuadot-5th.jpg?1590803339",
+      "width": 1080,
+      "height": 1080,
+      "position": 7,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe height=\"360\" allowfullscreen=\"\" allow=\"autoplay; fullscreen; vr\" class=\"\" frameborder=\"0\" title=\"\" mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allowvr=\"\" width=\"640\" src=\"https://sketchfab.com/models/e114132dd22b43b5be17ae543697c9e8/embed\" onmousewheel=\"\"\u003E\u003C/iframe\u003E",
+      "oembed": {
+
+      },
+      "id": 27180423,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/model3ds/images/027/180/423/large/victor-cuadot-d1d4c05e83194f419377b05ec67ff7x.jpg?1590803369",
+      "width": 720,
+      "height": 405,
+      "position": 8,
+      "asset_type": "model3d",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": {
+    "name": "Digital 3D",
+    "id": 2
+  },
+  "mediums": [
+    {
+      "name": "Digital 3D",
+      "id": 2
+    }
+  ],
+  "categories": [
+    {
+      "name": "Character Design",
+      "id": 65
+    }
+  ],
+  "software_items": [
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/043/default/toolbag_512.png?1459433117",
+      "name": "Marmoset Toolbag"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/041/default/pt_appicon_noshadow_512.png?1627397594",
+      "name": "Substance 3D Painter"
+    }
+  ],
+  "id": 7446999,
+  "user_id": 175617,
+  "title": "¡Wooden Toy Horse!",
+  "description": "\u003Cp\u003EModeled on blender, and textures made on substance painter.\n\u003Cbr /\u003EReally enjoy making this one!, lots of fun.\u003C/p\u003E",
+  "description_html": "\u003Cp\u003EModeled on blender, and textures made on substance painter.\n\u003Cbr /\u003EReally enjoy making this one!, lots of fun.\u003C/p\u003E",
+  "created_at": "2020-05-29T20:54:41.774-05:00",
+  "updated_at": "2023-12-07T18:44:18.940-06:00",
+  "views_count": 223,
+  "likes_count": 23,
+  "comments_count": 0,
+  "permalink": "https://www.artstation.com/artwork/8lQLgQ",
+  "cover_url": "https://cdna.artstation.com/p/assets/covers/images/070/214/426/medium/victor-cuadot-victor-cuadot-horse.jpg?1701996254",
+  "published_at": "2020-05-29T20:54:50.721-05:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "wooden-toy-horse-1",
+  "suppressed": false,
+  "hash_id": "8lQLgQ",
+  "visible": true,
+  "is_promotional": false
+}

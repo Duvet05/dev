@@ -1,0 +1,170 @@
+{
+  "liked": false,
+  "tags": [
+    "Darksouls",
+    "Demonsouls",
+    "Nito",
+    "FromSoftware",
+    "Character",
+    "skull",
+    "Skeleton",
+    "humanbody"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 36754412,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/036/754/412/large/victor-cuadot-bpr-render1-ff.jpg?1618515570",
+      "width": 762,
+      "height": 989,
+      "position": 0,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214137,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/137/large/victor-cuadot-victor-cuadot-nito.jpg?1701995322",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 36754416,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/036/754/416/large/victor-cuadot-bpr-render2-ff.jpg?1618515574",
+      "width": 1247,
+      "height": 843,
+      "position": 1,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 36754422,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/036/754/422/large/victor-cuadot-bpr-render3-ff.jpg?1618515579",
+      "width": 1473,
+      "height": 884,
+      "position": 2,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 36754429,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/036/754/429/large/victor-cuadot-bpr-render4-ff.jpg?1618515585",
+      "width": 1262,
+      "height": 1046,
+      "position": 3,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": {
+    "name": "Digital 3D",
+    "id": 2
+  },
+  "mediums": [
+    {
+      "name": "Digital 3D",
+      "id": 2
+    }
+  ],
+  "categories": [
+    {
+      "name": "Game Art",
+      "id": 7
+    },
+    {
+      "name": "Illustration",
+      "id": 27
+    },
+    {
+      "name": "Fan Art",
+      "id": 43
+    }
+  ],
+  "software_items": [
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/046/default/zBrush3.png?1505488078",
+      "name": "ZBrush"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/032/default/Photoshop.png?1608144074",
+      "name": "Photoshop"
+    }
+  ],
+  "id": 9805156,
+  "user_id": 175617,
+  "title": "Nito the GRAVELORD!",
+  "description": "\u003Cp\u003EThis is my version of Nito from the first Darksouls!, i always liked the character design of Nito. \n\u003Cbr /\u003EIn my version i wanted him to feel more Heroic and kind of a warrior.\n\u003Cbr /\u003EI made him using blender, zbrush and photoshop, it was pretty pretty fun to make!\u003C/p\u003E",
+  "description_html": "\u003Cp\u003EThis is my version of Nito from the first Darksouls!, i always liked the character design of Nito. \n\u003Cbr /\u003EIn my version i wanted him to feel more Heroic and kind of a warrior.\n\u003Cbr /\u003EI made him using blender, zbrush and photoshop, it was pretty pretty fun to make!\u003C/p\u003E",
+  "created_at": "2021-04-15T14:42:55.983-05:00",
+  "updated_at": "2024-03-03T21:37:45.443-06:00",
+  "views_count": 644,
+  "likes_count": 17,
+  "comments_count": 0,
+  "permalink": "https://www.artstation.com/artwork/d8DKwx",
+  "cover_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/137/medium/victor-cuadot-victor-cuadot-nito.jpg?1701995322",
+  "published_at": "2021-04-15T14:42:55.958-05:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "nito-the-gravelord",
+  "suppressed": false,
+  "hash_id": "d8DKwx",
+  "visible": true,
+  "is_promotional": false
+}

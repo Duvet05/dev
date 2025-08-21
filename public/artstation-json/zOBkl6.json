@@ -1,0 +1,261 @@
+{
+  "liked": false,
+  "tags": [
+    "Chicken",
+    "Character",
+    "Eevee",
+    "Realtime",
+    "renderrealtime",
+    "blender",
+    "black",
+    "pollo",
+    "parkour"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe   src=\"https://www.youtube-nocookie.com/embed/NWcTHpdqyvA?feature=oembed&rel=0\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen\u003E\u003C/iframe\u003E",
+      "oembed": {
+
+      },
+      "id": 33828485,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/videos/images/033/828/485/large/victor-cuadot-maxresdefault.jpg?1610661688",
+      "width": 1280,
+      "height": 720,
+      "position": 0,
+      "asset_type": "video",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214315,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/315/large/victor-cuadot-victor-cuadot-3dpollos.jpg?1701995914",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 33683201,
+      "title": "SomeCoolRenders",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003ESomeCoolRenders\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/033/683/201/large/victor-cuadot-optimized-pantalla-1-postpo.jpg?1610303643",
+      "width": 1920,
+      "height": 1080,
+      "position": 1,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 33683208,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/033/683/208/large/victor-cuadot-pose-2-final.jpg?1610303654",
+      "width": 1920,
+      "height": 1080,
+      "position": 2,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe src='https://www.artstation.com/api/v2/animation/video_clips/cd118712-1099-4dd3-b849-4f8c1801cdfc/embed.html?s=f37b1936366bd875c78a78a05f0c2d921af54fb462d22e9a27a64daf7e5c0069&t=1755780880' width='1920' height='1080' frameborder='0' allowfullscreen allows='autoplay; fullscreen' style='max-width: 1920px; max-height: 1080px;'\u003E\u003C/iframe\u003E",
+      "oembed": {
+        "width": 1920,
+        "height": 1080,
+        "provider_name": "ArtStation"
+      },
+      "id": 33683501,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/video_clips/images/033/683/501/large/victor-cuadot-thumb.jpg?1610304403",
+      "width": 1920,
+      "height": 1080,
+      "position": 3,
+      "asset_type": "video_clip",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 33683210,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/033/683/210/large/victor-cuadot-pose-3-zdepth.jpg?1610303659",
+      "width": 1920,
+      "height": 1080,
+      "position": 4,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe src='https://www.artstation.com/api/v2/animation/video_clips/84f85df9-c79d-4fac-b243-6053b7352735/embed.html?s=b6ba211714f23d4f6b44fcb489986faebf58334b13d80cf11ef1a32f704aba02&t=1755780880' width='1920' height='1920' frameborder='0' allowfullscreen allows='autoplay; fullscreen' style='max-width: 1920px; max-height: 1920px;'\u003E\u003C/iframe\u003E",
+      "oembed": {
+        "width": 1920,
+        "height": 1920,
+        "provider_name": "ArtStation"
+      },
+      "id": 33683273,
+      "title": "Uv's!",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EUv's!\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/video_clips/images/033/683/273/large/victor-cuadot-thumb.jpg?1610303909",
+      "width": 1920,
+      "height": 1920,
+      "position": 5,
+      "asset_type": "video_clip",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 33683216,
+      "title": "Topology View_1",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003ETopology View_1\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/033/683/216/large/victor-cuadot-wireframe.jpg?1610303664",
+      "width": 1920,
+      "height": 1080,
+      "position": 6,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 33683217,
+      "title": "Topology View_2",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003ETopology View_2\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/033/683/217/large/victor-cuadot-wireframe-1.jpg?1610303669",
+      "width": 1920,
+      "height": 1080,
+      "position": 7,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": {
+    "name": "Digital 3D",
+    "id": 2
+  },
+  "mediums": [
+    {
+      "name": "Digital 3D",
+      "id": 2
+    },
+    {
+      "name": "Animation",
+      "id": 6
+    },
+    {
+      "name": "Real-time",
+      "id": 7
+    }
+  ],
+  "categories": [
+    {
+      "name": "Game Art",
+      "id": 7
+    },
+    {
+      "name": "Character Design",
+      "id": 65
+    },
+    {
+      "name": "Character Modeling",
+      "id": 66
+    }
+  ],
+  "software_items": [
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/041/default/pt_appicon_noshadow_512.png?1627397594",
+      "name": "Substance 3D Painter"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/032/default/Photoshop.png?1608144074",
+      "name": "Photoshop"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/003/default/aftereffects.png?1608144443",
+      "name": "After Effects"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/056/default/BI_MD_Symbol_Primary.png?1636557207",
+      "name": "Marvelous Designer"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/046/default/zBrush3.png?1505488078",
+      "name": "ZBrush"
+    }
+  ],
+  "id": 9050375,
+  "user_id": 175617,
+  "title": "Chicken Parkour!",
+  "description": "\u003Cp\u003ECharacter design from scratch!, hope you like it.\n\u003Cbr /\u003EReally excited to work on more characters like this.\u003C/p\u003E",
+  "description_html": "\u003Cp\u003ECharacter design from scratch!, hope you like it.\n\u003Cbr /\u003EReally excited to work on more characters like this.\u003C/p\u003E",
+  "created_at": "2021-01-10T12:30:40.309-06:00",
+  "updated_at": "2024-03-03T21:37:57.164-06:00",
+  "views_count": 277,
+  "likes_count": 15,
+  "comments_count": 1,
+  "permalink": "https://www.artstation.com/artwork/zOBkl6",
+  "cover_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/315/medium/victor-cuadot-victor-cuadot-3dpollos.jpg?1701995914",
+  "published_at": "2021-01-14T16:02:18.202-06:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "chicken-parkour",
+  "suppressed": false,
+  "hash_id": "zOBkl6",
+  "visible": true,
+  "is_promotional": false
+}
