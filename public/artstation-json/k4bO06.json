@@ -1,0 +1,155 @@
+{
+  "liked": false,
+  "tags": [
+    "blender",
+    "robot",
+    "substanceainter",
+    "photoshop",
+    "illustration",
+    "scifi",
+    "characters",
+    "conceptart"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23525672,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/023/525/672/large/victor-cuadot-robotsitoconfondo.jpg?1579508136",
+      "width": 1920,
+      "height": 1080,
+      "position": 0,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214409,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/409/large/victor-cuadot-victor-cuadot-robotocube.jpg?1701996187",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23525670,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/023/525/670/large/victor-cuadot-gamejamillustration-postpo-1.jpg?1579508127",
+      "width": 1080,
+      "height": 1920,
+      "position": 1,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23525671,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/023/525/671/large/victor-cuadot-robots.jpg?1579508131",
+      "width": 1920,
+      "height": 1080,
+      "position": 2,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": {
+    "name": "Digital 3D",
+    "id": 2
+  },
+  "mediums": [
+    {
+      "name": "Digital 3D",
+      "id": 2
+    }
+  ],
+  "categories": [
+    {
+      "name": "Concept Art",
+      "id": 3
+    },
+    {
+      "name": "Creatures",
+      "id": 19
+    },
+    {
+      "name": "Character Modeling",
+      "id": 66
+    }
+  ],
+  "software_items": [
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/041/default/pt_appicon_noshadow_512.png?1627397594",
+      "name": "Substance 3D Painter"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/032/default/Photoshop.png?1608144074",
+      "name": "Photoshop"
+    }
+  ],
+  "id": 6502835,
+  "user_id": 175617,
+  "title": "Bibot robot",
+  "description": "\u003Cp\u003EIllustration made for UNIAT publicity, I modeled it in blender, textured it in substance painter, and compositing in photoshop.\u003C/p\u003E",
+  "description_html": "\u003Cp\u003EIllustration made for UNIAT publicity, I modeled it in blender, textured it in substance painter, and compositing in photoshop.\u003C/p\u003E",
+  "created_at": "2020-01-20T02:17:21.648-06:00",
+  "updated_at": "2023-12-07T18:43:10.983-06:00",
+  "views_count": 540,
+  "likes_count": 86,
+  "comments_count": 3,
+  "permalink": "https://www.artstation.com/artwork/k4bO06",
+  "cover_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/409/medium/victor-cuadot-victor-cuadot-robotocube.jpg?1701996187",
+  "published_at": "2020-01-20T02:17:21.632-06:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "bibot-robot",
+  "suppressed": false,
+  "hash_id": "k4bO06",
+  "visible": true,
+  "is_promotional": false
+}

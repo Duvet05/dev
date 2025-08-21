@@ -17,25 +17,29 @@ const techList: { tech: string; level: number; icon: IconType }[] = [
 ];
 
 export const Stack: React.FC<StackProps> = () => (
-  <div id="stack" className="flex-1 h-full flex flex-col self-stretch">
+  <div id="stack" className="flex-1 min-w-0 flex flex-col">
     <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">STACK</h2>
-    <div className="w-full max-w-2xl mx-auto flex flex-col gap-2">
-      {techList.map(({ tech, level, icon: Icon }, idx) => (
-        <div key={tech} className="flex items-center w-full">
-          <span className="flex items-center gap-4 font-vt323 text-lg text-white min-w-[140px] md:min-w-[160px] text-left">
-            <Icon className="text-2xl text-secondary" />
-            {tech}
-          </span>
-          <div className="flex flex-1 justify-end gap-1">
+    <div className="w-full grid gap-x-5 gap-y-2 items-center overflow-hidden" style={{ gridTemplateColumns: 'max-content 1fr' }}>
+      {techList.map(({ tech, level, icon: Icon }) => (
+        <React.Fragment key={tech}>
+          {/* Texto con ancho automático según el más largo */}
+          <div className="flex items-center gap-2 font-vt323 text-base lg:text-lg text-white">
+            <Icon className="text-xl lg:text-2xl text-secondary flex-shrink-0" />
+            <span className="truncate">{tech}</span>
+          </div>
+          {/* Barritas responsivas alineadas */}
+          <div className="flex gap-1 flex-1 w-full min-w-0">
             {[...Array(10)].map((_, i) => (
               <div
                 key={i}
-                className={`w-7 h-3 border border-secondary ${i < level ? 'bg-white' : 'bg-black'} transition-colors`}
-                style={{ boxShadow: i < level ? '0 0 1px #fff' : 'none', marginLeft: '1px' }}
+                className={`flex-1 min-w-0 h-3 border border-secondary flex-shrink-0 transition-colors ${i < level ? 'bg-white' : 'bg-black'}`}
+                style={{ 
+                  boxShadow: i < level ? '0 0 1px #fff' : 'none'
+                }}
               ></div>
             ))}
           </div>
-        </div>
+        </React.Fragment>
       ))}
     </div>
   </div>

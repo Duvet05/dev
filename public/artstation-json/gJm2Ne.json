@@ -1,0 +1,167 @@
+{
+  "liked": false,
+  "tags": [
+    "egg",
+    "character",
+    "heroe",
+    "blender",
+    "eevee",
+    "clay",
+    "sculpt"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23125777,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/023/125/777/large/victor-cuadot-huevopose-1-postpo.jpg?1578184436",
+      "width": 1920,
+      "height": 1080,
+      "position": 0,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214379,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/379/large/victor-cuadot-victor-cuadot-eggselente.jpg?1701996076",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23125776,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/023/125/776/large/victor-cuadot-2.jpg?1578184432",
+      "width": 1920,
+      "height": 1042,
+      "position": 2,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23125779,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/023/125/779/large/victor-cuadot-huevopose-2-postpo.jpg?1578184438",
+      "width": 1920,
+      "height": 1080,
+      "position": 3,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23125780,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/023/125/780/large/victor-cuadot-6.jpg?1578184438",
+      "width": 1920,
+      "height": 1022,
+      "position": 4,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 23125778,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/023/125/778/large/victor-cuadot-3.jpg?1578184435",
+      "width": 1916,
+      "height": 1042,
+      "position": 5,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": {
+    "name": "Digital 3D",
+    "id": 2
+  },
+  "mediums": [
+    {
+      "name": "Digital 3D",
+      "id": 2
+    }
+  ],
+  "categories": [],
+  "software_items": [
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/032/default/Photoshop.png?1608144074",
+      "name": "Photoshop"
+    }
+  ],
+  "id": 6393939,
+  "user_id": 175617,
+  "title": "Angry EGG",
+  "description": "\u003Cp\u003EHello everyone, here i am bringing you this cute but angry egg.\n\u003Cbr /\u003EToday i wanted to make something cute, and simple, but creative, i did prepare my moodboard with a bunch of egg images, and started modeling.\n\u003Cbr /\u003EI modeled it on blender 2.81, textures were made there too, i render it on Eevee and iam amazed by the results.\u003C/p\u003E\n\n\u003Cp\u003EInstagram; \u003Ca href=\"https://www.instagram.com/cuadot/\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"\u003Ehttps://www.instagram.com/cuadot/\u003C/a\u003E\u003C/p\u003E",
+  "description_html": "\u003Cp\u003EHello everyone, here i am bringing you this cute but angry egg.\n\u003Cbr /\u003EToday i wanted to make something cute, and simple, but creative, i did prepare my moodboard with a bunch of egg images, and started modeling.\n\u003Cbr /\u003EI modeled it on blender 2.81, textures were made there too, i render it on Eevee and iam amazed by the results.\n\u003Cbr /\u003EInstagram; \u003Ca href=\"https://www.instagram.com/cuadot/\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"\u003Ehttps://www.instagram.com/cuadot/\u003C/a\u003E\u003C/p\u003E",
+  "created_at": "2020-01-04T18:34:13.682-06:00",
+  "updated_at": "2025-05-02T11:43:10.030-05:00",
+  "views_count": 991,
+  "likes_count": 178,
+  "comments_count": 11,
+  "permalink": "https://www.artstation.com/artwork/gJm2Ne",
+  "cover_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/379/medium/victor-cuadot-victor-cuadot-eggselente.jpg?1701996076",
+  "published_at": "2020-01-04T18:34:22.700-06:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "angry-egg-2",
+  "suppressed": false,
+  "hash_id": "gJm2Ne",
+  "visible": true,
+  "is_promotional": false
+}

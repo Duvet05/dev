@@ -1,0 +1,297 @@
+{
+  "liked": false,
+  "tags": [
+    "stove oil",
+    "render",
+    "kitchen",
+    "prop",
+    "modeling",
+    "texturing",
+    "asset",
+    "free",
+    "NoAI"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79108491,
+      "title": "I love watching camping videos, and in one of those i saw this product, i felt in love with its design, so i wanted to replicate the whole product on 3d to showcase my skills and have fun :)",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EI love watching camping videos, and in one of those i saw this product, i felt in love with its design, so i wanted to replicate the whole product on 3d to showcase my skills and have fun :)\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/079/108/491/large/victor-cuadot-portada.jpg?1724009816",
+      "width": 2256,
+      "height": 1512,
+      "position": 0,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79109123,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/covers/images/079/109/123/large/victor-cuadot-victor-cuadot-toyotomi.jpg?1724011301",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79108495,
+      "title": "Refs came from YT channels who make reviews of this kind of camping products, so thanks to them !",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003ERefs came from YT channels who make reviews of this kind of camping products, so thanks to them !\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/079/108/495/large/victor-cuadot-refs.jpg?1724009827",
+      "width": 2256,
+      "height": 1512,
+      "position": 1,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79108493,
+      "title": "Measures and proportions are one of the first steps, so many blockings came from this stage.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EMeasures and proportions are one of the first steps, so many blockings came from this stage.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/079/108/493/large/victor-cuadot-proportionswireframe.jpg?1724009822",
+      "width": 2256,
+      "height": 1512,
+      "position": 2,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79108489,
+      "title": "Some ortographic views.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003ESome ortographic views.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/079/108/489/large/victor-cuadot-orto-2.jpg?1724009810",
+      "width": 2256,
+      "height": 1512,
+      "position": 3,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79108487,
+      "title": "Some ortographic views.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003ESome ortographic views.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/079/108/487/large/victor-cuadot-orto-1.jpg?1724009803",
+      "width": 2256,
+      "height": 1512,
+      "position": 4,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe id=\"\" title=\"\" class=\"\" width=\"640\" height=\"360\" src=\"https://sketchfab.com/models/30906a8fe8ff4e42883351691b6854ef/embed\" frameborder=\"0\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" allowfullscreen=\"\" mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" xr-spatial-tracking=\"true\" execution-while-out-of-viewport=\"true\" execution-while-not-rendered=\"true\" web-share=\"true\"\u003E\u003C/iframe\u003E",
+      "oembed": {
+
+      },
+      "id": 79108930,
+      "title": "Here you can inspect the uvs, and the model itself, also feel free to download it.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EHere you can inspect the uvs, and the model itself, also feel free to download it.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/model3ds/images/079/108/930/large/victor-cuadot-d25dd0be36ce415c9a01877d743c3725.jpg?1724010875",
+      "width": 720,
+      "height": 405,
+      "position": 5,
+      "asset_type": "model3d",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79108483,
+      "title": "For baking I tend to separate the objects.\nThe proccess of baking mesh maps on substance painter from high to low, becomes easir with this method and the suffix option on SP.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EFor baking I tend to separate the objects.\n\u003Cbr /\u003EThe proccess of baking mesh maps on substance painter from high to low, becomes easir with this method and the suffix option on SP.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/079/108/483/large/victor-cuadot-lowhigh.jpg?1724009795",
+      "width": 2256,
+      "height": 1512,
+      "position": 6,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79108498,
+      "title": "Some 3/4 Views.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003ESome 3/4 Views.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/079/108/498/large/victor-cuadot-3-4-views.jpg?1724009833",
+      "width": 2256,
+      "height": 1512,
+      "position": 7,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79108480,
+      "title": "This designs were made on Illustrator and photoshop, wanted to add some fun stories on them, i wasn't accurate on the content of this decals.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EThis designs were made on Illustrator and photoshop, wanted to add some fun stories on them, i wasn't accurate on the content of this decals.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/079/108/480/large/victor-cuadot-decals.jpg?1724009790",
+      "width": 2256,
+      "height": 1512,
+      "position": 8,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe src='https://www.artstation.com/api/v2/animation/video_clips/efc37557-783e-4386-b8ed-d04d9d240cf6/embed.html?s=eff92810440021cb9073024bb87937774a12faedd0ff2c4d082e9880ee9fefc7&t=1755780799' width='1920' height='1590' frameborder='0' allowfullscreen allows='autoplay; fullscreen' style='max-width: 1920px; max-height: 1590px;'\u003E\u003C/iframe\u003E",
+      "oembed": {
+        "width": 1920,
+        "height": 1590,
+        "provider_name": "ArtStation"
+      },
+      "id": 79108545,
+      "title": "A brief turntable with wireframe on.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EA brief turntable with wireframe on.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/video_clips/images/079/108/545/large/victor-cuadot-thumb.jpg?1724009962",
+      "width": 1920,
+      "height": 1590,
+      "position": 9,
+      "asset_type": "video_clip",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79108477,
+      "title": "Try to put all decals and stamps ",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003ETry to put all decals and stamps \u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/079/108/477/large/victor-cuadot-closeup1.jpg?1724009777",
+      "width": 2256,
+      "height": 1512,
+      "position": 10,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 79108479,
+      "title": "Showing off some close ups, all renders are made on blender using cycles engine.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EShowing off some close ups, all renders are made on blender using cycles engine.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/079/108/479/large/victor-cuadot-closeup2.jpg?1724009783",
+      "width": 2256,
+      "height": 1512,
+      "position": 11,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": {
+    "name": "Digital 3D",
+    "id": 2
+  },
+  "mediums": [
+    {
+      "name": "Digital 3D",
+      "id": 2
+    }
+  ],
+  "categories": [
+    {
+      "name": "Props",
+      "id": 21
+    },
+    {
+      "name": "Games and Real-Time 3D Environment Art",
+      "id": 45
+    }
+  ],
+  "software_items": [
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/007/745/default/Photoshop-Elements-14-Logo.png?1515085980",
+      "name": "Photoshop Elements"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/005/977/default/Illustrator_Draw.png?1471448458",
+      "name": "Illustrator Draw"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/041/default/pt_appicon_noshadow_512.png?1627397594",
+      "name": "Substance 3D Painter"
+    }
+  ],
+  "id": 18908695,
+  "user_id": 175617,
+  "title": "3dProp_ModelingPipline(Toyotomi Gear Mission KS-GE67); ",
+  "description": "\u003Cp\u003EHere's a prop model of a stove oil which design's inspire me to model it on 3d,\n\u003Cbr /\u003EFor the task i first gather all the refs i needed, then starter modeling,\n\u003Cbr /\u003Etexturing, exporting and importing, lightning and rendering.\n\u003Cbr /\u003EAfter that i just took care of the showcase design.\n\u003Cbr /\u003EIt was fun making this prop, \u003Cimg class=\"emoji\" alt=\"smiley\" src=\"https://artstation.com/assets/emoji/smiley.png\" /\u003E\n\u003Cbr /\u003EHope it showcase my skills &lt;. \u003C/p\u003E",
+  "description_html": "\u003Cp\u003EHere's a prop model of a stove oil which design's inspire me to model it on 3d,\n\u003Cbr /\u003EFor the task i first gather all the refs i needed, then starter modeling,\n\u003Cbr /\u003Etexturing, exporting and importing, lightning and rendering.\n\u003Cbr /\u003EAfter that i just took care of the showcase design.\n\u003Cbr /\u003EIt was fun making this prop, \u003Cimg class=\"emoji\" alt=\"smiley\" src=\"https://artstation.com/assets/emoji/smiley.png\" /\u003E\n\u003Cbr /\u003EHope it showcase my skills &lt;. \u003C/p\u003E",
+  "created_at": "2024-08-18T15:01:45.259-05:00",
+  "updated_at": "2025-07-03T02:25:41.018-05:00",
+  "views_count": 103,
+  "likes_count": 4,
+  "comments_count": 0,
+  "permalink": "https://www.artstation.com/artwork/nJQarE",
+  "cover_url": "https://cdnb.artstation.com/p/assets/covers/images/079/109/123/medium/victor-cuadot-victor-cuadot-toyotomi.jpg?1724011301",
+  "published_at": "2024-08-18T15:01:53.580-05:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "3dprop_modelingpipline-toyotomi-gear-mission-ks-ge67",
+  "suppressed": false,
+  "hash_id": "nJQarE",
+  "visible": true,
+  "is_promotional": false
+}

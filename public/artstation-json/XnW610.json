@@ -1,0 +1,250 @@
+{
+  "liked": false,
+  "tags": [
+    "Alien",
+    "horror",
+    "creature",
+    "animation",
+    "korn",
+    "hating",
+    "video",
+    "vfx",
+    "decalmachine",
+    "character",
+    "concept",
+    "design",
+    "conceptart",
+    "conceptvideo"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe   src=\"https://www.youtube-nocookie.com/embed/vKQOp4-Urtk?feature=oembed&rel=0\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen\u003E\u003C/iframe\u003E",
+      "oembed": {
+
+      },
+      "id": 35901685,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/videos/images/035/901/685/large/victor-cuadot-maxresdefault.jpg?1616189073",
+      "width": 1280,
+      "height": 720,
+      "position": 0,
+      "asset_type": "video",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214211,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/211/large/victor-cuadot-victor-cuadot-granujaboris.jpg?1701995574",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 35901335,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/035/901/335/large/victor-cuadot-alienigeno1-final.jpg?1616188289",
+      "width": 1920,
+      "height": 1080,
+      "position": 1,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 35901333,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/035/901/333/large/victor-cuadot-alienigeno1-ao.jpg?1616188283",
+      "width": 1920,
+      "height": 1080,
+      "position": 2,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 35901338,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/035/901/338/large/victor-cuadot-alienigeno3-ao.jpg?1616188294",
+      "width": 1920,
+      "height": 1080,
+      "position": 3,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 35901341,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/035/901/341/large/victor-cuadot-alienigeno3-basecolor.jpg?1616188299",
+      "width": 1920,
+      "height": 1080,
+      "position": 4,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 35901343,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/035/901/343/large/victor-cuadot-alienigeno5-final.jpg?1616188304",
+      "width": 1920,
+      "height": 1080,
+      "position": 5,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 35901345,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/035/901/345/large/victor-cuadot-alienigeno6-ao.jpg?1616188309",
+      "width": 1920,
+      "height": 1080,
+      "position": 6,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 35901351,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/035/901/351/large/victor-cuadot-alienigeno6-basecolor.jpg?1616188316",
+      "width": 1920,
+      "height": 1080,
+      "position": 7,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": {
+    "name": "Digital 3D",
+    "id": 2
+  },
+  "mediums": [
+    {
+      "name": "Digital 3D",
+      "id": 2
+    },
+    {
+      "name": "Real-time",
+      "id": 7
+    }
+  ],
+  "categories": [
+    {
+      "name": "Science Fiction",
+      "id": 6
+    },
+    {
+      "name": "Horror",
+      "id": 48
+    },
+    {
+      "name": "VFX for Film, TV & Animation",
+      "id": 64
+    }
+  ],
+  "software_items": [
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/046/default/zBrush3.png?1505488078",
+      "name": "ZBrush"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/041/default/pt_appicon_noshadow_512.png?1627397594",
+      "name": "Substance 3D Painter"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/003/default/aftereffects.png?1608144443",
+      "name": "After Effects"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/032/default/Photoshop.png?1608144074",
+      "name": "Photoshop"
+    }
+  ],
+  "id": 9596906,
+  "user_id": 175617,
+  "title": "Granuja Boris. Concept character design",
+  "description": "\u003Cp\u003EThis is Granuja Boris he's a pretty grumpy allien, dont make him angry please.\n\u003Cbr /\u003EThis was sculpted in Zbrush, then decimates to make some simple uv's and pass them to substance painter.\n\u003Cbr /\u003EAfter that i used some decal machine on blender to add some details, and some simple modeling.\n\u003Cbr /\u003ERender was made in Eevee, and composition in After Effects.\n\u003Cbr /\u003EThe song is Hating from Korn, all audio credits goes for them, that song means a lot to me, so i wanted to make a tribute about what I've felt over the years while listening to this song.\n\u003Cbr /\u003EHope someday they can watch this.\u003C/p\u003E",
+  "description_html": "\u003Cp\u003EThis is Granuja Boris he's a pretty grumpy allien, dont make him angry please.\n\u003Cbr /\u003EThis was sculpted in Zbrush, then decimates to make some simple uv's and pass them to substance painter.\n\u003Cbr /\u003EAfter that i used some decal machine on blender to add some details, and some simple modeling.\n\u003Cbr /\u003ERender was made in Eevee, and composition in After Effects.\n\u003Cbr /\u003EThe song is Hating from Korn, all audio credits goes for them, that song means a lot to me, so i wanted to make a tribute about what I've felt over the years while listening to this song.\n\u003Cbr /\u003EHope someday they can watch this.\u003C/p\u003E",
+  "created_at": "2021-03-19T16:25:14.093-05:00",
+  "updated_at": "2024-03-03T21:37:53.824-06:00",
+  "views_count": 221,
+  "likes_count": 13,
+  "comments_count": 5,
+  "permalink": "https://www.artstation.com/artwork/XnW610",
+  "cover_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/211/medium/victor-cuadot-victor-cuadot-granujaboris.jpg?1701995574",
+  "published_at": "2021-03-19T16:26:24.276-05:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "granuja-boris-concept-character-design",
+  "suppressed": false,
+  "hash_id": "XnW610",
+  "visible": true,
+  "is_promotional": false
+}

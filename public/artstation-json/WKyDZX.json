@@ -1,0 +1,154 @@
+{
+  "liked": false,
+  "tags": [
+    "sneakers",
+    "conceptart",
+    "3d",
+    "product",
+    "tennis",
+    "nike",
+    "adidas"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 41944078,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/041/944/078/large/victor-cuadot-sneakersquidgame-ff-mask.jpg?1633127035",
+      "width": 3840,
+      "height": 2160,
+      "position": 0,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70213812,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdna.artstation.com/p/assets/covers/images/070/213/812/large/victor-cuadot-victor-cuadot-squid.jpg?1701994403",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 41944115,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/041/944/115/large/victor-cuadot-sneakersquidgame-ff-mask-bw.jpg?1633127130",
+      "width": 3840,
+      "height": 2160,
+      "position": 1,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 41944197,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/041/944/197/large/victor-cuadot-squidgame-sneaker-ff.jpg?1633127322",
+      "width": 3840,
+      "height": 2160,
+      "position": 2,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": {
+    "name": "Digital 3D",
+    "id": 2
+  },
+  "mediums": [
+    {
+      "name": "Digital 3D",
+      "id": 2
+    }
+  ],
+  "categories": [
+    {
+      "name": "Stylized",
+      "id": 58
+    },
+    {
+      "name": "Toys & Collectibles",
+      "id": 60
+    },
+    {
+      "name": "Visual Development",
+      "id": 61
+    }
+  ],
+  "software_items": [
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/041/default/pt_appicon_noshadow_512.png?1627397594",
+      "name": "Substance 3D Painter"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/032/default/Photoshop.png?1608144074",
+      "name": "Photoshop"
+    }
+  ],
+  "id": 11046425,
+  "user_id": 175617,
+  "title": "SquidGame Sneakers",
+  "description": "\u003Cp\u003EAll this work was made on blender! except the splatter bloods, those ones i did on substance painter!\n\u003Cbr /\u003EIt was such a joy making them and i'm so satysfied with the result!\n\u003Cbr /\u003EHope you like them!\n\u003Cbr /\u003EIf you need a 3d concept artist for your projects feel free to dm me &lt;3!\n\u003Cbr /\u003EAlso wath SquidGame its really cool!\u003C/p\u003E",
+  "description_html": "\u003Cp\u003EAll this work was made on blender! except the splatter bloods, those ones i did on substance painter!\n\u003Cbr /\u003EIt was such a joy making them and i'm so satysfied with the result!\n\u003Cbr /\u003EHope you like them!\n\u003Cbr /\u003EIf you need a 3d concept artist for your projects feel free to dm me &lt;3!\n\u003Cbr /\u003EAlso wath SquidGame its really cool!\u003C/p\u003E",
+  "created_at": "2021-10-01T17:36:14.365-05:00",
+  "updated_at": "2025-05-02T11:47:41.926-05:00",
+  "views_count": 404,
+  "likes_count": 15,
+  "comments_count": 0,
+  "permalink": "https://www.artstation.com/artwork/WKyDZX",
+  "cover_url": "https://cdna.artstation.com/p/assets/covers/images/070/213/812/medium/victor-cuadot-victor-cuadot-squid.jpg?1701994403",
+  "published_at": "2021-10-01T17:36:14.352-05:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "squidgame-sneakers",
+  "suppressed": false,
+  "hash_id": "WKyDZX",
+  "visible": true,
+  "is_promotional": false
+}

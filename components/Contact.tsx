@@ -15,7 +15,7 @@ export const Contact: React.FC<ContactProps> = ({ currentTime }) => (
     <WindowHeader title="CONTACT.EXE" />
     <div className="border-secondary border grid grid-cols-1 lg:grid-cols-2">
       <div>
-        <div className="bg-primary border-r border-secondary p-6">
+        <div className="bg-primary border-b border-r-0 border-secondary p-6 lg:border-b-0 lg:border-r">
           <h3 className="text-xl font-bold mb-4 font-bauhaus whitespace-nowrap overflow-hidden w-full flex items-center">
             <span>SEND.MESSAGE</span>
             <span className="flex-1 ml-2 text-secondary" style={{ letterSpacing: '2px' }}>{'/'.repeat(40)}</span>
@@ -40,7 +40,7 @@ export const Contact: React.FC<ContactProps> = ({ currentTime }) => (
       <div>
         <div className="text-secondary bg-primary border-b border-secondary p-6">
           <h3 className="text-xl font-bold mb-4 font-bauhaus whitespace-nowrap overflow-hidden w-full flex items-center">
-            <span>DIRECT.LINKS</span>
+            <span>CONTACT.LINKS</span>
             <span className="flex-1 ml-2 text-secondary" style={{ letterSpacing: '2px' }}>{'/'.repeat(40)}</span>
           </h3>
           <div className="space-y-3">
@@ -54,11 +54,11 @@ export const Contact: React.FC<ContactProps> = ({ currentTime }) => (
             </div>
             <div className="flex items-center space-x-3">
               <SiInstagram className="w-5 h-5 text-white" />
-              <a href="https://www.instagram.com/cuadot.art" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">@cuadot.art</a>
+              <a href="https://www.instagram.com/cuadot.3d" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">@cuadot.3d</a>
             </div>
             <div className="flex items-center space-x-3">
               <SiLinkedin className="w-5 h-5 text-white" />
-              <a href="https://www.linkedin.com/in/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">linkedin.com/in/cuadot</a>
+              <a href="https://www.linkedin.com/in/victor-cuadot-esqueda-5a710b15a/?originalSubdomain=mx" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">linkedin.com/in/victor-cuadot-esqueda</a>
             </div>
             <div className="flex items-center space-x-3">
               <SiGmail className="w-5 h-5 text-white" />
@@ -66,7 +66,7 @@ export const Contact: React.FC<ContactProps> = ({ currentTime }) => (
             </div>
             <div className="flex items-center space-x-3">
               <SiDiscord className="w-5 h-5 text-white" />
-              <a href="https://discord.gg/cuadot" target="_blank" rel="noopener noreferrer" className="text-base hover:underline">discord.gg/cuadot</a>
+              <span className="text-base">cuadot</span>
             </div>
           </div>
         </div>

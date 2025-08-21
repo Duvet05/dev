@@ -62,6 +62,8 @@ interface Project {
   embedUrl?: string;
   publishedAt?: string;
   staffpickedAt?: string | null;
+  // Nuevo campo para el hash de ArtStation (p.ej. nJQarE)
+  hashId?: string;
 }
 
 // Interfaz para las estadísticas globales
@@ -103,6 +105,262 @@ const tagTechIcons: Record<string, IconType> = {
   substance: SiAdobe,
   zbrush: FaPaintBrush,
 }
+
+// Proyectos de ArtStation hardcodeados (basados en el JSON proporcionado por el usuario)
+const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
+  {
+    title: "3DPROP_MODELINGPIPLINE(TOYOTOMI GEAR MISSION KS-GE67); ".toUpperCase(),
+    source: 'ARTSTATION',
+    description: "Here's a prop model of a stove oil which design's inspire me to model it on 3d,\nFor the task i first gather all the refs i needed, then starter modeling,\ntexturing, exporting and importing, lightning and rendering.\nAfter that i just took care of the showcase design.\nIt was fun making this prop, :)\nHope it showcase my skills <.",
+    date: '2024-08-18T15:01:53.580-05:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/nJQarE',
+    embedUrl: 'https://www.artstation.com/embed/nJQarE',
+    likes: 4,
+    hashId: 'nJQarE',
+    thumbnails: {
+      small: 'https://cdnb.artstation.com/p/assets/covers/images/079/109/123/small_square/victor-cuadot-victor-cuadot-toyotomi.jpg?1724011301',
+      medium: 'https://cdnb.artstation.com/p/assets/covers/images/079/109/123/smaller_square/victor-cuadot-victor-cuadot-toyotomi.jpg?1724011301',
+      large: 'https://cdnb.artstation.com/p/assets/covers/images/079/109/123/micro_square/victor-cuadot-victor-cuadot-toyotomi.jpg?1724011301',
+    },
+  },
+  {
+    title: 'Low poly car animated model'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: "Based on the great  @gatring3's on twitter concept.\nHeres a demostration of some low poly videogame modeling, rigging, animating, and texturing.\nGiving life to this little guy was a challenge.",
+    date: '2024-01-09T12:24:40.640-06:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/QX6QnZ',
+    embedUrl: 'https://www.artstation.com/embed/QX6QnZ',
+    likes: 3,
+    hashId: 'QX6QnZ',
+    thumbnails: {
+      small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/633/small_square/victor-cuadot-victor-cuadot-vehiclecarrito.jpg?1701997233',
+      medium: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/633/smaller_square/victor-cuadot-victor-cuadot-vehiclecarrito.jpg?1701997233',
+      large: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/633/micro_square/victor-cuadot-victor-cuadot-vehiclecarrito.jpg?1701997233',
+    },
+  },
+  {
+    title: 'Casco - Caja de enchufes para autos de exploración'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: "Encargado del modelado, optimización, texturizado animación, renderizado y diseño conceptual del prototipo de producto.\nEl objetivo era explorar diseños para según el brief y feedback del clliente.\nDiseños conceptuales y renders de producto para Ford.",
+    date: '2023-12-07T17:33:52.874-06:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/PXDwdB',
+    embedUrl: 'https://www.artstation.com/embed/PXDwdB',
+    likes: 3,
+    hashId: 'PXDwdB',
+    thumbnails: {
+      small: 'https://cdnb.artstation.com/p/assets/covers/images/070/213/287/small_square/victor-cuadot-victor-cuadot-thumbnail.jpg?1701992354',
+      medium: 'https://cdnb.artstation.com/p/assets/covers/images/070/213/287/smaller_square/victor-cuadot-victor-cuadot-thumbnail.jpg?1701992354',
+      large: 'https://cdnb.artstation.com/p/assets/covers/images/070/213/287/micro_square/victor-cuadot-victor-cuadot-thumbnail.jpg?1701992354',
+    },
+  },
+  {
+    title: 'SquidGame Sneakers'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: "All this work was made on blender! except the splatter bloods, those ones i did on substance painter!\nIt was such a joy making them and i'm so satysfied with the result!",
+    date: '2021-10-01T17:36:14.352-05:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/WKyDZX',
+    embedUrl: 'https://www.artstation.com/embed/WKyDZX',
+    likes: 15,
+    hashId: 'WKyDZX',
+    thumbnails: {
+      small: 'https://cdna.artstation.com/p/assets/covers/images/070/213/812/small_square/victor-cuadot-victor-cuadot-squid.jpg?1701994403',
+      medium: 'https://cdna.artstation.com/p/assets/covers/images/070/213/812/smaller_square/victor-cuadot-victor-cuadot-squid.jpg?1701994403',
+      large: 'https://cdna.artstation.com/p/assets/covers/images/070/213/812/micro_square/victor-cuadot-victor-cuadot-squid.jpg?1701994403',
+    },
+  },
+  {
+    title: 'Bunny sneakers!'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: '3d concept design of a bunny sneaker!\nMade on blender and photoshop',
+    date: '2021-10-03T14:47:33.241-05:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/8eAxxE',
+    embedUrl: 'https://www.artstation.com/embed/8eAxxE',
+    likes: 9,
+    hashId: '8eAxxE',
+    thumbnails: {
+      small: 'https://cdnb.artstation.com/p/assets/covers/images/070/213/767/small_square/victor-cuadot-victor-cuadot-bunny.jpg?1701994207',
+      medium: 'https://cdnb.artstation.com/p/assets/covers/images/070/213/767/smaller_square/victor-cuadot-victor-cuadot-bunny.jpg?1701994207',
+      large: 'https://cdnb.artstation.com/p/assets/covers/images/070/213/767/micro_square/victor-cuadot-victor-cuadot-bunny.jpg?1701994207',
+    },
+  },
+  {
+    title: 'Angry EGG'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: "Hello everyone, here i am bringing you this cute but angry egg.\nToday i wanted to make something cute, and simple, but creative...",
+    date: '2020-01-04T18:34:22.700-06:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/gJm2Ne',
+    embedUrl: 'https://www.artstation.com/embed/gJm2Ne',
+    likes: 178,
+    hashId: 'gJm2Ne',
+    thumbnails: {
+      small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/379/small_square/victor-cuadot-victor-cuadot-eggselente.jpg?1701996076',
+      medium: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/379/smaller_square/victor-cuadot-victor-cuadot-eggselente.jpg?1701996076',
+      large: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/379/micro_square/victor-cuadot-victor-cuadot-eggselente.jpg?1701996076',
+    },
+  },
+  {
+    title: 'Skull illustrations'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: 'This set of renders were made on 2021.',
+    date: '2022-07-13T15:44:31.749-05:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/JeVyq0',
+    embedUrl: 'https://www.artstation.com/embed/JeVyq0',
+    likes: 5,
+    hashId: 'JeVyq0',
+    thumbnails: {
+      small: 'https://cdna.artstation.com/p/assets/covers/images/070/213/412/small_square/victor-cuadot-victor-cuadot-skull.jpg?1701992786',
+      medium: 'https://cdna.artstation.com/p/assets/covers/images/070/213/412/smaller_square/victor-cuadot-victor-cuadot-skull.jpg?1701992786',
+      large: 'https://cdna.artstation.com/p/assets/covers/images/070/213/412/micro_square/victor-cuadot-victor-cuadot-skull.jpg?1701992786',
+    },
+  },
+  {
+    title: 'allien portraits set'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: "This set of alliens were made trying to implement certain MLW creative's workflow technics",
+    date: '2021-05-09T23:33:31.612-05:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/Ooegxw',
+    embedUrl: 'https://www.artstation.com/embed/Ooegxw',
+    likes: 21,
+    hashId: 'Ooegxw',
+    thumbnails: {
+      small: 'https://cdna.artstation.com/p/assets/covers/images/070/213/924/small_square/victor-cuadot-victor-cuadot-allien.jpg?1701994737',
+      medium: 'https://cdna.artstation.com/p/assets/covers/images/070/213/924/smaller_square/victor-cuadot-victor-cuadot-allien.jpg?1701994737',
+      large: 'https://cdna.artstation.com/p/assets/covers/images/070/213/924/micro_square/victor-cuadot-victor-cuadot-allien.jpg?1701994737',
+    },
+  },
+  {
+    title: 'Nito the GRAVELORD!'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: "This is my version of Nito from the first Darksouls!, i always liked the character design of Nito.",
+    date: '2021-04-15T14:42:55.958-05:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/d8DKwx',
+    embedUrl: 'https://www.artstation.com/embed/d8DKwx',
+    likes: 17,
+    hashId: 'd8DKwx',
+    thumbnails: {
+      small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/137/small_square/victor-cuadot-victor-cuadot-nito.jpg?1701995322',
+      medium: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/137/smaller_square/victor-cuadot-victor-cuadot-nito.jpg?1701995322',
+      large: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/137/micro_square/victor-cuadot-victor-cuadot-nito.jpg?1701995322',
+    },
+  },
+  {
+    title: 'Granuja Boris. Concept character design'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: "This is Granuja Boris he's a pretty grumpy allien, dont make him angry please.",
+    date: '2021-03-19T16:26:24.276-05:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/XnW610',
+    embedUrl: 'https://www.artstation.com/embed/XnW610',
+    likes: 13,
+    hashId: 'XnW610',
+    thumbnails: {
+      small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/211/small_square/victor-cuadot-victor-cuadot-granujaboris.jpg?1701995574',
+      medium: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/211/smaller_square/victor-cuadot-victor-cuadot-granujaboris.jpg?1701995574',
+      large: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/211/micro_square/victor-cuadot-victor-cuadot-granujaboris.jpg?1701995574',
+    },
+  },
+  {
+    title: 'Chicken Parkour!'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: "Character design from scratch!, hope you like it.\nReally excited to work on more characters like this.",
+    date: '2021-01-14T16:02:18.202-06:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/zOBkl6',
+    embedUrl: 'https://www.artstation.com/embed/zOBkl6',
+    likes: 15,
+    hashId: 'zOBkl6',
+    thumbnails: {
+      small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/315/small_square/victor-cuadot-victor-cuadot-3dpollos.jpg?1701995914',
+      medium: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/315/smaller_square/victor-cuadot-victor-cuadot-3dpollos.jpg?1701995914',
+      large: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/315/micro_square/victor-cuadot-victor-cuadot-3dpollos.jpg?1701995914',
+    },
+  },
+  {
+    title: 'Bibot robot'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: 'Illustration made for UNIAT publicity, I modeled it in blender, textured it in substance painter, and compositing in photoshop.',
+    date: '2020-01-20T02:17:21.632-06:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/k4bO06',
+    embedUrl: 'https://www.artstation.com/embed/k4bO06',
+    likes: 86,
+    hashId: 'k4bO06',
+    thumbnails: {
+      small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/409/small_square/victor-cuadot-victor-cuadot-robotocube.jpg?1701996187',
+      medium: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/409/smaller_square/victor-cuadot-victor-cuadot-robotocube.jpg?1701996187',
+      large: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/409/micro_square/victor-cuadot-victor-cuadot-robotocube.jpg?1701996187',
+    },
+  },
+  {
+    title: '¡Wooden Toy Horse!'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: "Modeled on blender, and textures made on substance painter.\nReally enjoy making this one!, lots of fun.",
+    date: '2020-05-29T20:54:50.721-05:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/8lQLgQ',
+    embedUrl: 'https://www.artstation.com/embed/8lQLgQ',
+    likes: 23,
+    hashId: '8lQLgQ',
+    thumbnails: {
+      small: 'https://cdna.artstation.com/p/assets/covers/images/070/214/426/small_square/victor-cuadot-victor-cuadot-horse.jpg?1701996254',
+      medium: 'https://cdna.artstation.com/p/assets/covers/images/070/214/426/smaller_square/victor-cuadot-victor-cuadot-horse.jpg?1701996254',
+      large: 'https://cdna.artstation.com/p/assets/covers/images/070/214/426/micro_square/victor-cuadot-victor-cuadot-horse.jpg?1701996254',
+    },
+  },
+  {
+    title: 'Baseball Robot!'.toUpperCase(),
+    source: 'ARTSTATION',
+    description: "This work was made just by fun!, had a raw idea about a baseball player from other world.\nAll modeling was made on blender...",
+    date: '2019-12-31T01:42:28.014-06:00',
+    fileSize: '',
+    renderTime: '',
+    complexity: 'MEDIUM',
+    viewerUrl: 'https://www.artstation.com/artwork/qAVyER',
+    embedUrl: 'https://www.artstation.com/embed/qAVyER',
+    likes: 52,
+    hashId: 'qAVyER',
+    thumbnails: {
+      small: 'https://cdna.artstation.com/p/assets/covers/images/070/214/434/small_square/victor-cuadot-victor-cuadot-robotbaseball.jpg?1701996304',
+      medium: 'https://cdna.artstation.com/p/assets/covers/images/070/214/434/smaller_square/victor-cuadot-victor-cuadot-robotbaseball.jpg?1701996304',
+      large: 'https://cdna.artstation.com/p/assets/covers/images/070/214/434/micro_square/victor-cuadot-victor-cuadot-robotbaseball.jpg?1701996304',
+    },
+  },
+]
 
 export default function ProjectsPage() {
   const [currentTime, setCurrentTime] = useState("")
@@ -201,55 +459,15 @@ export default function ProjectsPage() {
     try {
       setIsLoadingProjects(true);
       setProjectsError("");
-      const response = await fetch(`/api/artstation`);
-      const data = await response.json();
 
-      if (Array.isArray(data)) {
-        // Mapear los datos de ArtStation al formato Project
-        const mappedProjects: Project[] = data.map((item: unknown) => {
-          if (typeof item !== 'object' || item === null) return null;
-          const safeItem = item as Record<string, unknown>;
-          const title = typeof safeItem.title === 'string' ? safeItem.title : '';
-          return {
-            title: title.length > 25 ? title.substring(0, 25) + '...' : title.toUpperCase(),
-            source: 'ARTSTATION',
-            description: (safeItem.descriptionHtml as string) || (safeItem.description as string) || '',
-            date: (safeItem.publishedAt as string) || (safeItem.createdAt as string) || '',
-            fileSize: '',
-            renderTime: '',
-            complexity: 'MEDIUM',
-            viewerUrl: safeItem.permalink as string,
-            embedUrl: `https://www.artstation.com/embed/${safeItem.id}`,
-            likes: safeItem.likesCount as number,
-            views: safeItem.viewsCount as number,
-            author: (safeItem.user && typeof safeItem.user === 'object') ? 
-              ((safeItem.user as Record<string, unknown>).fullName as string) : undefined,
-            categories: Array.isArray(safeItem.categories) && safeItem.categories.length > 0 ? 
-              [safeItem.categories[0] as string] : [],
-            tags: Array.isArray(safeItem.tags) ? 
-              (safeItem.tags as string[]).slice(0, 3) : [],
-            softwareUsed: Array.isArray(safeItem.softwareUsed) ? 
-              (safeItem.softwareUsed as Array<{name: string; iconUrl: string}>) : [],
-            assets: Array.isArray(safeItem.assets) ? 
-              (safeItem.assets as Array<{id: number; title?: string; imageUrl: string; width: number; height: number; type: string; playerEmbedded?: string | null}>) : [],
-            thumbnails: {
-              small: (safeItem.coverUrl as string) || '',
-              medium: (safeItem.coverUrl as string) || '',
-              large: (safeItem.coverUrl as string) || '',
-            }
-          }
-        }).filter(Boolean) as Project[];
+      // Usar directamente los proyectos hardcodeados para asegurar disponibilidad
+      const mappedProjects: Project[] = HARDCODED_ARTSTATION_PROJECTS.map(p => ({ ...p }));
 
-        setAllProjects(prev => {
-          // Filtramos los modelos de Sketchfab que pudieran existir
-          const filtered = prev.filter(p => p.source !== "ARTSTATION");
-          return [...filtered, ...mappedProjects];
-        });
-      } else {
-        throw new Error('Invalid data format received from ArtStation API');
-      }
+      setAllProjects(prev => {
+        const filtered = prev.filter(proj => proj.source !== "ARTSTATION");
+        return [...filtered, ...mappedProjects];
+      });
     } catch (error: unknown) {
-      // setProjectsError(`Failed to load projects from ArtStation: ${error.message}`); // Cambiar a error: unknown y usar type guard
       if (error instanceof Error) {
         setProjectsError(`Failed to load projects from ArtStation: ${error.message}`);
       } else {
@@ -594,8 +812,8 @@ export default function ProjectsPage() {
         key={index}
         className="bg-black border-r border-b border-secondary hover:border-white transition-colors group cursor-pointer relative"
         onClick={() => {
-          setModalProject(project);
-          setSelectedAssetIndex(0);
+          // Cargar detalles antes de abrir modal
+          loadArtStationDetails(project);
         }}
       >
         {/* Tarjeta estilo galería para ArtStation - solo imagen y overlay en hover */}
@@ -890,6 +1108,99 @@ export default function ProjectsPage() {
         </div>
       </div>
     );
+  };
+
+  // Mapear JSON de ArtStation al formato interno del proyecto
+  const mapArtStationJsonToProject = (baseProject: Project, json: any): Project => {
+    if (!json) return baseProject;
+    const mapped: Project = { ...baseProject };
+
+    // Metadatos
+    mapped.title = (json.title as string) || mapped.title;
+    mapped.description = (json.description_html as string) || json.description || mapped.description;
+    mapped.date = (json.published_at as string) || mapped.date;
+    mapped.likes = typeof json.likes_count === 'number' ? json.likes_count : mapped.likes;
+    mapped.views = typeof json.views_count === 'number' ? json.views_count : mapped.views;
+    mapped.projectUrl = (json.permalink as string) || mapped.projectUrl;
+    mapped.publishedAt = (json.published_at as string) || mapped.publishedAt;
+
+    // Autor
+    if (json.user) {
+      mapped.author = (json.user.full_name as string) || (json.user.username as string) || mapped.author;
+    }
+
+    // Categorías
+    mapped.categories = (json.categories as { name: string }[] | undefined)?.map(c => c.name) || mapped.categories;
+
+    // Tags
+    mapped.tags = (json.tags as string[] | undefined) || mapped.tags;
+
+    // Software
+    mapped.softwareUsed = (json.software_items as { name: string; icon_url: string }[] | undefined)?.map(s => ({
+      name: s.name,
+      iconUrl: s.icon_url
+    })) || mapped.softwareUsed;
+
+    // Thumbnails / cover
+    if (json.cover_url) {
+      mapped.thumbnails = mapped.thumbnails || { small: json.cover_url, medium: json.cover_url, large: json.cover_url };
+      mapped.thumbnails.large = json.cover_url;
+    }
+
+    // Assets
+    mapped.assets = (json.assets as any[] | undefined)?.map(a => ({
+      id: a.id,
+      title: a.title ?? undefined,
+      imageUrl: a.image_url,
+      width: a.width ?? 0,
+      height: a.height ?? 0,
+      type: (a.asset_type as 'image' | 'cover' | 'model3d' | 'video_clip') ?? 'image',
+      playerEmbedded: a.player_embedded ?? null
+    })) || mapped.assets;
+
+    return mapped;
+  };
+
+  // Cargar detalles de ArtStation (intenta copia local en /artstation-json/{hash}.json, luego fallback remoto)
+  const loadArtStationDetails = async (project: Project) => {
+    const hash = project.hashId;
+    if (!hash) {
+      setModalProject(project);
+      setSelectedAssetIndex(0);
+      return;
+    }
+
+    const localUrl = `/artstation-json/${hash}.json`;
+    try {
+      const res = await fetch(localUrl);
+      if (res.ok) {
+        const json = await res.json();
+        const mapped = mapArtStationJsonToProject(project, json);
+        setModalProject(mapped);
+        setSelectedAssetIndex(0);
+        return;
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    // fallback remoto
+    try {
+      const remoteRes = await fetch(`https://www.artstation.com/projects/${hash}.json`);
+      if (remoteRes.ok) {
+        const json = await remoteRes.json();
+        const mapped = mapArtStationJsonToProject(project, json);
+        setModalProject(mapped);
+        setSelectedAssetIndex(0);
+        return;
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    // si todo falla, abrir con el proyecto base
+    setModalProject(project);
+    setSelectedAssetIndex(0);
   };
 
   return (
@@ -1202,7 +1513,7 @@ export default function ProjectsPage() {
                             variant={i + 1 === currentPage ? "default" : "ghost"}
                             size="sm"
                             className={`w-8 h-8 p-0 text-xs rounded-none cursor-pointer pointer-events-auto ${i + 1 === currentPage
-                              ? "bg-white text-black border-white cursor-pointer pointer-events-auto !hover:bg-white !hover:text-black !focus:bg-white !focus:text-black !active:bg-white !active:text-black !hover:bg-white !focus:bg-white !active:bg-white !hover:text-black !focus:text-black !active:text-black"
+                              ? "bg-white text-black border-white cursor-pointer pointer-events-auto !hover:bg-white !hover:text-black !focus:bg-white !focus:text-black !active:bg-white !active:text-black !hover:bg-white !ocus:bg-white !active:bg-white !hover:text-black !focus:text-black !active:text-black"
                               : "border border-gray-700 text-gray-400 hover:text-white hover:bg-primary hover:border-white transition-all cursor-pointer"
                               } disabled:opacity-50`}
                             style={i + 1 === currentPage ? { backgroundColor: '#fff', color: '#000', borderColor: '#fff' } : {}}
