@@ -111,7 +111,7 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
               />
             </div>
             {/* Indicador de click */}
-            <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
+            <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1">
               Click to enlarge
             </div>
           </div>

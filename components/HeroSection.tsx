@@ -252,7 +252,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                   >
                     <Badge
                       variant="outline"
-                      className={`text-xs rounded-none cursor-pointer transition-colors border-2 ${showEnterHint ? 'border-green-500 text-green-500 hover:bg-green-500/10' : 'border-yellow-400 text-yellow-400 bg-yellow-400/10 animate-pulse'}`}
+                      className={`text-xs rounded-none cursor-pointer transition-colors border-1 ${showEnterHint ? 'border-green-500 text-green-500 hover:bg-green-500/10' : 'border-yellow-400 text-yellow-400 bg-yellow-400/10 animate-pulse'}`}
                       tabIndex={0}
                       onClick={() => setShowTRexGame(true)}
                       onKeyDown={e => {
