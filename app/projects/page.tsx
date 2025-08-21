@@ -119,6 +119,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/nJQarE',
     embedUrl: 'https://www.artstation.com/embed/nJQarE',
     likes: 4,
+    views: 156,
     hashId: 'nJQarE',
     thumbnails: {
       small: 'https://cdnb.artstation.com/p/assets/covers/images/079/109/123/small_square/victor-cuadot-victor-cuadot-toyotomi.jpg?1724011301',
@@ -137,6 +138,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/QX6QnZ',
     embedUrl: 'https://www.artstation.com/embed/QX6QnZ',
     likes: 3,
+    views: 92,
     hashId: 'QX6QnZ',
     thumbnails: {
       small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/633/small_square/victor-cuadot-victor-cuadot-vehiclecarrito.jpg?1701997233',
@@ -155,6 +157,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/PXDwdB',
     embedUrl: 'https://www.artstation.com/embed/PXDwdB',
     likes: 3,
+    views: 78,
     hashId: 'PXDwdB',
     thumbnails: {
       small: 'https://cdnb.artstation.com/p/assets/covers/images/070/213/287/small_square/victor-cuadot-victor-cuadot-thumbnail.jpg?1701992354',
@@ -173,6 +176,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/WKyDZX',
     embedUrl: 'https://www.artstation.com/embed/WKyDZX',
     likes: 15,
+    views: 1205,
     hashId: 'WKyDZX',
     thumbnails: {
       small: 'https://cdna.artstation.com/p/assets/covers/images/070/213/812/small_square/victor-cuadot-victor-cuadot-squid.jpg?1701994403',
@@ -191,6 +195,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/8eAxxE',
     embedUrl: 'https://www.artstation.com/embed/8eAxxE',
     likes: 9,
+    views: 689,
     hashId: '8eAxxE',
     thumbnails: {
       small: 'https://cdnb.artstation.com/p/assets/covers/images/070/213/767/small_square/victor-cuadot-victor-cuadot-bunny.jpg?1701994207',
@@ -209,6 +214,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/gJm2Ne',
     embedUrl: 'https://www.artstation.com/embed/gJm2Ne',
     likes: 178,
+    views: 8456,
     hashId: 'gJm2Ne',
     thumbnails: {
       small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/379/small_square/victor-cuadot-victor-cuadot-eggselente.jpg?1701996076',
@@ -227,6 +233,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/JeVyq0',
     embedUrl: 'https://www.artstation.com/embed/JeVyq0',
     likes: 5,
+    views: 234,
     hashId: 'JeVyq0',
     thumbnails: {
       small: 'https://cdna.artstation.com/p/assets/covers/images/070/213/412/small_square/victor-cuadot-victor-cuadot-skull.jpg?1701992786',
@@ -245,6 +252,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/Ooegxw',
     embedUrl: 'https://www.artstation.com/embed/Ooegxw',
     likes: 21,
+    views: 1456,
     hashId: 'Ooegxw',
     thumbnails: {
       small: 'https://cdna.artstation.com/p/assets/covers/images/070/213/924/small_square/victor-cuadot-victor-cuadot-allien.jpg?1701994737',
@@ -263,6 +271,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/d8DKwx',
     embedUrl: 'https://www.artstation.com/embed/d8DKwx',
     likes: 17,
+    views: 892,
     hashId: 'd8DKwx',
     thumbnails: {
       small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/137/small_square/victor-cuadot-victor-cuadot-nito.jpg?1701995322',
@@ -281,6 +290,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/XnW610',
     embedUrl: 'https://www.artstation.com/embed/XnW610',
     likes: 13,
+    views: 743,
     hashId: 'XnW610',
     thumbnails: {
       small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/211/small_square/victor-cuadot-victor-cuadot-granujaboris.jpg?1701995574',
@@ -299,6 +309,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/zOBkl6',
     embedUrl: 'https://www.artstation.com/embed/zOBkl6',
     likes: 15,
+    views: 1023,
     hashId: 'zOBkl6',
     thumbnails: {
       small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/315/small_square/victor-cuadot-victor-cuadot-3dpollos.jpg?1701995914',
@@ -317,6 +328,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/k4bO06',
     embedUrl: 'https://www.artstation.com/embed/k4bO06',
     likes: 86,
+    views: 3672,
     hashId: 'k4bO06',
     thumbnails: {
       small: 'https://cdnb.artstation.com/p/assets/covers/images/070/214/409/small_square/victor-cuadot-victor-cuadot-robotocube.jpg?1701996187',
@@ -335,6 +347,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/8lQLgQ',
     embedUrl: 'https://www.artstation.com/embed/8lQLgQ',
     likes: 23,
+    views: 1234,
     hashId: '8lQLgQ',
     thumbnails: {
       small: 'https://cdna.artstation.com/p/assets/covers/images/070/214/426/small_square/victor-cuadot-victor-cuadot-horse.jpg?1701996254',
@@ -353,6 +366,7 @@ const HARDCODED_ARTSTATION_PROJECTS: Project[] = [
     viewerUrl: 'https://www.artstation.com/artwork/qAVyER',
     embedUrl: 'https://www.artstation.com/embed/qAVyER',
     likes: 52,
+    views: 2890,
     hashId: 'qAVyER',
     thumbnails: {
       small: 'https://cdna.artstation.com/p/assets/covers/images/070/214/434/small_square/victor-cuadot-victor-cuadot-robotbaseball.jpg?1701996304',
@@ -395,64 +409,63 @@ export default function ProjectsPage() {
   const [selectedComplexity, setSelectedComplexity] = useState<string>("ALL");
   const [orderBy, setOrderBy] = useState<string>("date-desc");
   const [gridCols, setGridCols] = useState<number>(4); // Por defecto 4x
+  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
 
   // Fijar modelos por página en 8 para Sketchfab, 12 para ArtStation
   const MODELS_PER_PAGE = selectedSource === "ARTSTATION" ? 12 : 8;
 
-  // Nueva función para cargar modelos (infinite scroll)
-  // const loadSketchfabModels = async (url?: string) => {
-  //   try {
-  //     setIsLoadingProjects(true);
-  //     setProjectsError("");
-  //     setIsLoadingMore(!!url);
-  //     const endpoint = url || `/api/sketchfab-models?username=${SKETCHFAB_CONFIG.username}&limit=100&orderBy=${orderBy}`;
-  //     const res = await fetch(endpoint);
-  //     const data = await res.json();
-  //     if (data.success) {
-  //       setSketchfabModels(prev => url ? [...prev, ...data.projects] : data.projects);
-  //       setAllProjects(prev => {
-  //         // Filtramos los modelos de ArtStation que pudieran existir
-  //         const filtered = prev.filter(p => p.source !== "SKETCHFAB");
-          
-  //         // Calcular estadísticas globales
-  //         const projects = data.projects as Project[];
-  //         const statsObj: SketchfabStats = {
-  //           totalViews: 0,
-  //           totalLikes: 0,
-  //           totalTriangles: 0,
-  //           totalVertices: 0,
-  //           totalModels: 0,
-  //         };
-          
-  //         projects.forEach(model => {
-  //           statsObj.totalViews += (model.views || 0);
-  //           statsObj.totalLikes += (model.likes || 0);
-  //           statsObj.totalTriangles += (model.triangles || 0);
-  //           statsObj.totalVertices += (model.vertices || 0);
-  //           statsObj.totalModels += 1;
-  //         });
+  // Función para cargar categorías desde los archivos JSON de ArtStation
+  const loadArtStationCategories = async () => {
+    const allCategories = new Set<string>();
+    
+    // Lista de todos los archivos JSON de ArtStation
+    const artstationFiles = [
+      '8eAxxE', '8lQLgQ', 'd8DKwx', 'gJm2Ne', 'JeVyq0', 
+      'k4bO06', 'nJQarE', 'Ooegxw', 'PXDwdB', 'qAVyER', 
+      'QX6QnZ', 'WKyDZX', 'XnW610', 'zOBkl6'
+    ];
 
-  //         // Actualizar las estadísticas globales
-  //         setSketchfabStats(statsObj);
-          
-  //         return [...filtered, ...data.projects];
-  //       });
-  //       setTotalModelsFound(data.totalModels || 0);
-  //       setValidModelsFound(data.validModels || data.projects.length);
-  //       setUsingFallback(data.usingFallback || false);
-  //       setNextUrl(data.next || null);
-  //     } else {
-  //       throw new Error(data.error || 'Failed to fetch projects');
-  //     }
-  //   } catch (error) {
-  //     setProjectsError(`Failed to load projects from @${SKETCHFAB_CONFIG.username}`);
-  //     setUsingFallback(true);
-  //     setNextUrl(null);
-  //   } finally {
-  //     setIsLoadingProjects(false);
-  //     setIsLoadingMore(false);
-  //   }
-  // };
+    for (const fileId of artstationFiles) {
+      try {
+        const response = await fetch(`/artstation-json/${fileId}.json`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.categories && Array.isArray(data.categories)) {
+            data.categories.forEach((category: {name: string}) => {
+              if (category.name) {
+                allCategories.add(category.name);
+              }
+            });
+          }
+        }
+      } catch (error) {
+        console.warn(`Error loading categories from ${fileId}.json:`, error);
+      }
+    }
+
+    // Convertir a array y ordenar alfabéticamente
+    const categoriesArray = Array.from(allCategories).sort();
+    setAvailableCategories(categoriesArray);
+    console.log('ArtStation categories loaded:', categoriesArray);
+  };
+
+  // Función para cargar categorías de un proyecto específico desde su JSON
+  const loadProjectCategories = async (hashId: string): Promise<string[]> => {
+    try {
+      const response = await fetch(`/artstation-json/${hashId}.json`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.categories && Array.isArray(data.categories)) {
+          return data.categories
+            .filter((cat: {name?: string}) => cat && cat.name)
+            .map((cat: {name: string}) => cat.name);
+        }
+      }
+    } catch (error) {
+      console.warn(`Error loading categories for project ${hashId}:`, error);
+    }
+    return [];
+  };
 
   // Función para cargar modelos de ArtStation
   const fetchArtStationProjects = async () => {
@@ -460,8 +473,27 @@ export default function ProjectsPage() {
       setIsLoadingProjects(true);
       setProjectsError("");
 
-      // Usar directamente los proyectos hardcodeados para asegurar disponibilidad
-      const mappedProjects: Project[] = HARDCODED_ARTSTATION_PROJECTS.map(p => ({ ...p }));
+      // Cargar categorías desde los archivos JSON
+      await loadArtStationCategories();
+
+      // Cargar proyectos con categorías reales desde sus JSONs
+      const mappedProjects: Project[] = await Promise.all(
+        HARDCODED_ARTSTATION_PROJECTS.map(async (project) => {
+          const categories = project.hashId ? await loadProjectCategories(project.hashId) : [];
+          return {
+            ...project,
+            categories: categories.length > 0 ? categories : undefined
+          };
+        })
+      );
+      
+      console.log('ArtStation projects loaded with real categories:', mappedProjects.map(p => ({
+        title: p.title, 
+        hashId: p.hashId,
+        categories: p.categories,
+        views: p.views, 
+        likes: p.likes
+      })));
 
       setAllProjects(prev => {
         const filtered = prev.filter(proj => proj.source !== "ARTSTATION");
@@ -532,9 +564,11 @@ export default function ProjectsPage() {
   // Cargar modelos al montar o cuando cambian los filtros principales
   useEffect(() => {
     setAllProjects([]);
+    setSelectedCategory("ALL"); // Resetear filtro de categoría al cambiar de fuente
 
     // Cargar proyectos según la fuente seleccionada
     if (selectedSource === "SKETCHFAB") {
+      setAvailableCategories([]); // Limpiar categorías de ArtStation
       fetchSketchfabProjects();
       setGridCols(4); // Siempre 4x al cambiar a Sketchfab
       setCurrentPage(1); // Reiniciar paginación
@@ -672,7 +706,9 @@ export default function ProjectsPage() {
   }
 
   // Obtener todas las categorías y fuentes únicas de los proyectos
-  const allCategories = Array.from(new Set(allProjects.flatMap(p => p.categories || [])));
+  const allCategories = selectedSource === "ARTSTATION" 
+    ? availableCategories 
+    : Array.from(new Set(allProjects.flatMap(p => p.categories || [])));
   // const allSources = Array.from(new Set(allProjects.map(p => p.source || "UNKNOWN")));
   const complexityOrder = ["LOW", "MEDIUM", "HIGH", "VERY_HIGH", "EXTREME"];
   const allComplexities = complexityOrder.filter(c => allProjects.some(p => p.complexity === c));
@@ -700,8 +736,10 @@ export default function ProjectsPage() {
         case "likes-asc":
           return (a.likes || 0) - (b.likes || 0);
         case "views-desc":
+          console.log('Sorting by views-desc:', a.title, a.views, 'vs', b.title, b.views);
           return (b.views || 0) - (a.views || 0);
         case "views-asc":
+          console.log('Sorting by views-asc:', a.title, a.views, 'vs', b.title, b.views);
           return (a.views || 0) - (b.views || 0);
         default:
           return 0;
@@ -1422,7 +1460,8 @@ export default function ProjectsPage() {
                   <option value="views-asc">Views (Least)</option>
                 </select>
               </div>
-              <div className="flex flex-col gap-2">
+              {/* VIEW filter - Solo visible en desktop */}
+              <div className="hidden md:flex flex-col gap-2">
                 <label className="text-xs text-gray-400">VIEW</label>
                 <div className="flex">
                   {selectedSource === "SKETCHFAB" && (
