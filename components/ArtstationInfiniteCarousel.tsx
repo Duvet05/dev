@@ -61,7 +61,7 @@ export default function ArtstationInfiniteCarousel() {
             <img
               src={`/images/artstation/${img}`}
               alt={img}
-              className="absolute inset-0 w-full h-full object-cover shadow-lg border-l border-secondary opacity-80 group-hover:opacity-100 transition-opacity"
+              className="absolute inset-0 w-full h-full object-cover shadow-lg border-l border-secondary opacity-100 group-hover:opacity-100 transition-opacity"
               draggable={false}
             />
             {/* Overlay estilo ArtStation */}

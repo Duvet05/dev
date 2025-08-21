@@ -40,11 +40,11 @@ export const MainContent: React.FC<MainContentProps> = ({
         renderingProgress={renderingProgress}
       />      
     </div>
-    <div className="flex flex-col md:flex-row mb-12 gap-8 items-stretch h-full md:justify-between">
-      <div id="about">
+    <div className="flex flex-col lg:flex-row mb-12 gap-8 items-stretch min-h-0 overflow-hidden">
+      <div id="about" className="flex-[2] min-w-0">
         <AboutMe currentTime={currentTime} />
       </div>
-      <div id="stack">
+      <div id="stack" className="flex-1 min-w-0">
         <Stack />
       </div>
     </div>

@@ -16,8 +16,8 @@ export const Brands: React.FC = () => {
       {/* Contenedor con overflow hidden para el scroll infinito */}
       <div className="relative overflow-hidden p-8">
         <div className="flex animate-scroll-brands">
-          {/* Triplicamos los brands para crear un efecto infinito más suave */}
-          {[...brands, ...brands, ...brands].map((brand, index) => (
+          {/* Cuadruplicamos los brands en mobile para un loop más largo y suave */}
+          {([...(window.innerWidth <= 640 ? [...brands, ...brands, ...brands, ...brands] : [...brands, ...brands, ...brands])]).map((brand, index) => (
             <div
               key={index}
               className="flex-shrink-0 mx-8 flex items-center justify-center"
@@ -42,9 +42,22 @@ export const Brands: React.FC = () => {
             transform: translateX(-33.333%);
           }
         }
-        
         .animate-scroll-brands {
           animation: scroll-brands 30s linear infinite;
+        }
+        @media (max-width: 640px) {
+          .animate-scroll-brands {
+            animation-duration: 2s !important;
+            animation-name: scroll-brands-mobile !important;
+          }
+          @keyframes scroll-brands-mobile {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-25%);
+            }
+          }
         }
       `}</style>
     </div>

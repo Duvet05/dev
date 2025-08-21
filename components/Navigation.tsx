@@ -107,7 +107,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         </div>
         
         {/* Mini reproductor de música funcional estilo terminal/pixel art - Solo en desktop */}
-        <div className="hidden md:flex items-center space-x-3 rounded-none font-vt323 text-white min-w-[260px] bg-black">
+        <div className="hidden hide-music-880 items-center space-x-3 rounded-none font-vt323 text-white min-w-[260px] bg-black">
         {tracks.length > 0 ? (
           <audio
             ref={audioRef}
@@ -206,6 +206,14 @@ export const Navigation: React.FC<NavigationProps> = ({
         
         .animate-pulse-green {
           animation: pulse-green 1.5s ease-in-out infinite;
+        }
+        .hide-music-880 {
+          display: flex;
+        }
+        @media (max-width: 880px) {
+          .hide-music-880 {
+            display: none !important;
+          }
         }
       `}</style>
     </div>

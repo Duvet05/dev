@@ -1,0 +1,226 @@
+{
+  "liked": false,
+  "tags": [
+    "vehicle",
+    "videogame",
+    "modeling",
+    "rigging",
+    "texturing",
+    "lowpoly"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214466,
+      "title": "3d isometric view.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003E3d isometric view.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/070/214/466/large/victor-cuadot-iso.jpg?1701996482",
+      "width": 1920,
+      "height": 1920,
+      "position": 0,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214633,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/633/large/victor-cuadot-victor-cuadot-vehiclecarrito.jpg?1701997233",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214468,
+      "title": "ortographic views.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003Eortographic views.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/070/214/468/large/victor-cuadot-front.jpg?1701996490",
+      "width": 1920,
+      "height": 1920,
+      "position": 1,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe id=\"\" title=\"\" class=\"\" width=\"640\" height=\"360\" src=\"https://sketchfab.com/models/acccd15d4e454399a39dbe40f4f6df71/embed\" frameborder=\"0\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" allowfullscreen=\"\" mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" xr-spatial-tracking=\"true\" execution-while-out-of-viewport=\"true\" execution-while-not-rendered=\"true\" web-share=\"true\"\u003E\u003C/iframe\u003E",
+      "oembed": {
+
+      },
+      "id": 70214546,
+      "title": "This model was my first staff pick at Sketchfab, here you can inspect the topology, rig and all the 3d model aspect since you can downloaded for free on sketchfab.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EThis model was my first staff pick at Sketchfab, here you can inspect the topology, rig and all the 3d model aspect since you can downloaded for free on sketchfab.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/model3ds/images/070/214/546/large/victor-cuadot-4f82f2df6d014828baa0edba11c9d271.jpg?1701996760",
+      "width": 720,
+      "height": 405,
+      "position": 4,
+      "asset_type": "model3d",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214560,
+      "title": "isometric 3/4 view",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003Eisometric 3/4 view\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/070/214/560/large/victor-cuadot-perspective.jpg?1701996834",
+      "width": 1920,
+      "height": 1920,
+      "position": 5,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214561,
+      "title": "side view",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003Eside view\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/070/214/561/large/victor-cuadot-side.jpg?1701996841",
+      "width": 1920,
+      "height": 1920,
+      "position": 6,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70214562,
+      "title": "front view",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003Efront view\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/images/images/070/214/562/large/victor-cuadot-front-1.jpg?1701996847",
+      "width": 1920,
+      "height": 1920,
+      "position": 7,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe src='https://www.artstation.com/api/v2/animation/video_clips/896e4d61-7d12-45bb-8f32-4edf033423ff/embed.html?s=9883247253a7377d692238d267eca8026636755c85aa797461bb5d58ba939edd&t=1755780850' width='1920' height='1920' frameborder='0' allowfullscreen allows='autoplay; fullscreen' style='max-width: 1920px; max-height: 1920px;'\u003E\u003C/iframe\u003E",
+      "oembed": {
+        "width": 1920,
+        "height": 1920,
+        "provider_name": "ArtStation"
+      },
+      "id": 70214474,
+      "title": "360 video.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003E360 video.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdna.artstation.com/p/assets/video_clips/images/070/214/474/large/victor-cuadot-thumb.jpg?1701996518",
+      "width": 1920,
+      "height": 1920,
+      "position": null,
+      "asset_type": "video_clip",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": true,
+      "player_embedded": "\u003Ciframe src='https://www.artstation.com/api/v2/animation/video_clips/85099376-d49a-414c-af9f-57e8b3fab3eb/embed.html?s=d6a09992d0564f636150c4695b9e71e23de08fe4eac90a0187da28e5dff69d8b&t=1755780850' width='1920' height='1920' frameborder='0' allowfullscreen allows='autoplay; fullscreen' style='max-width: 1920px; max-height: 1920px;'\u003E\u003C/iframe\u003E",
+      "oembed": {
+        "width": 1920,
+        "height": 1920,
+        "provider_name": "ArtStation"
+      },
+      "id": 70214521,
+      "title": "Here's a clip with all animations.",
+      "title_formatted": "\u003Cdiv class=\"asset-caption\"\u003E\u003Cp\u003EHere's a clip with all animations.\u003C/p\u003E\u003C/div\u003E",
+      "image_url": "https://cdnb.artstation.com/p/assets/video_clips/images/070/214/521/large/victor-cuadot-thumb.jpg?1701996702",
+      "width": 1920,
+      "height": 1920,
+      "position": null,
+      "asset_type": "video_clip",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": null,
+  "mediums": [],
+  "categories": [
+    {
+      "name": "Vehicles",
+      "id": 11
+    },
+    {
+      "name": "Character Modeling",
+      "id": 66
+    },
+    {
+      "name": "Character Animation",
+      "id": 67
+    }
+  ],
+  "software_items": [
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdnb.artstation.com/p/softwares/icons/000/000/041/default/pt_appicon_noshadow_512.png?1627397594",
+      "name": "Substance 3D Painter"
+    }
+  ],
+  "id": 17186026,
+  "user_id": 175617,
+  "title": "Low poly car animated model",
+  "description": "\u003Cp\u003EBased on the great  @gatring3's on twitter concept.\n\u003Cbr /\u003EHeres a demostration of some low poly videogame modeling, rigging, animating, and texturing.\n\u003Cbr /\u003EGiving life to this little guy was a challenge.\n\u003C/p\u003E",
+  "description_html": "\u003Cp\u003EBased on the great  @gatring3's on twitter concept.\n\u003Cbr /\u003EHeres a demostration of some low poly videogame modeling, rigging, animating, and texturing.\n\u003Cbr /\u003EGiving life to this little guy was a challenge.\u003C/p\u003E",
+  "created_at": "2023-12-07T19:00:37.485-06:00",
+  "updated_at": "2024-01-10T05:34:53.240-06:00",
+  "views_count": 112,
+  "likes_count": 3,
+  "comments_count": 0,
+  "permalink": "https://www.artstation.com/artwork/QX6QnZ",
+  "cover_url": "https://cdnb.artstation.com/p/assets/covers/images/070/214/633/medium/victor-cuadot-victor-cuadot-vehiclecarrito.jpg?1701997233",
+  "published_at": "2024-01-09T12:24:40.640-06:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "low-poly-car-animated-model",
+  "suppressed": false,
+  "hash_id": "QX6QnZ",
+  "visible": true,
+  "is_promotional": false
+}

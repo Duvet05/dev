@@ -120,7 +120,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
 
   return (
   <div id="projects" className="mb-12">
-    <div className="flex items-center justify-between mb-4">
+    <div className="flex items-center justify-between mb-3">
       <Link href="/projects" passHref legacyBehavior>
         <a className="text-4xl font-bauhaus-pixel leading-none text-white cursor-pointer animate-projects-glow transition-all relative group" style={{ textShadow: '0 0 12px #fff, 0 0 24px #fff' }}>
           PROJECTS
@@ -130,7 +130,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
       <Link href="/projects">
         <Button
           variant="outline"
-          className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none cursor-pointer"
+          className="mb-3 border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none cursor-pointer"
         >
           VIEW.ALL <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
@@ -220,37 +220,39 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                   </div>
                 </div>
                 <div className="flex items-center justify-between mb-2">
-                  <a
-                    href={`https://sketchfab.com/3d-models/${project.sketchfabUid}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 focus:outline-none"
-                  >
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-xl font-bold group-hover:text-gray-300 transition-colors font-bauhaus text-left hover:underline cursor-pointer text-secondary truncate overflow-hidden whitespace-nowrap">
-                        {project.title}
-                      </h3>
-                      {project.staffpickedAt && (
-                        <img
-                          src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/icons/1ec49a9ae15f3f8f2d6ce895f503953c-v2.svg"
-                          alt="Staff Picked"
-                          title="Staff Picked"
-                          className="w-5 h-5 drop-shadow-md"
-                        />
-                      )}
-                      {project.date && (
-                        <span className="text-xs text-gray-400 font-normal align-middle">
-                          {(() => {
-                            const d = new Date(project.date)
-                            if (isNaN(d.getTime())) return project.date
-                            return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`
-                          })()}
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                    <a
+                      href={`https://sketchfab.com/3d-models/${project.sketchfabUid}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 focus:outline-none min-w-0"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <h3 className="text-xl font-bold group-hover:text-gray-300 transition-colors font-bauhaus text-left hover:underline cursor-pointer text-secondary truncate overflow-hidden whitespace-nowrap min-w-0">
+                          {project.title}
+                        </h3>
+                        {project.staffpickedAt && (
+                          <img
+                            src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/icons/1ec49a9ae15f3f8f2d6ce895f503953c-v2.svg"
+                            alt="Staff Picked"
+                            title="Staff Picked"
+                            className="w-5 h-5 drop-shadow-md"
+                          />
+                        )}
+                        {project.date && (
+                          <span className="text-xs text-gray-400 font-normal align-middle">
+                            {(() => {
+                              const d = new Date(project.date)
+                              if (isNaN(d.getTime())) return project.date
+                              return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`
+                            })()}
                         </span>
-                      )}
-                    </div>
-                  </a>
+                        )}
+                      </div>
+                    </a>
+                  </div>
                   {(project.likes || project.views) && (
-                    <div className="flex items-center gap-4 ml-4 text-gray-400">
+                    <div className="flex items-center gap-4 ml-4 text-gray-400 flex-shrink-0">
                       {project.likes ? (
                         <div className="flex items-center gap-1">
                           <Heart className="w-4 h-4" />

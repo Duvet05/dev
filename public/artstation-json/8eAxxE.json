@@ -1,0 +1,132 @@
+{
+  "liked": false,
+  "tags": [
+    "sneaker",
+    "design",
+    "product",
+    "bunny"
+  ],
+  "hide_as_adult": false,
+  "visible_on_artstation": true,
+  "assets": [
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 41992053,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/041/992/053/large/victor-cuadot-bunnysneaker-pp-1.jpg?1633290357",
+      "width": 3840,
+      "height": 2160,
+      "position": 0,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": false,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 70213767,
+      "title": null,
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/covers/images/070/213/767/large/victor-cuadot-victor-cuadot-bunny.jpg?1701994207",
+      "width": 1024,
+      "height": 1024,
+      "position": 0,
+      "asset_type": "cover",
+      "viewport_constraint_type": "constrained"
+    },
+    {
+      "has_image": true,
+      "has_embedded_player": false,
+      "player_embedded": null,
+      "oembed": null,
+      "id": 41992045,
+      "title": "",
+      "title_formatted": "",
+      "image_url": "https://cdnb.artstation.com/p/assets/images/images/041/992/045/large/victor-cuadot-bunnysneaker-pp-1-bw.jpg?1633290344",
+      "width": 3840,
+      "height": 2160,
+      "position": 1,
+      "asset_type": "image",
+      "viewport_constraint_type": "constrained"
+    }
+  ],
+  "collections": [],
+  "user": {
+    "followed": false,
+    "following_back": false,
+    "blocked": false,
+    "is_staff": false,
+    "is_plus_member": false,
+    "is_studio_account": false,
+    "is_school_account": false,
+    "id": 175617,
+    "username": "cuadot",
+    "headline": "3d Generlist",
+    "full_name": "Victor Cuadot",
+    "permalink": "https://www.artstation.com/cuadot",
+    "medium_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/medium/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "large_avatar_url": "https://cdnb.artstation.com/p/users/avatars/000/175/617/large/4ea12a07f417ea002dfd0c68154fa568.jpg?1696552605",
+    "small_cover_url": "https://cdnb.artstation.com/p/users/covers/000/175/617/small/b7c6c5fb5bd1a62f11c3cdf3560e6beb.jpg?1745186495",
+    "pro_member": false
+  },
+  "medium": {
+    "name": "Digital 3D",
+    "id": 2
+  },
+  "mediums": [
+    {
+      "name": "Digital 3D",
+      "id": 2
+    }
+  ],
+  "categories": [
+    {
+      "name": "Concept Art",
+      "id": 3
+    },
+    {
+      "name": "Industrial & Product Design",
+      "id": 18
+    },
+    {
+      "name": "Animals & Wildlife",
+      "id": 37
+    }
+  ],
+  "software_items": [
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/008/default/blender_icon_1024x1024.png?1570478232",
+      "name": "Blender"
+    },
+    {
+      "icon_url": "https://cdna.artstation.com/p/softwares/icons/000/000/032/default/Photoshop.png?1608144074",
+      "name": "Photoshop"
+    }
+  ],
+  "id": 11058055,
+  "user_id": 175617,
+  "title": "Bunny sneakers!",
+  "description": "\u003Cp\u003E3d concept design of a bunny sneaker!\n\u003Cbr /\u003EMade on blender and photoshop\u003C/p\u003E",
+  "description_html": "\u003Cp\u003E3d concept design of a bunny sneaker!\n\u003Cbr /\u003EMade on blender and photoshop\u003C/p\u003E",
+  "created_at": "2021-10-03T14:47:33.253-05:00",
+  "updated_at": "2024-11-28T20:01:13.377-06:00",
+  "views_count": 286,
+  "likes_count": 9,
+  "comments_count": 0,
+  "permalink": "https://www.artstation.com/artwork/8eAxxE",
+  "cover_url": "https://cdnb.artstation.com/p/assets/covers/images/070/213/767/medium/victor-cuadot-victor-cuadot-bunny.jpg?1701994207",
+  "published_at": "2021-10-03T14:47:33.241-05:00",
+  "editor_pick": false,
+  "adult_content": false,
+  "admin_adult_content": false,
+  "slug": "bunny-sneakers",
+  "suppressed": false,
+  "hash_id": "8eAxxE",
+  "visible": true,
+  "is_promotional": false
+}
