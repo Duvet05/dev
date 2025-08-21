@@ -1,5 +1,0 @@
-The file public/models/thumbnails/quantum-mesh.glb is intended to be a binary file containing a 3D model in GLB format. As such, it cannot be represented as text content. You would typically generate or export this file from a 3D modeling software (like Blender) or obtain it from a 3D model repository.
-
-If you need to create a GLB file, you would do so using a 3D modeling tool, and then save or export the model in the GLB format to the specified directory. 
-
-If you have a specific model in mind or need assistance with creating or exporting a GLB file from a 3D modeling application, please provide more details!
