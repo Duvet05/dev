@@ -1096,8 +1096,8 @@ export default function ProjectsPage() {
                 size="sm"
                 className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
                 onClick={() => {
-                  if (project.sketchfabUid) {
-                    window.open(`https://sketchfab.com/3d-models/${project.sketchfabUid}`, '_blank')
+                  if (typeof window !== 'undefined' && project.sketchfabUid) {
+                    window.open(`https://sketchfab.com/3d-models/${project.sketchfabUid}`, '_blank');
                   }
                 }}
               >
