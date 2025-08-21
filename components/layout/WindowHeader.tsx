@@ -17,8 +17,6 @@ export const WindowHeader: React.FC<WindowHeaderProps> = ({
   title,
   draggable = false,
   onClose,
-  onMinimize,
-  onMaximize,
   onMouseDown,
   className = "",
   customClass = "",

@@ -16,7 +16,7 @@ import { SketchfabModal } from "@/components/modals/SketchfabModal"
 import { ArtStationModal } from "@/components/modals/ArtStationModal"
 
 // Interfaz para los proyectos
-interface Project {
+export interface Project {
   title: string;
   source: string; // Nuevo campo para el origen
   description: string;
@@ -519,7 +519,7 @@ export default function ProjectsPage() {
       } else {
         throw new Error(data.error || 'Failed to fetch projects');
       }
-    } catch (_error) {
+    } catch {
       setProjectsError(`Failed to load projects from @${SKETCHFAB_CONFIG.username}`);
       setValidModelsFound(0);
       setCurrentPage(1);
@@ -1119,98 +1119,127 @@ export default function ProjectsPage() {
       .substring(0, 25) + '.DEMO';
   }
 
-  // Mapear JSON de ArtStation al formato interno del proyecto
-  const mapArtStationJsonToProject = (baseProject: Project, json: any): Project => {
-    if (!json) return baseProject;
+  // Mapear JSON de ArtStation al formato interno del proyecto (uso de unknown para evitar any)
+  const mapArtStationJsonToProject = (baseProject: Project, json: unknown): Project => {
+    if (!json || typeof json !== 'object' || json === null) return baseProject;
+    const j = json as Record<string, unknown>;
     const mapped: Project = { ...baseProject };
 
     // Metadatos
-    mapped.title = json.title ? formatTitle(json.title as string) : mapped.title;
-    mapped.description = (json.description_html as string) || json.description || mapped.description;
-    mapped.date = (json.published_at as string) || mapped.date;
-    mapped.likes = typeof json.likes_count === 'number' ? json.likes_count : mapped.likes;
-    mapped.views = typeof json.views_count === 'number' ? json.views_count : mapped.views;
-    mapped.projectUrl = (json.permalink as string) || mapped.projectUrl;
-    mapped.publishedAt = (json.published_at as string) || mapped.publishedAt;
+    if (typeof j['title'] === 'string' && (j['title'] as string).trim()) mapped.title = formatTitle(j['title'] as string);
+    if (typeof j['description_html'] === 'string') mapped.description = j['description_html'] as string;
+    else if (typeof j['description'] === 'string') mapped.description = j['description'] as string;
+    if (typeof j['published_at'] === 'string') mapped.date = j['published_at'] as string;
+    if (typeof j['likes_count'] === 'number') mapped.likes = j['likes_count'] as number;
+    if (typeof j['views_count'] === 'number') mapped.views = j['views_count'] as number;
+    if (typeof j['permalink'] === 'string') mapped.projectUrl = j['permalink'] as string;
+    if (typeof j['published_at'] === 'string') mapped.publishedAt = j['published_at'] as string;
 
     // Autor
-    if (json.user) {
-      mapped.author = (json.user.full_name as string) || (json.user.username as string) || mapped.author;
+    if (j['user'] && typeof j['user'] === 'object') {
+      const user = j['user'] as Record<string, unknown>;
+      if (typeof user['full_name'] === 'string') mapped.author = user['full_name'] as string;
+      else if (typeof user['username'] === 'string') mapped.author = user['username'] as string;
     }
 
     // Categorías
-    mapped.categories = (json.categories as { name: string }[] | undefined)?.map(c => c.name) || mapped.categories;
+    const categories = j['categories'];
+    if (Array.isArray(categories)) {
+      mapped.categories = categories
+        .filter(c => typeof c === 'object' && c !== null && typeof (c as Record<string, unknown>)['name'] === 'string')
+        .map(c => (c as Record<string, unknown>)['name'] as string);
+    }
 
     // Tags
-    mapped.tags = (json.tags as string[] | undefined) || mapped.tags;
+    const tags = j['tags'];
+    if (Array.isArray(tags)) {
+      mapped.tags = (tags as unknown[]).filter(t => typeof t === 'string') as string[];
+    }
 
     // Software
-    mapped.softwareUsed = (json.software_items as { name: string; icon_url: string }[] | undefined)?.map(s => ({
-      name: s.name,
-      iconUrl: s.icon_url
-    })) || mapped.softwareUsed;
+    const softwareItems = j['software_items'];
+    if (Array.isArray(softwareItems)) {
+      mapped.softwareUsed = (softwareItems as unknown[])
+        .filter(s => typeof s === 'object' && s !== null)
+        .map(s => ({
+          name: (s as Record<string, unknown>)['name'] as string,
+          iconUrl: (s as Record<string, unknown>)['icon_url'] as string
+        }));
+    }
 
     // Thumbnails / cover
-    if (json.cover_url) {
-      mapped.thumbnails = mapped.thumbnails || { small: json.cover_url, medium: json.cover_url, large: json.cover_url };
-      mapped.thumbnails.large = json.cover_url;
+    if (typeof j['cover_url'] === 'string') {
+      mapped.thumbnails = mapped.thumbnails || { small: j['cover_url'] as string, medium: j['cover_url'] as string, large: j['cover_url'] as string };
+      mapped.thumbnails.large = j['cover_url'] as string;
     }
 
     // Assets
-    mapped.assets = (json.assets as any[] | undefined)?.map(a => ({
-      id: a.id,
-      title: a.title ?? undefined,
-      imageUrl: a.image_url,
-      width: a.width ?? 0,
-      height: a.height ?? 0,
-      type: (a.asset_type as 'image' | 'cover' | 'model3d' | 'video_clip') ?? 'image',
-      playerEmbedded: a.player_embedded ?? null
-    })) || mapped.assets;
+    const assets = j['assets'];
+    if (Array.isArray(assets)) {
+      mapped.assets = (assets as unknown[])
+        .filter(a => typeof a === 'object' && a !== null)
+        .map(a => {
+          const ar = a as Record<string, unknown>;
+          const assetType = typeof ar['asset_type'] === 'string' ? ar['asset_type'] as string : undefined;
+          const type = assetType === 'cover' || assetType === 'model3d' || assetType === 'video_clip' ? assetType as 'cover' | 'model3d' | 'video_clip' : 'image';
+          const imageUrl = typeof ar['image_url'] === 'string' ? ar['image_url'] as string : (typeof j['cover_url'] === 'string' ? j['cover_url'] as string : '');
+          const playerEmbedded = typeof ar['player_embedded'] === 'string' ? ar['player_embedded'] as string : null;
+          return {
+            id: typeof ar['id'] === 'number' ? ar['id'] as number : 0,
+            title: typeof ar['title'] === 'string' ? ar['title'] as string : undefined,
+            imageUrl,
+            width: typeof ar['width'] === 'number' ? ar['width'] as number : 0,
+            height: typeof ar['height'] === 'number' ? ar['height'] as number : 0,
+            type,
+            playerEmbedded
+          };
+        });
+    }
 
     return mapped;
   };
 
   // Cargar detalles de ArtStation (intenta copia local en /artstation-json/{hash}.json, luego fallback remoto)
-  const loadArtStationDetails = async (project: Project) => {
-    const hash = project.hashId;
-    if (!hash) {
-      setModalProject(project);
-      setSelectedAssetIndex(0);
-      return;
-    }
+  async function loadArtStationDetails(project: Project) {
+     const hash = project.hashId;
+     if (!hash) {
+       setModalProject(project);
+       setSelectedAssetIndex(0);
+       return;
+     }
 
-    const localUrl = `/artstation-json/${hash}.json`;
-    try {
-      const res = await fetch(localUrl);
-      if (res.ok) {
-        const json = await res.json();
-        const mapped = mapArtStationJsonToProject(project, json);
-        setModalProject(mapped);
-        setSelectedAssetIndex(0);
-        return;
-      }
-    } catch (e) {
-      // ignore
-    }
+     const localUrl = `/artstation-json/${hash}.json`;
+     try {
+       const res = await fetch(localUrl);
+       if (res.ok) {
+         const json = await res.json();
+         const mapped = mapArtStationJsonToProject(project, json);
+         setModalProject(mapped);
+         setSelectedAssetIndex(0);
+         return;
+       }
+     } catch {
+       // ignore
+     }
 
-    // fallback remoto
-    try {
-      const remoteRes = await fetch(`https://www.artstation.com/projects/${hash}.json`);
-      if (remoteRes.ok) {
-        const json = await remoteRes.json();
-        const mapped = mapArtStationJsonToProject(project, json);
-        setModalProject(mapped);
-        setSelectedAssetIndex(0);
-        return;
-      }
-    } catch (e) {
-      // ignore
-    }
+     // fallback remoto
+     try {
+       const remoteRes = await fetch(`https://www.artstation.com/projects/${hash}.json`);
+       if (remoteRes.ok) {
+         const json = await remoteRes.json();
+         const mapped = mapArtStationJsonToProject(project, json);
+         setModalProject(mapped);
+         setSelectedAssetIndex(0);
+         return;
+       }
+     } catch {
+       // ignore
+     }
 
-    // si todo falla, abrir con el proyecto base
-    setModalProject(project);
-    setSelectedAssetIndex(0);
-  };
+     // si todo falla, abrir con el proyecto base
+     setModalProject(project);
+     setSelectedAssetIndex(0);
+   };
 
   return (
     <div className="min-h-screen bg-black text-white font-vt323 overflow-x-hidden">

@@ -33,7 +33,9 @@ export default function TRexGame({ isActive = false, onClose, baseUrl = '/react-
 
     selectors.forEach(sel => {
       document.querySelectorAll<HTMLElement>(sel).forEach(el => {
-        saved.push({ el, visibility: el.style.visibility || '', pointerEvents: el.style.pointerEvents || '', zIndex: (el.style as any).zIndex || '' });
+        // Usar getComputedStyle para obtener zIndex en vez de castear a any
+        const computed = window.getComputedStyle(el);
+        saved.push({ el, visibility: el.style.visibility || '', pointerEvents: el.style.pointerEvents || '', zIndex: computed.zIndex || '' });
         el.style.pointerEvents = 'none';
         el.style.visibility = 'hidden';
       });
@@ -44,8 +46,8 @@ export default function TRexGame({ isActive = false, onClose, baseUrl = '/react-
         try {
           s.el.style.visibility = s.visibility;
           s.el.style.pointerEvents = s.pointerEvents;
-          (s.el.style as any).zIndex = s.zIndex;
-        } catch (e) {
+          s.el.style.zIndex = s.zIndex;
+        } catch {
           // ignore
         }
       });
@@ -60,31 +62,38 @@ export default function TRexGame({ isActive = false, onClose, baseUrl = '/react-
       const win = ifr.contentWindow;
       const doc = ifr.contentDocument || (win && win.document);
       if (win) {
-        try { win.focus(); } catch (e) { /* ignore */ }
+        try { win.focus(); } catch { /* ignore */ }
       }
       // Intenta despachar eventos al documento del iframe (mismo origen si está en /public)
       if (doc) {
         try {
+          const view = doc.defaultView;
+          // Obtener el constructor KeyboardEvent desde el Window del iframe si está disponible.
+          // Evitamos usar `any` y en su lugar usamos `unknown` y cast explícito a `typeof KeyboardEvent`.
+          const maybeCtor = view ? (view as unknown as Record<string, unknown>)['KeyboardEvent'] : undefined;
+          const KeyboardEventCtor = (maybeCtor as typeof KeyboardEvent) ?? KeyboardEvent;
+
           // Simular Space y ArrowUp (keydown + keyup)
           [' ', 'ArrowUp'].forEach(k => {
-            const down = new (doc.defaultView as any).KeyboardEvent('keydown', { key: k, code: k === ' ' ? 'Space' : 'ArrowUp', keyCode: k === ' ' ? 32 : 38, which: k === ' ' ? 32 : 38, bubbles: true });
-            const up = new (doc.defaultView as any).KeyboardEvent('keyup', { key: k, code: k === ' ' ? 'Space' : 'ArrowUp', keyCode: k === ' ' ? 32 : 38, which: k === ' ' ? 32 : 38, bubbles: true });
+            const init: KeyboardEventInit = { key: k, code: k === ' ' ? 'Space' : 'ArrowUp', bubbles: true };
+            const down = new KeyboardEventCtor('keydown', init);
+            const up = new KeyboardEventCtor('keyup', init);
             doc.dispatchEvent(down);
             doc.dispatchEvent(up);
           });
-        } catch (e) {
+        } catch {
           // fallback: intentar dispatch en contentWindow
           try {
             if (win) {
-              (win as any).dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', keyCode: 32, which: 32, bubbles: true }));
-              (win as any).dispatchEvent(new KeyboardEvent('keyup', { key: ' ', code: 'Space', keyCode: 32, which: 32, bubbles: true }));
+              win.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', bubbles: true }));
+              win.dispatchEvent(new KeyboardEvent('keyup', { key: ' ', code: 'Space', bubbles: true }));
             }
-          } catch (err) {
+          } catch {
             // ignore
           }
         }
       }
-    } catch (err) {
+    } catch {
       // ignore
     }
   };

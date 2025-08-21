@@ -121,10 +121,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
   // Simular cambios en los datos del proyecto
   useEffect(() => {
     const interval = setInterval(() => {
-      setRenderTime(prev => prev + Math.floor(Math.random() * 3)); // Aumenta 0-2 min
-      setPolyCount(prev => prev + Math.floor(Math.random() * 5 - 2)); // Varía ±2K
-      setMemUsage(prev => Math.max(1.8, Math.min(3.2, prev + (Math.random() * 0.2 - 0.1)))); // Varía ±0.1GB
-      setSamples(prev => {
+      setRenderTime(r => r + Math.floor(Math.random() * 3)); // Aumenta 0-2 min
+      setPolyCount(p => p + Math.floor(Math.random() * 5 - 2)); // Varía ±2K
+      setMemUsage(m => Math.max(1.8, Math.min(3.2, m + (Math.random() * 0.2 - 0.1)))); // Varía ±0.1GB
+      setSamples(() => {
         const changes = [128, 256, 512, 1024];
         return changes[Math.floor(Math.random() * changes.length)];
       });
@@ -138,11 +138,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
 
       setLightIntensity(prev => Math.max(0.5, Math.min(2.0, prev + (Math.random() * 0.2 - 0.1))));
       setMeshCount(prev => prev + Math.floor(Math.random() * 3 - 1)); // Varía ±1
-      setSubdivLevel(prev => {
+      setSubdivLevel(() => {
         const levels = [1, 2, 3, 4];
         return levels[Math.floor(Math.random() * levels.length)];
       });
-      setRenderEngine(prev => {
+      setRenderEngine(() => {
         const engines = ['CYCLES', 'EEVEE', 'WORKBENCH'];
         return engines[Math.floor(Math.random() * engines.length)];
       });
@@ -214,7 +214,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                           setTimeout(() => {
                             el.focus();
                             if (el.contentWindow) {
-                              // @ts-ignore
+                              // @ts-expect-error: contentWindow.KeyboardEvent puede no estar disponible cross-origin, pero en /public sí lo está
                               const evt = new el.contentWindow.KeyboardEvent('keydown', { keyCode: 32, code: 'Space', key: ' ', bubbles: true });
                               el.contentWindow.document.dispatchEvent(evt);
                             }

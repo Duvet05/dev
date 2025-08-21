@@ -7,7 +7,6 @@ import { Skills } from "@/components/Skills";
 import { Brands } from "@/components/Brands";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/layout/Footer";
-import ArtstationInfiniteCarousel from "./ArtstationInfiniteCarousel";
 
 interface MainContentProps {
   glitchText: string;
@@ -16,7 +15,6 @@ interface MainContentProps {
   gpuUsage: number;
   ramUsage: number;
   renderingProgress: number;
-  projects: any[];
 }
 
 export const MainContent: React.FC<MainContentProps> = ({
@@ -26,10 +24,8 @@ export const MainContent: React.FC<MainContentProps> = ({
   gpuUsage,
   ramUsage,
   renderingProgress,
-  projects,
 }) => (
   <div className="p-8">
-
     <div id="home">
       <HeroSection
         glitchText={glitchText}
@@ -38,7 +34,7 @@ export const MainContent: React.FC<MainContentProps> = ({
         gpuUsage={gpuUsage}
         ramUsage={ramUsage}
         renderingProgress={renderingProgress}
-      />      
+      />
     </div>
     <div className="flex flex-col lg:flex-row mb-12 gap-8 items-stretch min-h-0 overflow-hidden">
       <div id="about" className="flex-[2] min-w-0">
@@ -49,7 +45,7 @@ export const MainContent: React.FC<MainContentProps> = ({
       </div>
     </div>
     <div id="projects">
-      <Projects projects={projects} />
+      <Projects />
     </div>
     <div id="skills">
       <Skills />

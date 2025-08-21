@@ -50,7 +50,7 @@ interface ArtStationModalProps {
   assetsScrollRef: React.RefObject<HTMLDivElement | null>;
   scrollAssetsLeft: () => void;
   scrollAssetsRight: () => void;
-  renderArtStationAsset: (asset: any, isLarge: boolean) => React.ReactNode;
+  renderArtStationAsset: (asset: NonNullable<Project['assets']>[number], isLarge: boolean) => React.ReactNode;
 }
 
 export const ArtStationModal: React.FC<ArtStationModalProps> = ({
@@ -62,7 +62,6 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
   assetsScrollRef,
   scrollAssetsLeft,
   scrollAssetsRight,
-  renderArtStationAsset
 }) => {
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [imageModalSrc, setImageModalSrc] = useState('');
@@ -84,7 +83,7 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
   };
 
   // Función para renderizar assets en el modal (solo imágenes)
-  const renderAssetInModal = (asset: any, isLarge: boolean = false) => {
+  const renderAssetInModal = (asset: NonNullable<Project['assets']>[number], isLarge: boolean = false) => {
     if (asset.type === 'image') {
       if (isLarge) {
         return (

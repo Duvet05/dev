@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { FaStepBackward, FaStepForward, FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 
 interface NavigationProps {
   tracks: { name: string; src: string }[];

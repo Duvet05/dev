@@ -26,7 +26,7 @@ declare global {
   interface SketchfabInitOptions {
     success: (api: SketchfabAPI) => void;
     error: (error: Error | string) => void;
-    [key: string]: any;
+    [key: string]: unknown;
   }
 
   interface SketchfabAPI {
@@ -34,7 +34,7 @@ declare global {
     removeEventListener: (event: string, callback: (error?: Error) => void) => void;
     start: () => void;
     stop: () => void;
-    [key: string]: any;
+    [key: string]: unknown;
   }
 }
 
@@ -159,7 +159,7 @@ export const SketchfabViewer: React.FC<SketchfabViewerProps> = ({
           ui_loading: 0,
           autostart: autoStart ? 1 : 0
         })
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Error initializing Sketchfab viewer:', error)
         setHasError(true)
         setErrorMessage('Error de inicialización del visor 3D')

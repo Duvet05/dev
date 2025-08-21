@@ -198,57 +198,6 @@ export default function CyberpunkPortfolio() {
     setPlayerState("PLAYING");
   };
 
-  const projects = [
-    {
-      title: "QUANTUM_MESH.EXE",
-      type: "3D VISUALIZATION",
-      status: "ACTIVE",
-      description: "Neural network visualization with real-time data processing",
-      tech: ["BLENDER", "THREE.JS", "WEBGL"],
-      date: "2024.01.15",
-    },
-    {
-      title: "CYBER_CITY.BIN",
-      type: "ENVIRONMENT",
-      status: "COMPLETE",
-      description: "Dystopian cityscape with procedural generation",
-      tech: ["UNREAL", "HOUDINI", "SUBSTANCE"],
-      date: "2024.01.08",
-    },
-    {
-      title: "ANDROID_DREAMS",
-      type: "CHARACTER",
-      status: "BETA",
-      description: "Photorealistic android character with advanced rigging",
-      tech: ["MAYA", "ZBRUSH", "MARVELOUS"],
-      date: "2024.01.22",
-    },
-    {
-      title: "NEON_INTERFACE.SYS",
-      type: "UI/UX",
-      status: "ACTIVE",
-      description: "Holographic user interface design system",
-      tech: ["FIGMA", "AFTER.EFFECTS", "CSS"],
-      date: "2024.01.30",
-    },
-    {
-      title: "MECH_WARRIOR.OBJ",
-      type: "CHARACTER",
-      status: "COMPLETE",
-      description: "High-detail mechanical warrior with full animation rig",
-      tech: ["MAYA", "SUBSTANCE", "UNREAL"],
-      date: "2023.12.20",
-    },
-    {
-      title: "DATA_STREAM.VFX",
-      type: "EFFECTS",
-      status: "BETA",
-      description: "Real-time particle system for data visualization",
-      tech: ["HOUDINI", "THREE.JS", "GLSL"],
-      date: "2024.02.05",
-    },
-  ]
-
   return (
     <div className="min-h-screen bg-black text-white font-vt323 overflow-x-hidden">
       {/* Header sticky que ocupa todo el ancho de la pantalla */}
@@ -286,7 +235,6 @@ export default function CyberpunkPortfolio() {
             gpuUsage={gpuUsage}
             ramUsage={ramUsage}
             renderingProgress={renderingProgress}
-            projects={projects}
           />
         </div>
       </div>

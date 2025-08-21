@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export const Brands: React.FC = () => {
   const brands = [
@@ -9,6 +9,23 @@ export const Brands: React.FC = () => {
     { name: "EPIC GAMES", logo: "images/brands/epic-games.png" },
   ];
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth <= 640);
+      }
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const brandsToShow = isMobile
+    ? [...brands, ...brands, ...brands, ...brands]
+    : [...brands, ...brands, ...brands];
+
   return (
     <div id="brands" className="mb-12">
       <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">BRANDS</h2>
@@ -17,7 +34,7 @@ export const Brands: React.FC = () => {
       <div className="relative overflow-hidden p-8">
         <div className="flex animate-scroll-brands">
           {/* Cuadruplicamos los brands en mobile para un loop más largo y suave */}
-          {([...(window.innerWidth <= 640 ? [...brands, ...brands, ...brands, ...brands] : [...brands, ...brands, ...brands])]).map((brand, index) => (
+          {brandsToShow.map((brand, index) => (
             <div
               key={index}
               className="flex-shrink-0 mx-8 flex items-center justify-center"

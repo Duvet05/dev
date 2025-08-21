@@ -145,8 +145,8 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
             <div className="text-base text-gray-400">
               <ReactMarkdown
                 components={{
-                  p: ({ node, ...props }) => <p {...props} className="mb-2" />,
-                  strong: ({ node, ...props }) => <strong {...props} className="font-bold" />,
+                  p: (props) => <p {...props} className="mb-2" />,
+                  strong: (props) => <strong {...props} className="font-bold" />,
                   br: () => <br />,
                 }}
               >

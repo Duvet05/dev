@@ -3,8 +3,6 @@ import { SiBlender, SiAutodesk, SiAdobephotoshop, SiUnity, SiUnrealengine, SiWeb
 import { FaPaintBrush } from "react-icons/fa";
 import { IconType } from "react-icons";
 
-interface StackProps { }
-
 const techList: { tech: string; level: number; icon: IconType }[] = [
   { tech: "Blender", level: 10, icon: SiBlender },
   { tech: "Maya", level: 9, icon: SiAutodesk },
@@ -16,7 +14,7 @@ const techList: { tech: string; level: number; icon: IconType }[] = [
   { tech: "WebGL", level: 7, icon: SiWebgl },
 ];
 
-export const Stack: React.FC<StackProps> = () => (
+export const Stack: React.FC = () => (
   <div id="stack" className="flex-1 min-w-0 flex flex-col">
     <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">STACK</h2>
     <div className="w-full grid gap-x-5 gap-y-2 items-center overflow-hidden" style={{ gridTemplateColumns: 'max-content 1fr' }}>

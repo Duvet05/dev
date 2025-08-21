@@ -3,31 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Heart, Eye, Shapes, Layers, Gauge, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { SiBlender, SiAutodesk, SiAdobephotoshop, SiUnity, SiUnrealengine, SiWebgl, SiAdobe, SiFigma, SiCss3, SiHoudini, SiMarvelapp, SiSketchfab } from "react-icons/si";
-import { TbBrandThreejs } from "react-icons/tb";
+import { SiBlender, SiAdobe, SiSketchfab } from "react-icons/si";
 import { FaPaintBrush } from "react-icons/fa";
 import { IconType } from "react-icons";
 import ReactMarkdown from "react-markdown";
-
-// Mapeo de tecnologías a iconos
-const techIcons: Record<string, IconType> = {
-  BLENDER: SiBlender,
-  MAYA: SiAutodesk,
-  ZBRUSH: FaPaintBrush,
-  SUBSTANCE: SiAdobe,
-  PHOTOSHOP: SiAdobephotoshop,
-  UNITY: SiUnity,
-  UNREAL: SiUnrealengine,
-  WEBGL: SiWebgl,
-  MARVELOUS: SiMarvelapp,
-  HOUDINI: SiHoudini,
-  FIGMA: SiFigma,
-  "AFTER.EFFECTS": SiAdobe,
-  CSS: SiCss3,
-  "THREE.JS": TbBrandThreejs,
-  GLSL: SiWebgl,
-  SKETCHFAB: SiSketchfab,
-};
 
 // Mapeo de tecnologías a iconos (estandarizado para tags)
 const tagTechIcons: Record<string, IconType> = {
@@ -70,20 +49,7 @@ interface SketchfabProject {
   staffpickedAt?: string | null;
 }
 
-interface Project {
-  title: string;
-  type: string;
-  status: string;
-  description: string;
-  tech: string[];
-  date: string;
-}
-
-interface ProjectsProps {
-  projects: Project[];
-}
-
-export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
+export const Projects: React.FC = () => {
   const [sketchfabProjects, setSketchfabProjects] = useState<SketchfabProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -157,7 +123,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
         ))
       ) : (
         // Render Sketchfab projects
-        sketchfabProjects.map((project, index) => (
+        sketchfabProjects.map((project) => (
           <div
             key={project.sketchfabUid}
             className="bg-primary border-t border-l border-secondary hover:border-white transition-colors group"
@@ -291,8 +257,8 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                 <div className="text-base text-gray-400 mb-2 line-clamp-3">
                   <ReactMarkdown
                     components={{
-                      p: ({ node, ...props }) => <p {...props} className="inline" />,
-                      strong: ({ node, ...props }) => <strong {...props} className="font-bold" />,
+                      p: ({ ...props }) => <p {...props} className="inline" />,
+                      strong: ({ ...props }) => <strong {...props} className="font-bold" />,
                       br: () => <br />,
                     }}
                   >
@@ -368,7 +334,7 @@ export const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                     className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-700 hover:border-white transition-all cursor-pointer"
                     onClick={() => {
                       if (project.sketchfabUid) {
-                        window.open(`https://sketchfab.com/3d-models/${project.sketchfabUid}`, '_blank')
+                        if (typeof window !== 'undefined') window.open(`https://sketchfab.com/3d-models/${project.sketchfabUid}`, '_blank')
                       }
                     }}
                   >
