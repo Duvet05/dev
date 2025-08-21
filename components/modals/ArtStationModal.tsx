@@ -359,7 +359,11 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
                   variant="ghost"
                   size="sm"
                   className="flex-1 text-sm text-gray-400 hover:text-white hover:bg-primary h-8 rounded-none border border-gray-400 hover:border-white transition-all cursor-pointer"
-                  onClick={() => project.viewerUrl && window.open(project.viewerUrl, '_blank')}
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && project.viewerUrl) {
+                      window.open(project.viewerUrl, '_blank');
+                    }
+                  }}
                 >
                   VIEW.ON.ARTSTATION <ExternalLink className="w-3 h-3" />
                 </Button>
