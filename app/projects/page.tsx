@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { BrowserHeader } from "@/components/BrowserHeader"
 import { Footer } from "@/components/layout/Footer"
 import { Badge } from "@/components/ui/badge"
@@ -780,6 +780,18 @@ export default function ProjectsPage() {
   const [selectedAssetIndex, setSelectedAssetIndex] = useState<number>(0);
   const assetsScrollRef = useRef<HTMLDivElement>(null);
 
+  // Mobile filters toggle
+  const [showFilters, setShowFilters] = useState<boolean>(true);
+
+  // Compact number formatter for mobile
+  const compactFormatter = useMemo(() => new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }), []);
+  const formatCompact = (n?: number) => (typeof n === 'number' ? compactFormatter.format(n).toLowerCase() : '0');
+
+  const compactTotalViews = formatCompact(sketchfabStats.totalViews);
+  const compactTotalLikes = formatCompact(sketchfabStats.totalLikes);
+  const compactTotalTriangles = formatCompact(sketchfabStats.totalTriangles);
+  const compactTotalVertices = formatCompact(sketchfabStats.totalVertices);
+
   // Funciones para navegar por los assets
   const scrollAssetsLeft = () => {
     if (assetsScrollRef.current) {
@@ -1279,6 +1291,20 @@ export default function ProjectsPage() {
      setSelectedAssetIndex(0);
    };
 
+  // Formatea números en versión compacta (66k, 1.2M)
+  function formatCompactNumber(n: number): string {
+    if (typeof n !== 'number' || isNaN(n)) return '0';
+    if (n >= 1_000_000) {
+      const v = +(n / 1_000_000).toFixed(n >= 10_000_000 ? 0 : 1);
+      return `${v.toString().replace(/\.0$/, '')}M`;
+    }
+    if (n >= 1_000) {
+      const v = +(n / 1_000).toFixed(n >= 100_000 ? 0 : 1);
+      return `${v.toString().replace(/\.0$/, '')}k`;
+    }
+    return `${n}`;
+  }
+
   return (
     <div className="min-h-screen bg-black text-white font-vt323 overflow-x-hidden">
       {/* Header sticky que ocupa todo el ancho de la pantalla */}
@@ -1308,21 +1334,24 @@ export default function ProjectsPage() {
           <div className="p-8">
             {/* Header de la página */}
             <div className="mb-6">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+              <div className="mb-4 flex items-center gap-4 sm:flex-row sm:items-center sm:gap-6">
+                <div className="flex items-center gap-4">
                   <Link href="/">
                     <Button
                       variant="outline"
-                      className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none flex items-center gap-2 cursor-pointer w-fit"
+                      className="border-white text-white hover:bg-white hover:text-black bg-transparent rounded-none flex items-center gap-2 cursor-pointer"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       <span className="hidden sm:inline">BACK.TO.MAIN</span>
                       <span className="sm:hidden">BACK</span>
                     </Button>
                   </Link>
-                  <h1 className="mb-[-16] text-4xl sm:text-3xl lg:text-5xl font-bauhaus-pixel leading-none">PROJECTS.ARCHIVE</h1>
+                  <h1 className="mb-[-16] text-4xl sm:text-3xl lg:text-5xl font-bauhaus-pixel leading-none">
+                    <span className="inline sm:hidden">PROJECTS</span>
+                    <span className="hidden sm:inline">PROJECTS.ARCHIVE</span>
+                  </h1>
                 </div>
-                <div className="text-left lg:text-right">
+                <div className="hidden sm:block text-left lg:text-right">
                   <div className="flex flex-col gap-1">
                     <div className="text-xs sm:text-sm text-gray-400 break-words">
                       <span className="block sm:inline">PAGE {currentPage} OF {totalPages}</span>
@@ -1351,55 +1380,84 @@ export default function ProjectsPage() {
                   <div className="flex flex-col items-center p-3 bg-black/60 border border-secondary">
                     <Eye className="w-6 h-6 text-blue-400 mb-1" />
                     <div className="text-xl font-bold text-white">
-                      {sketchfabStats.totalViews.toLocaleString()}
+                      <span className="sm:hidden">{compactTotalViews}</span>
+                      <span className="hidden sm:inline">{sketchfabStats.totalViews.toLocaleString()}</span>
                     </div>
-                    <div className="text-xs text-gray-400">TOTAL VIEWS</div>
+                    <div className="text-xs text-gray-400">
+                      <span className="sm:hidden lowercase">views</span>
+                      <span className="hidden sm:inline">TOTAL VIEWS</span>
+                    </div>
                   </div>
                   <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary">
                     <Heart className="w-6 h-6 text-red-400 mb-1" />
                     <div className="text-xl font-bold text-white">
-                      {sketchfabStats.totalLikes.toLocaleString()}
+                      <span className="sm:hidden">{compactTotalLikes}</span>
+                      <span className="hidden sm:inline">{sketchfabStats.totalLikes.toLocaleString()}</span>
                     </div>
-                    <div className="text-xs text-gray-400">TOTAL LIKES</div>
+                    <div className="text-xs text-gray-400">
+                      <span className="sm:hidden lowercase">likes</span>
+                      <span className="hidden sm:inline">TOTAL LIKES</span>
+                    </div>
                   </div>
-<div className="flex flex-col items-center p-3 bg-black/60 border-l border-r border-y border-secondary">                    <Shapes className="w-6 h-6 text-yellow-400 mb-1" />
+<div className="flex flex-col items-center p-3 bg-black/60 border-l border-r border-y border-secondary">
+                    <Shapes className="w-6 h-6 text-yellow-400 mb-1" />
                     <div className="text-xl font-bold text-white">
-                      {sketchfabStats.totalTriangles.toLocaleString()}
+                      <span className="sm:hidden">{compactTotalTriangles}</span>
+                      <span className="hidden sm:inline">{sketchfabStats.totalTriangles.toLocaleString()}</span>
                     </div>
-                    <div className="text-xs text-gray-400">TOTAL TRIANGLES</div>
+                    <div className="text-xs text-gray-400">
+                      <span className="sm:hidden lowercase">tris</span>
+                      <span className="hidden sm:inline">TOTAL TRIANGLES</span>
+                    </div>
                   </div>
                   <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary">
                     <Layers className="w-6 h-6 text-purple-400 mb-1" />
                     <div className="text-xl font-bold text-white">
-                      {sketchfabStats.totalVertices.toLocaleString()}
+                      <span className="sm:hidden">{compactTotalVertices}</span>
+                      <span className="hidden sm:inline">{sketchfabStats.totalVertices.toLocaleString()}</span>
                     </div>
-                    <div className="text-xs text-gray-400">TOTAL VERTICES</div>
+                    <div className="text-xs text-gray-400">
+                      <span className="sm:hidden lowercase">verts</span>
+                      <span className="hidden sm:inline">TOTAL VERTICES</span>
+                    </div>
                   </div>
                 </div>
               </div>
 
             {/* NUEVO: Barra de búsqueda, filtros, orden y vista */}
-            <div className="mb-8 flex flex-col md:flex-row md:items-end gap-4">
+
+            {/* Mobile: toggle filters button */}
+            <div className="sm:hidden mb-4 flex w-full">
+              <Button
+                onClick={() => setShowFilters(!showFilters)}
+                variant="outline"
+                className="border-white bg-white text-black rounded-none w-full"
+              >
+                {showFilters ? 'HIDE.FILTERS' : 'SHOW.FILTERS'}
+              </Button>
+            </div>
+
+            <div className={`${showFilters ? 'flex' : 'hidden sm:flex'} flex-col md:flex-row md:items-end gap-4 mb-8`}>
               <div className="flex flex-col gap-2">
                 <label className="text-xs text-gray-400">SOURCE</label>
-                <div className="flex">
+                <div className="flex w-full">
                   <button
-                    className={`px-3 py-1.5 border rounded-none text-sm flex items-center gap-2 ${selectedSource === "SKETCHFAB"
+                    className={`px-3 py-1.5 border rounded-none text-sm flex items-center gap-2 flex-1 justify-center ${selectedSource === "SKETCHFAB"
                       ? "border-white bg-white text-black"
                       : "border-secondary bg-black text-white cursor-pointer hover:border-white"}`}
                     onClick={() => setSelectedSource("SKETCHFAB")}
                   >
                     <SiSketchfab className="inline-block" style={{ fontSize: 14, verticalAlign: "middle" }} />
-                    SKETCHFAB
+                    <span className="truncate">SKETCHFAB</span>
                   </button>
                   <button
-                    className={`px-3 py-1.5 border rounded-none text-sm flex items-center gap-2 ${selectedSource === "ARTSTATION"
+                    className={`px-3 py-1.5 border rounded-none text-sm flex items-center gap-2 flex-1 justify-center ${selectedSource === "ARTSTATION"
                       ? "border-white bg-white text-black"
                       : "border-secondary bg-black text-white cursor-pointer hover:border-white"}`}
                     onClick={() => setSelectedSource("ARTSTATION")}
                   >
                     <SiArtstation className="inline-block" style={{ fontSize: 14, verticalAlign: "middle" }} />
-                    ARTSTATION
+                    <span className="truncate">ARTSTATION</span>
                   </button>
                 </div>
               </div>
@@ -1414,36 +1472,42 @@ export default function ProjectsPage() {
                   className="bg-black border border-secondary text-white px-3 py-1.5 rounded-none focus:outline-none focus:border-white text-sm"
                 />
               </div>
-              <div className="flex flex-col gap-2">
-                <label htmlFor="category-filter" className="text-xs text-gray-400">CATEGORY</label>
-                <select
-                  id="category-filter"
-                  value={selectedCategory}
-                  onChange={e => setSelectedCategory(e.target.value)}
-                  className="bg-black border border-secondary text-white px-3 py-2 rounded-none focus:outline-none focus:border-white text-sm cursor-pointer uppercase"
-                >
-                  <option value="ALL">ALL</option>
-                  {allCategories.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
-                </select>
-              </div>
-              {selectedSource !== "ARTSTATION" && (
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="complexity-filter" className="text-xs text-gray-400">COMPLEXITY</label>
+
+              {/* Category + Complexity: grouped on mobile for Sketchfab */}
+              <div className={selectedSource !== "ARTSTATION" ? "flex w-full gap-2" : ""}>
+                <div className={`flex flex-col gap-2 ${selectedSource !== "ARTSTATION" ? 'flex-1' : ''}`}>
+                  <label htmlFor="category-filter" className="text-xs text-gray-400">CATEGORY</label>
                   <select
-                    id="complexity-filter"
-                    value={selectedComplexity}
-                    onChange={e => setSelectedComplexity(e.target.value)}
-                    className="bg-black border border-secondary text-white px-3 py-2 rounded-none focus:outline-none focus:border-white text-sm cursor-pointer uppercase"
+                    id="category-filter"
+                    value={selectedCategory}
+                    onChange={e => setSelectedCategory(e.target.value)}
+                    className="bg-black border border-secondary text-white px-3 py-2 rounded-none focus:outline-none focus:border-white text-sm cursor-pointer uppercase w-full"
                   >
                     <option value="ALL">ALL</option>
-                    {allComplexities.map(complexity => (
-                      <option key={complexity} value={complexity}>{complexity}</option>
+                    {allCategories.map(cat => (
+                      <option key={cat} value={cat}>{cat}</option>
                     ))}
                   </select>
                 </div>
-              )}
+
+                {selectedSource !== "ARTSTATION" && (
+                  <div className="flex flex-col gap-2 flex-1">
+                    <label htmlFor="complexity-filter" className="text-xs text-gray-400">COMPLEXITY</label>
+                    <select
+                      id="complexity-filter"
+                      value={selectedComplexity}
+                      onChange={e => setSelectedComplexity(e.target.value)}
+                      className="bg-black border border-secondary text-white px-3 py-2 rounded-none focus:outline-none focus:border-white text-sm cursor-pointer uppercase w-full"
+                    >
+                      <option value="ALL">ALL</option>
+                      {allComplexities.map(complexity => (
+                        <option key={complexity} value={complexity}>{complexity}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+
               <div className="flex flex-col gap-2">
                 <label htmlFor="order-by" className="text-xs text-gray-400">ORDER BY</label>
                 <select
@@ -1492,8 +1556,8 @@ export default function ProjectsPage() {
               </div>
             </div>
 
-            {/* Grid de proyectos */}
-            {isLoadingProjects ? (
+             {/* Grid de proyectos */}
+             {isLoadingProjects ? (
               <div className="border border-secondary p-12 text-center">
                 <div className="text-gray-400 text-lg animate-pulse mb-4">LOADING.CUADOT.PROJECTS...</div>
                 <div className="text-gray-500 text-sm mb-2">
@@ -1564,10 +1628,6 @@ export default function ProjectsPage() {
             {/* Footer info */}
             <div className="pt-2 mb-12">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-sm text-gray-400 w-full">
-                <div>
-                  <div>PORTFOLIO.VERSION: 3.2.1</div>
-                  <div>BUILD.DATE: 2025.07.25</div>
-                </div>
                 {/* Paginación centrada en el footer */}
                 {!usingFallback && totalPages > 1 && (
                   <div className="w-full md:w-auto flex justify-center order-3 md:order-none">
@@ -1598,6 +1658,7 @@ export default function ProjectsPage() {
                             {i + 1}
                           </Button>
                         ))}
+
                       </div>
                       <Button
                         onClick={handleNextPage}
@@ -1611,10 +1672,6 @@ export default function ProjectsPage() {
                     </div>
                   </div>
                 )}
-                <div className="text-right">
-                  <div>MEMORY.USAGE: 1.2GB / 16GB</div>
-                  <div>SYSTEM.STATUS: ONLINE</div>
-                </div>
               </div>
             </div>
             <Footer currentTime={currentTime} />
