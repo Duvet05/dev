@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Badge } from "@/components/ui/badge";
 import { Cpu, MonitorSmartphone, MemoryStick, Torus, Calendar, Clock, Layers, HardDrive, Zap } from "lucide-react";
 import { DonutAnimation } from "./DonutAnimation";
-import TRexGame from "./TRexGame";
-import ArtstationInfiniteCarousel from "./ArtstationInfiniteCarousel";
 
 interface HeroSectionProps {
   glitchText: string;
@@ -170,6 +168,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [showTRexGame]);
 
+  // Evitar scroll con SPACE cuando el juego está activo
+  useEffect(() => {
+    const preventSpaceScroll = (e: KeyboardEvent) => {
+      if (showTRexGame && e.code === 'Space') {
+        e.preventDefault();
+      }
+    };
+    window.addEventListener('keydown', preventSpaceScroll, { passive: false });
+    return () => window.removeEventListener('keydown', preventSpaceScroll);
+  }, [showTRexGame]);
+
   // Mostrar hint después de 3 segundos
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -184,7 +193,91 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
     <div className="relative mb-4 min-h-[520px] md:min-h-[520px] lg:min-h-[480px]">
       <div className="grid grid-cols-12">
         <div className="col-span-12 lg:col-span-8">
-            <div className="relative bg-primary border border-secondary overflow-hidden h-full border-b-0 lg:border-b">
+
+          <div className="relative bg-primary border border-secondary overflow-hidden h-full border-b-0 lg:border-b">
+
+            {/* Contenido central */}
+            {/* Añadir padding vertical para evitar que el texto se comprima en alturas pequeñas */}
+            <div className="absolute inset-0 flex items-center justify-center w-full">
+
+              {/* Renderizar el juego T-Rex cuando esté activo */}
+              {showTRexGame ? (
+                <div className="w-full h-full" style={{ zIndex: 50, position: 'relative' }}>
+                  <div className="absolute top-3 right-5">Copyright (c) 2014 The Chromium Authors. All rights reserved.</div>
+                  <iframe
+                    ref={el => {
+                      if (el) {
+                        // Darle foco al iframe para que reciba teclas
+                        el.focus();
+                        // Espera a que el iframe cargue y luego simula SPACE
+                        el.onload = () => {
+                          setTimeout(() => {
+                            el.focus();
+                            if (el.contentWindow) {
+                              // @ts-ignore
+                              const evt = new el.contentWindow.KeyboardEvent('keydown', { keyCode: 32, code: 'Space', key: ' ', bubbles: true });
+                              el.contentWindow.document.dispatchEvent(evt);
+                            }
+                          }, 200);
+                        };
+                      }
+                    }}
+                    src="/dino/index.html"
+                    style={{ width: '100%', height: 400, border: 'none', outline: 'none' }}
+                    tabIndex={0}
+                    allowFullScreen
+                    title="Chrome Dino Game"
+                  />
+                </div>
+              ) : (
+                <div className="text-center max-w-full w-full">
+                  {/*<h1 className="text-6xl font-bold glitch-text font-bauhaus-pixel">{glitchText}</h1>*/}
+                  {/* Evitar márgenes negativos en pantallas pequeñas; aplicarlos solo desde md en adelante */}
+                  <h1 className="text-6xl lg:text-7xl xl:text-8xl font-bauhaus-pixel mb-0 md:mb-[-12px] lg:mb-[-12px] xl:mb-[-12px] leading-none overflow-hidden">{glitchText}</h1>
+                  <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-gray-400 mb-3 sm:mb-6">3D.ARTIST.DEVELOPER</p>
+                  <div className="flex justify-center space-x-1 sm:space-x-4 flex-wrap gap-y-1">
+                    <Badge variant="outline" className="text-xs border-white text-white rounded-none whitespace-nowrap">
+                      ONLINE
+                    </Badge>
+                    <Badge variant="outline" className="text-xs border-gray-600 text-gray-400 rounded-none whitespace-nowrap">
+                      GMT-6 {currentTime}
+                    </Badge>
+                  </div>
+
+                  {/* Botón de hint para activar T-Rex Game: visible desde el inicio, cambia de estado tras 3s */}
+                  <div
+                    className="mt-4 flex justify-center hidden md:flex"
+                    style={{ cursor: 'pointer', zIndex: 20, position: 'relative' }}
+                    onClick={() => setShowTRexGame(true)}
+                  >
+                    <Badge
+                      variant="outline"
+                      className={`text-xs rounded-none cursor-pointer transition-colors border-2 ${showEnterHint ? 'border-green-500 text-green-500 hover:bg-green-500/10' : 'border-yellow-400 text-yellow-400 bg-yellow-400/10 animate-pulse'}`}
+                      tabIndex={0}
+                      onClick={() => setShowTRexGame(true)}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setShowTRexGame(true);
+                        }
+                      }}
+                      role="button"
+                      aria-label="Iniciar juego T-Rex"
+                    >
+                      {showEnterHint ? (
+                        <>
+                          <span className="hidden sm:inline">PRESS SPACE TO PLAY T-REX</span>
+                          <span className="sm:hidden">TAP TO PLAY T-REX</span>
+                        </>
+                      ) : (
+                        <span>LOADING...</span>
+                      )}
+                    </Badge>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Grid pattern de fondo completo */}
             <div
               className="absolute inset-0"
@@ -193,12 +286,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                   linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
                   linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px)
                 `,
-                backgroundSize: '20px 20px'
+                backgroundSize: '20px 20px',
+                pointerEvents: 'none',
+                zIndex: 0
               }}
             />
 
             {/* Estrellas animadas de fondo */}
-            <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute inset-0 overflow-hidden" style={{ pointerEvents: 'none', zIndex: 0 }}>
               {/* Estrellas pequeñas rápidas */}
               {[...Array(30)].map((_, i) => (
                 <div
@@ -252,8 +347,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
 
               {/* Estrellas de colores cyberpunk */}
               {[...Array(8)].map((_, i) => {
-                const colors = ['#00ffff', '#ff00ff', '#ffff00', '#00ff00'];
-                const color = colors[Math.floor(Math.random() * colors.length)];
+                const color = '#fffff';
                 return (
                   <div
                     key={`colored-${i}`}
@@ -332,8 +426,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
 
             {/* Panel de Fondo */}
             {/* usar flex-1 y min-height interno para que el contenido central pueda centrar correctamente */}
-            <div className="p-3 flex-1 flex flex-col min-h-[360px] md:min-h-[420px]">
-              <div className="flex-1 border border-gray-600 bg-black/40 relative overflow-hidden">
+            <div className="p-2 flex-1 flex flex-col min-h-[360px] md:min-h-[420px] lg:min-h-full">
+              <div className="flex-1 border border-gray-600 relative overflow-hidden">
                 {/* Scanning line */}
                 <div className="absolute left-0 right-0 h-0.5 bg-secondary/30"
                   style={{ animation: 'scanLine 3s linear infinite' }}></div>
@@ -358,7 +452,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                     </div>
 
                     {/* Abajo Izquierda - GEOMETRY */}
-                    <div className="absolute bottom-15 left-4 text-xs text-gray-400 font-vt323">
+                    <div className="absolute bottom-16 left-4 text-xs text-gray-400 font-vt323">
                       <div className="text-xs text-secondary mb-1 font-vt323">GEOMETRY</div>
                       <div>MSH: {meshCount}</div>
                       <div>SUB: {subdivLevel}</div>
@@ -366,7 +460,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
                     </div>
 
                     {/* Abajo Derecha - RENDER.OUT */}
-                    <div className="absolute bottom-15 right-4 text-xs text-gray-400 font-vt323 text-right">
+                    <div className="absolute bottom-16 right-4 text-xs text-gray-400 font-vt323 text-right">
                       <div className="text-xs text-secondary mb-1 font-vt323">RENDER.OUT</div>
                       <div>RES: 1920x1080</div>
                       <div>FMT: PNG</div>
@@ -382,47 +476,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
               </div>
             </div>
 
-
-
-            {/* Contenido central */}
-            {/* Añadir padding vertical para evitar que el texto se comprima en alturas pequeñas */}
-            <div className="absolute inset-0 flex items-center justify-center px-1 sm:px-4 py-6">
-              {/* Renderizar el juego T-Rex cuando esté activo */}
-              {showTRexGame ? (
-                <TRexGame onClose={() => setShowTRexGame(false)} isActive={showTRexGame} />
-              ) : (
-                <div className="text-center max-w-full w-full">
-                  {/*<h1 className="text-6xl font-bold glitch-text font-bauhaus-pixel">{glitchText}</h1>*/}
-                  {/* Evitar márgenes negativos en pantallas pequeñas; aplicarlos solo desde md en adelante */}
-                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bauhaus-pixel mb-0 md:mb-[-12px] lg:mb-[-16px] xl:mb-[-18px] leading-none overflow-hidden">{glitchText}</h1>
-                  <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-gray-400 mb-3 sm:mb-6">3D.ARTIST.DEVELOPER</p>
-                  <div className="flex justify-center space-x-1 sm:space-x-4 flex-wrap gap-y-1">
-                    <Badge variant="outline" className="text-xs border-white text-white rounded-none whitespace-nowrap">
-                      ONLINE
-                    </Badge>
-                    <Badge variant="outline" className="text-xs border-gray-600 text-gray-400 rounded-none whitespace-nowrap">
-                      GMT-6 {currentTime}
-                    </Badge>
-                  </div>
-
-                  {/* Hint para activar T-Rex Game */}
-                  {showEnterHint && (
-                    <div className="mt-4 animate-pulse">
-                      <Badge
-                        variant="outline"
-                        className="text-xs border-green-500 text-green-500 rounded-none cursor-pointer hover:bg-green-500/10 transition-colors"
-                        onClick={() => setShowTRexGame(true)}
-                      >
-                        <span className="hidden sm:inline">PRESS SPACE TO PLAY T-REX</span>
-                        <span className="sm:hidden">TAP TO PLAY T-REX</span>
-                      </Badge>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <div className="p-2 absolute bottom-4 left-4 right-4">
+            <div className="p-2 absolute bottom-3.5 left-4 right-4">
               <div className="grid grid-cols-4 gap-2">
                 {[...Array(16)].map((_, i) => (
                   <div
