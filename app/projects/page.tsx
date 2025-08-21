@@ -1110,13 +1110,22 @@ export default function ProjectsPage() {
     );
   };
 
+  // Función para formatear el título igual que Sketchfab
+  function formatTitle(name: string): string {
+    return name
+      .toUpperCase()
+      .replace(/\s+/g, '_')
+      .replace(/[^A-Z0-9_]/g, '')
+      .substring(0, 25) + '.DEMO';
+  }
+
   // Mapear JSON de ArtStation al formato interno del proyecto
   const mapArtStationJsonToProject = (baseProject: Project, json: any): Project => {
     if (!json) return baseProject;
     const mapped: Project = { ...baseProject };
 
     // Metadatos
-    mapped.title = (json.title as string) || mapped.title;
+    mapped.title = json.title ? formatTitle(json.title as string) : mapped.title;
     mapped.description = (json.description_html as string) || json.description || mapped.description;
     mapped.date = (json.published_at as string) || mapped.date;
     mapped.likes = typeof json.likes_count === 'number' ? json.likes_count : mapped.likes;
