@@ -25,7 +25,7 @@ export const MainContent: React.FC<MainContentProps> = ({
   ramUsage,
   renderingProgress,
 }) => (
-  <div className="p-8">
+  <div className="p-6 px-4 py-6 sm:p-6">
     <div id="home">
       <HeroSection
         glitchText={glitchText}

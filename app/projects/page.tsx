@@ -75,29 +75,6 @@ interface SketchfabStats {
   totalModels: number;
 }
 
-// Mapeo de tecnologías a iconos
-// const techIcons: Record<string, IconType> = {
-//   BLENDER: SiBlender,
-//   MAYA: SiAutodesk,
-//   "3DS MAX": SiAutodesk,
-//   ZBRUSH: FaPaintBrush,
-//   SUBSTANCE: SiAdobe,
-//   PHOTOSHOP: SiAdobephotoshop,
-//   UNITY: SiUnity,
-//   UNREAL: SiUnrealengine,
-//   WEBGL: SiWebgl,
-//   MARVELOUS: SiMarvelapp,
-//   HOUDINI: SiHoudini,
-//   FIGMA: SiFigma,
-//   "AFTER.EFFECTS": SiAdobe,
-//   CSS: SiCss3,
-//   "THREE.JS": TbBrandThreejs,
-//   GLSL: SiWebgl,
-//   SKETCHFAB: SiSketchfab,
-//   PBR: SiWebgl,
-//   LOWPOLY: SiWebgl,
-// }
-
 // Mapeo de tecnologías a iconos (estandarizado para tags)
 const tagTechIcons: Record<string, IconType> = {
   blender: SiBlender,
@@ -417,11 +394,11 @@ export default function ProjectsPage() {
   // Función para cargar categorías desde los archivos JSON de ArtStation
   const loadArtStationCategories = async () => {
     const allCategories = new Set<string>();
-    
+
     // Lista de todos los archivos JSON de ArtStation
     const artstationFiles = [
-      '8eAxxE', '8lQLgQ', 'd8DKwx', 'gJm2Ne', 'JeVyq0', 
-      'k4bO06', 'nJQarE', 'Ooegxw', 'PXDwdB', 'qAVyER', 
+      '8eAxxE', '8lQLgQ', 'd8DKwx', 'gJm2Ne', 'JeVyq0',
+      'k4bO06', 'nJQarE', 'Ooegxw', 'PXDwdB', 'qAVyER',
       'QX6QnZ', 'WKyDZX', 'XnW610', 'zOBkl6'
     ];
 
@@ -431,7 +408,7 @@ export default function ProjectsPage() {
         if (response.ok) {
           const data = await response.json();
           if (data.categories && Array.isArray(data.categories)) {
-            data.categories.forEach((category: {name: string}) => {
+            data.categories.forEach((category: { name: string }) => {
               if (category.name) {
                 allCategories.add(category.name);
               }
@@ -457,8 +434,8 @@ export default function ProjectsPage() {
         const data = await response.json();
         if (data.categories && Array.isArray(data.categories)) {
           return data.categories
-            .filter((cat: {name?: string}) => cat && cat.name)
-            .map((cat: {name: string}) => cat.name);
+            .filter((cat: { name?: string }) => cat && cat.name)
+            .map((cat: { name: string }) => cat.name);
         }
       }
     } catch (error) {
@@ -486,12 +463,12 @@ export default function ProjectsPage() {
           };
         })
       );
-      
+
       console.log('ArtStation projects loaded with real categories:', mappedProjects.map(p => ({
-        title: p.title, 
+        title: p.title,
         hashId: p.hashId,
         categories: p.categories,
-        views: p.views, 
+        views: p.views,
         likes: p.likes
       })));
 
@@ -521,7 +498,7 @@ export default function ProjectsPage() {
         setAllProjects(prev => {
           // Filtramos los modelos de ArtStation que pudieran existir
           const filtered = prev.filter(p => p.source !== "SKETCHFAB");
-          
+
           // Calcular estadísticas globales
           const projects = data.projects as Project[];
           const statsObj: SketchfabStats = {
@@ -531,7 +508,7 @@ export default function ProjectsPage() {
             totalVertices: 0,
             totalModels: 0,
           };
-          
+
           projects.forEach(model => {
             statsObj.totalViews += (model.views || 0);
             statsObj.totalLikes += (model.likes || 0);
@@ -542,7 +519,7 @@ export default function ProjectsPage() {
 
           // Actualizar las estadísticas globales
           setSketchfabStats(statsObj);
-          
+
           return [...filtered, ...data.projects];
         });
         setValidModelsFound(data.validModels || data.projects.length);
@@ -706,8 +683,8 @@ export default function ProjectsPage() {
   }
 
   // Obtener todas las categorías y fuentes únicas de los proyectos
-  const allCategories = selectedSource === "ARTSTATION" 
-    ? availableCategories 
+  const allCategories = selectedSource === "ARTSTATION"
+    ? availableCategories
     : Array.from(new Set(allProjects.flatMap(p => p.categories || [])));
   // const allSources = Array.from(new Set(allProjects.map(p => p.source || "UNKNOWN")));
   const complexityOrder = ["LOW", "MEDIUM", "HIGH", "VERY_HIGH", "EXTREME"];
@@ -818,7 +795,7 @@ export default function ProjectsPage() {
         return (
           <div className="relative w-full h-full overflow-hidden">
             {/* Fondo desenfocado */}
-            <div 
+            <div
               className="absolute inset-0 bg-cover bg-center"
               style={{
                 backgroundImage: `url(${asset.imageUrl})`,
@@ -849,8 +826,8 @@ export default function ProjectsPage() {
           />
         );
       }
-    } 
-    
+    }
+
     // No mostrar videos, covers, modelos 3D u otros tipos
     return null;
   };
@@ -908,17 +885,17 @@ export default function ProjectsPage() {
         key={index}
         className="bg-primary border-r border-b border-secondary hover:border-white transition-colors group"
       >
-        <div className="p-6 flex flex-col h-full">
+        <div className="p-4 sm:p-6 flex flex-col h-full">
           <div>
             <div className="flex items-center justify-between mb-4">
               <div className="flex w-full items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <a
-                    href={project.sketchfabUid ? `https://sketchfab.com/3d-models/${project.sketchfabUid}` : undefined}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="focus:outline-none"
-                  >
+          <div className="flex items-center gap-2">
+            <a
+              href={project.sketchfabUid ? `https://sketchfab.com/3d-models/${project.sketchfabUid}` : undefined}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus:outline-none"
+            >
                     <Badge
                       variant="outline"
                       className="text-sm rounded-none flex items-center gap-1 cursor-pointer hover:underline border-[#13aff0] text-[#13aff0]"
@@ -1251,45 +1228,45 @@ export default function ProjectsPage() {
 
   // Cargar detalles de ArtStation (intenta copia local en /artstation-json/{hash}.json, luego fallback remoto)
   async function loadArtStationDetails(project: Project) {
-     const hash = project.hashId;
-     if (!hash) {
-       setModalProject(project);
-       setSelectedAssetIndex(0);
-       return;
-     }
+    const hash = project.hashId;
+    if (!hash) {
+      setModalProject(project);
+      setSelectedAssetIndex(0);
+      return;
+    }
 
-     const localUrl = `/artstation-json/${hash}.json`;
-     try {
-       const res = await fetch(localUrl);
-       if (res.ok) {
-         const json = await res.json();
-         const mapped = mapArtStationJsonToProject(project, json);
-         setModalProject(mapped);
-         setSelectedAssetIndex(0);
-         return;
-       }
-     } catch {
-       // ignore
-     }
+    const localUrl = `/artstation-json/${hash}.json`;
+    try {
+      const res = await fetch(localUrl);
+      if (res.ok) {
+        const json = await res.json();
+        const mapped = mapArtStationJsonToProject(project, json);
+        setModalProject(mapped);
+        setSelectedAssetIndex(0);
+        return;
+      }
+    } catch {
+      // ignore
+    }
 
-     // fallback remoto
-     try {
-       const remoteRes = await fetch(`https://www.artstation.com/projects/${hash}.json`);
-       if (remoteRes.ok) {
-         const json = await remoteRes.json();
-         const mapped = mapArtStationJsonToProject(project, json);
-         setModalProject(mapped);
-         setSelectedAssetIndex(0);
-         return;
-       }
-     } catch {
-       // ignore
-     }
+    // fallback remoto
+    try {
+      const remoteRes = await fetch(`https://www.artstation.com/projects/${hash}.json`);
+      if (remoteRes.ok) {
+        const json = await remoteRes.json();
+        const mapped = mapArtStationJsonToProject(project, json);
+        setModalProject(mapped);
+        setSelectedAssetIndex(0);
+        return;
+      }
+    } catch {
+      // ignore
+    }
 
-     // si todo falla, abrir con el proyecto base
-     setModalProject(project);
-     setSelectedAssetIndex(0);
-   };
+    // si todo falla, abrir con el proyecto base
+    setModalProject(project);
+    setSelectedAssetIndex(0);
+  };
 
   // Formatea números en versión compacta (66k, 1.2M)
   function formatCompactNumber(n: number): string {
@@ -1331,7 +1308,7 @@ export default function ProjectsPage() {
       {/* Contenido principal con padding-top para compensar el header fijo */}
       <div className="pt-[100px] mb-4">
         <div className="border-l border-r border-b border-secondary mx-4">
-          <div className="p-8">
+          <div className="p-6 px-4 py-6 sm:p-6">
             {/* Header de la página */}
             <div className="mb-6">
               <div className="mb-4 flex items-center gap-4 sm:flex-row sm:items-center sm:gap-6">
@@ -1375,54 +1352,55 @@ export default function ProjectsPage() {
             </div>
 
 
-              <div className="mb-4 bg-black/40 backdrop-blur-sm">
-                <div className="grid grid-cols-2 md:grid-cols-4">
-                  <div className="flex flex-col items-center p-3 bg-black/60 border border-secondary">
-                    <Eye className="w-6 h-6 text-blue-400 mb-1" />
-                    <div className="text-xl font-bold text-white">
-                      <span className="sm:hidden">{compactTotalViews}</span>
-                      <span className="hidden sm:inline">{sketchfabStats.totalViews.toLocaleString()}</span>
-                    </div>
-                    <div className="text-xs text-gray-400">
-                      <span className="sm:hidden lowercase">views</span>
-                      <span className="hidden sm:inline">TOTAL VIEWS</span>
-                    </div>
+            <div className="mb-4 bg-black/40 backdrop-blur-sm">
+              {/* Mobile: force single row of 4 stats; desktop keeps 4 columns */}
+              <div className="grid grid-cols-4 md:grid-cols-4">
+                <div className="flex flex-col items-center p-3 bg-black/60 border border-secondary">
+                  <Eye className="w-6 h-6 text-blue-400 mb-1" />
+                  <div className="text-xl font-bold text-white">
+                    <span className="sm:hidden uppercase">{compactTotalViews}</span>
+                    <span className="hidden sm:inline">{sketchfabStats.totalViews.toLocaleString()}</span>
                   </div>
-                  <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary">
-                    <Heart className="w-6 h-6 text-red-400 mb-1" />
-                    <div className="text-xl font-bold text-white">
-                      <span className="sm:hidden">{compactTotalLikes}</span>
-                      <span className="hidden sm:inline">{sketchfabStats.totalLikes.toLocaleString()}</span>
-                    </div>
-                    <div className="text-xs text-gray-400">
-                      <span className="sm:hidden lowercase">likes</span>
-                      <span className="hidden sm:inline">TOTAL LIKES</span>
-                    </div>
+                  <div className="text-xs text-gray-400">
+                    <span className="sm:hidden">VIEWS</span>
+                    <span className="hidden sm:inline">TOTAL VIEWS</span>
                   </div>
-<div className="flex flex-col items-center p-3 bg-black/60 border-l border-r border-y border-secondary">
-                    <Shapes className="w-6 h-6 text-yellow-400 mb-1" />
-                    <div className="text-xl font-bold text-white">
-                      <span className="sm:hidden">{compactTotalTriangles}</span>
-                      <span className="hidden sm:inline">{sketchfabStats.totalTriangles.toLocaleString()}</span>
-                    </div>
-                    <div className="text-xs text-gray-400">
-                      <span className="sm:hidden lowercase">tris</span>
-                      <span className="hidden sm:inline">TOTAL TRIANGLES</span>
-                    </div>
+                </div>
+                <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary">
+                  <Heart className="w-6 h-6 text-red-400 mb-1" />
+                  <div className="text-xl font-bold text-white">
+                    <span className="sm:hidden uppercase">{compactTotalLikes}</span>
+                    <span className="hidden sm:inline">{sketchfabStats.totalLikes.toLocaleString()}</span>
                   </div>
-                  <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary">
-                    <Layers className="w-6 h-6 text-purple-400 mb-1" />
-                    <div className="text-xl font-bold text-white">
-                      <span className="sm:hidden">{compactTotalVertices}</span>
-                      <span className="hidden sm:inline">{sketchfabStats.totalVertices.toLocaleString()}</span>
-                    </div>
-                    <div className="text-xs text-gray-400">
-                      <span className="sm:hidden lowercase">verts</span>
-                      <span className="hidden sm:inline">TOTAL VERTICES</span>
-                    </div>
+                  <div className="text-xs text-gray-400">
+                    <span className="sm:hidden">LIKES</span>
+                    <span className="hidden sm:inline">TOTAL LIKES</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center p-3 bg-black/60 border-l border-r border-y border-secondary">
+                  <Shapes className="w-6 h-6 text-yellow-400 mb-1" />
+                  <div className="text-xl font-bold text-white">
+                    <span className="sm:hidden uppercase">{compactTotalTriangles}</span>
+                    <span className="hidden sm:inline">{sketchfabStats.totalTriangles.toLocaleString()}</span>
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    <span className="sm:hidden">TRIANGLES</span>
+                    <span className="hidden sm:inline">TOTAL TRIANGLES</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary">
+                  <Layers className="w-6 h-6 text-purple-400 mb-1" />
+                  <div className="text-xl font-bold text-white">
+                    <span className="sm:hidden uppercase">{compactTotalVertices}</span>
+                    <span className="hidden sm:inline">{sketchfabStats.totalVertices.toLocaleString()}</span>
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    <span className="sm:hidden">VERTICES</span>
+                    <span className="hidden sm:inline">TOTAL VERTICES</span>
                   </div>
                 </div>
               </div>
+            </div>
 
             {/* NUEVO: Barra de búsqueda, filtros, orden y vista */}
 
@@ -1473,9 +1451,9 @@ export default function ProjectsPage() {
                 />
               </div>
 
-              {/* Category + Complexity: grouped on mobile for Sketchfab */}
-              <div className={selectedSource !== "ARTSTATION" ? "flex w-full gap-2" : ""}>
-                <div className={`flex flex-col gap-2 ${selectedSource !== "ARTSTATION" ? 'flex-1' : ''}`}>
+              {/* Category + Complexity: grouped on mobile for Sketchfab. On desktop the selects size to content (md:w-auto). */}
+              <div className={selectedSource !== "ARTSTATION" ? "flex gap-2 items-end w-full md:w-auto" : "md:w-auto"}>
+                <div className={`flex flex-col gap-2 ${selectedSource !== "ARTSTATION" ? 'flex-1 md:flex-none md:w-auto' : 'md:w-auto'}`}>
                   <label htmlFor="category-filter" className="text-xs text-gray-400">CATEGORY</label>
                   <select
                     id="category-filter"
@@ -1491,7 +1469,7 @@ export default function ProjectsPage() {
                 </div>
 
                 {selectedSource !== "ARTSTATION" && (
-                  <div className="flex flex-col gap-2 flex-1">
+                  <div className="flex flex-col gap-2 flex-1 md:flex-none md:w-auto">
                     <label htmlFor="complexity-filter" className="text-xs text-gray-400">COMPLEXITY</label>
                     <select
                       id="complexity-filter"
@@ -1556,8 +1534,8 @@ export default function ProjectsPage() {
               </div>
             </div>
 
-             {/* Grid de proyectos */}
-             {isLoadingProjects ? (
+            {/* Grid de proyectos */}
+            {isLoadingProjects ? (
               <div className="border border-secondary p-12 text-center">
                 <div className="text-gray-400 text-lg animate-pulse mb-4">LOADING.CUADOT.PROJECTS...</div>
                 <div className="text-gray-500 text-sm mb-2">
@@ -1590,10 +1568,10 @@ export default function ProjectsPage() {
                 )}
 
                 <div className={`border-l border-t border-secondary grid gap-0 ${selectedSource === "ARTSTATION"
-                    ? gridCols === 3
-                      ? "grid-cols-1 sm:grid-cols-3"
-                      : "grid-cols-1 sm:grid-cols-6"
-                    : `grid-cols-1 md:grid-cols-2 lg:grid-cols-${gridCols}`
+                  ? gridCols === 3
+                    ? "grid-cols-1 sm:grid-cols-3"
+                    : "grid-cols-1 sm:grid-cols-6"
+                  : `grid-cols-1 md:grid-cols-2 lg:grid-cols-${gridCols}`
                   }`}>
                   {paginatedProjects.map((project, index) => (
                     selectedSource === "ARTSTATION"
@@ -1628,6 +1606,10 @@ export default function ProjectsPage() {
             {/* Footer info */}
             <div className="pt-2 mb-12">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-sm text-gray-400 w-full">
+                <div className="hidden md:block">
+                  <div>PORTFOLIO.VERSION: 3.2.1</div>
+                  <div>BUILD.DATE: 2025.07.25</div>
+                </div>
                 {/* Paginación centrada en el footer */}
                 {!usingFallback && totalPages > 1 && (
                   <div className="w-full md:w-auto flex justify-center order-3 md:order-none">
@@ -1672,6 +1654,10 @@ export default function ProjectsPage() {
                     </div>
                   </div>
                 )}
+                <div className="hidden md:block text-right">
+                  <div>MEMORY.USAGE: 1.2GB / 16GB</div>
+                  <div>SYSTEM.STATUS: ONLINE</div>
+                </div>
               </div>
             </div>
             <Footer currentTime={currentTime} />

@@ -8,7 +8,7 @@ interface AboutMeProps {
 }
 
 export const AboutMe: React.FC<AboutMeProps> = () => (
-  <div id="about" className="flex-1 min-w-0 flex flex-col">
+  <div id="about" className="flex-1 min-w-0 flex flex-col sm:mb-0 mb-4">
     <h2 className="text-4xl font-bauhaus-pixel leading-none mb-4">ABOUT.ME</h2>
     
     <WindowHeader title="ABOUT.ME.EXE" />

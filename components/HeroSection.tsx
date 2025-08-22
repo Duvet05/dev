@@ -190,7 +190,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ glitchText, currentTim
 
   return (
     // Mantener la sección hero con una altura mínima consistente para evitar compresión en móviles
-    <div className="relative mb-4 min-h-[520px] md:min-h-[520px] lg:min-h-[480px]">
+    <div className="relative sm:mb-2 mb-10 min-h-[520px] md:min-h-[520px] lg:min-h-[480px]">
       <div className="grid grid-cols-12">
         <div className="col-span-12 lg:col-span-8">
 
