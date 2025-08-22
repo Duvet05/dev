@@ -1268,20 +1268,6 @@ export default function ProjectsPage() {
     setSelectedAssetIndex(0);
   };
 
-  // Formatea números en versión compacta (66k, 1.2M)
-  function formatCompactNumber(n: number): string {
-    if (typeof n !== 'number' || isNaN(n)) return '0';
-    if (n >= 1_000_000) {
-      const v = +(n / 1_000_000).toFixed(n >= 10_000_000 ? 0 : 1);
-      return `${v.toString().replace(/\.0$/, '')}M`;
-    }
-    if (n >= 1_000) {
-      const v = +(n / 1_000).toFixed(n >= 100_000 ? 0 : 1);
-      return `${v.toString().replace(/\.0$/, '')}k`;
-    }
-    return `${n}`;
-  }
-
   return (
     <div className="min-h-screen bg-black text-white font-vt323 overflow-x-hidden">
       {/* Header sticky que ocupa todo el ancho de la pantalla */}
