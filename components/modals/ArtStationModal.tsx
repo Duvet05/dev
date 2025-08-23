@@ -134,12 +134,12 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
       className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center md:p-24 p-4"
       onClick={handleBackdropClick}
     >
-      <div className="bg-primary max-w-6xl w-full max-h-full overflow-y-auto border border-secondary">
+      <div className="bg-primary max-w-6xl w-full max-h-full overflow-y-auto overflow-x-hidden border border-secondary">
         <WindowHeader
           title={project.title}
           onClose={onClose}
         />
-        <div className="p-6 flex flex-col lg:flex-row gap-6 bg-primary">
+        <div className="p-4 md:p-6 flex flex-col lg:flex-row gap-4 md:gap-6 bg-primary overflow-x-hidden">
           {/* Imagen grande o visor */}
           <div className="flex flex-col items-center relative flex-shrink-0">
             {/* Contenedor que se adapta al asset */}
@@ -249,34 +249,36 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
           </div>
           
           {/* Info del modelo */}
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              <h2 className="text-2xl font-bauhaus-pixel mb-[-8] text-secondary">
+          <div className="flex flex-col gap-2 min-w-0">
+            <div className="flex gap-2 min-w-0">
+              <h2 className="text-xl md:text-2xl font-bauhaus-pixel mb-[-8] text-secondary truncate min-w-0">
                 {project.title}
               </h2>
             </div>
-            <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
-              <Calendar className="w-4 h-4 mr-1" />
-              {project.date && (() => {
-                const d = new Date(project.date);
-                if (isNaN(d.getTime())) return project.date;
-                return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
-              })()}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-gray-400 text-sm mb-2">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4 mr-1" />
+                {project.date && (() => {
+                  const d = new Date(project.date);
+                  if (isNaN(d.getTime())) return project.date;
+                  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+                })()}
 
-              {/* Mostrar autor para ArtStation */}
-              {project.author && (
-                <span className="ml-2">by <span className="text-gray-200">{project.author}</span></span>
-              )}
+                {/* Mostrar autor para ArtStation */}
+                {project.author && (
+                  <span className="ml-2">by <span className="text-gray-200 truncate">{project.author}</span></span>
+                )}
+              </div>
 
-              <div className="flex flex-wrap gap-2 ml-2 items-center">
+              <div className="flex flex-wrap gap-2 items-center">
                 {/* Categorías */}
                 {project.categories && project.categories.length > 0 && (
                   <>
-                    {project.categories.map((cat, i) => (
+                    {project.categories.slice(0, 2).map((cat, i) => (
                       <div className="relative inline-block" key={i}>
                         <Badge
                           variant="secondary"
-                          className="text-sm rounded-none uppercase bg-primary text-secondary"
+                          className="text-xs md:text-sm rounded-none uppercase bg-primary text-secondary"
                         >
                           {cat}
                         </Badge>
@@ -288,6 +290,9 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
                         </>
                       </div>
                     ))}
+                    {project.categories.length > 2 && (
+                      <span className="text-xs text-gray-500">+{project.categories.length - 2} more</span>
+                    )}
                   </>
                 )}
               </div>

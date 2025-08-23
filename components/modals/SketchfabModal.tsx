@@ -56,12 +56,12 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
       className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center md:p-24 p-4"
       onClick={handleBackdropClick}
     >
-      <div className="bg-primary max-w-6xl w-full max-h-full overflow-y-auto border border-secondary">
+      <div className="bg-primary max-w-6xl w-full max-h-full overflow-y-auto overflow-x-hidden border border-secondary">
         <WindowHeader
           title={project.title}
           onClose={onClose}
         />
-        <div className="p-6 grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-6 bg-primary">
+        <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-4 md:gap-6 bg-primary overflow-x-hidden">
           {/* Imagen grande o visor 3D */}
           <div className="flex flex-col items-center relative">
             {/* Corner brackets */}
@@ -98,9 +98,9 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
           </div>
           
           {/* Info del modelo */}
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              <h2 className="text-2xl font-bauhaus-pixel mb-[-8] text-secondary">
+          <div className="flex flex-col gap-2 min-w-0">
+            <div className="flex gap-2 min-w-0">
+              <h2 className="text-xl md:text-2xl font-bauhaus-pixel mb-[-8] text-secondary truncate min-w-0">
                 {project.title}
               </h2>
               {/* Icono de staffpick si aplica */}
@@ -109,25 +109,27 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
                   src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/icons/1ec49a9ae15f3f8f2d6ce895f503953c-v2.svg"
                   alt="Staff Picked"
                   title="Staff Picked"
-                  className="w-5 h-5 drop-shadow-md mt-0.5"
+                  className="w-5 h-5 drop-shadow-md mt-0.5 flex-shrink-0"
                 />
               )}
             </div>
-            <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
-              <Calendar className="w-4 h-4 mr-1" />
-              {project.date && (() => {
-                const d = new Date(project.date);
-                if (isNaN(d.getTime())) return project.date;
-                return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
-              })()}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-gray-400 text-sm mb-2">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4 mr-1" />
+                {project.date && (() => {
+                  const d = new Date(project.date);
+                  if (isNaN(d.getTime())) return project.date;
+                  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+                })()}
+              </div>
 
               {project.categories && project.categories.length > 0 && (
-                <div className="flex flex-wrap gap-2 ml-2">
-                  {project.categories.map((cat, i) => (
+                <div className="flex flex-wrap gap-2">
+                  {project.categories.slice(0, 2).map((cat, i) => (
                     <div className="relative inline-block" key={i}>
                       <Badge
                         variant="secondary"
-                        className="text-sm rounded-none uppercase bg-primary text-secondary"
+                        className="text-xs md:text-sm rounded-none uppercase bg-primary text-secondary"
                       >
                         {cat}
                       </Badge>
@@ -139,6 +141,9 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
                       </>
                     </div>
                   ))}
+                  {project.categories.length > 2 && (
+                    <span className="text-xs text-gray-500">+{project.categories.length - 2} more</span>
+                  )}
                 </div>
               )}
             </div>
