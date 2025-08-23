@@ -32,8 +32,8 @@ export const BrowserHeader: React.FC<BrowserHeaderProps> = (props) => {
           <div className="w-3 h-3 bg-yellow-500"></div>
           <div className="w-3 h-3 bg-green-500"></div>
         </div>
-        <div className="flex-1 ml-4 mr-2">
-          <div className="bg-black border border-gray-600 px-3 py-1 text-sm">
+        <div className="flex-1 min-w-0 ml-4 mr-2">
+          <div className="bg-black border border-gray-600 px-3 py-1 text-sm truncate overflow-hidden whitespace-nowrap">
             {currentUrl}
           </div>
         </div>

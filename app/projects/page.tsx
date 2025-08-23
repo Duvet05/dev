@@ -15,6 +15,24 @@ import ReactMarkdown from "react-markdown"
 import { SketchfabModal } from "@/components/modals/SketchfabModal"
 import { ArtStationModal } from "@/components/modals/ArtStationModal"
 
+// Fondos para los stats (mismo estilo que Skills)
+const skillBackgrounds = [
+  "url('https://cdnb.artstation.com/p/assets/images/images/027/180/409/large/victor-cuadot-top-final.jpg?1590803333')",
+  "url('https://cdna.artstation.com/p/assets/images/images/033/683/208/large/victor-cuadot-pose-2-final.jpg?1610303654')",
+  "url('https://cdna.artstation.com/p/assets/images/images/023/027/472/large/victor-cuadot-robot2.jpg?1577778023')",
+  "url('https://cdnb.artstation.com/p/assets/images/images/023/525/671/large/victor-cuadot-robots.jpg?1579508131')",
+];
+
+const skillBackgroundPositions = [
+  'center 40%',    // TRIANGLES
+  'center 80%',    // VIEWS
+  'center 0%',    // LIKES
+  'center 80%',    // VERTICES
+];
+
+// Opacidad centralizada para overlays de fondo
+const BACKGROUND_IMAGE_OPACITY = 0.8;
+
 // Interfaz para los proyectos
 export interface Project {
   title: string;
@@ -1297,7 +1315,7 @@ export default function ProjectsPage() {
           <div className="p-6 px-4 py-6 sm:p-6">
             {/* Header de la página */}
             <div className="mb-6">
-              <div className="mb-4 flex items-center gap-4 sm:flex-row sm:items-center sm:gap-6">
+              <div className="mb-4 flex items-center justify-between gap-4 sm:gap-6 w-full">
                 <div className="flex items-center gap-4">
                   <Link href="/">
                     <Button
@@ -1314,21 +1332,17 @@ export default function ProjectsPage() {
                     <span className="hidden sm:inline">PROJECTS.ARCHIVE</span>
                   </h1>
                 </div>
-                <div className="hidden sm:block text-left lg:text-right">
-                  <div className="flex flex-col gap-1">
-                    <div className="text-xs sm:text-sm text-gray-400 break-words">
-                      <span className="block sm:inline">PAGE {currentPage} OF {totalPages}</span>
-                      <span className="hidden sm:inline"> • </span>
-                      <span className="block sm:inline">SHOWING {paginatedProjects.length}</span>
-                      <span className="hidden sm:inline"> • </span>
-                      <span className="block sm:inline text-green-400">TOTAL: {validModelsFound}</span>
-                    </div>
-                    <div className="text-xs sm:text-sm text-gray-400">LAST.UPDATE: {currentTime}</div>
+                <div className="hidden sm:flex text-right flex flex-col items-end">
+                  <div className="text-xs sm:text-sm text-gray-400 break-words">
+                    <span className="block sm:inline">PAGE {currentPage} OF {totalPages}</span>
+                    <span className="hidden sm:inline"> • </span>
+                    <span className="block sm:inline">SHOWING {paginatedProjects.length}</span>
+                    <span className="hidden sm:inline"> • </span>
+                    <span className="block sm:inline text-green-400">TOTAL: {validModelsFound}</span>
                   </div>
+                  <div className="text-xs sm:text-sm text-gray-400">LAST.UPDATE: {currentTime}</div>
                   {usingFallback && (
-                    <div className="text-xs text-yellow-400 mt-1">
-                      USING.FALLBACK.DATA
-                    </div>
+                    <div className="text-xs text-yellow-400 mt-1">USING.FALLBACK.DATA</div>
                   )}
                 </div>
               </div>
@@ -1341,48 +1355,108 @@ export default function ProjectsPage() {
             <div className="mb-4 bg-black/40 backdrop-blur-sm">
               {/* Mobile: force single row of 4 stats; desktop keeps 4 columns */}
               <div className="grid grid-cols-4 md:grid-cols-4">
-                <div className="flex flex-col items-center p-3 bg-black/60 border border-secondary">
-                  <Eye className="w-6 h-6 text-blue-400 mb-1" />
-                  <div className="text-xl font-bold text-white">
-                    <span className="sm:hidden uppercase">{compactTotalViews}</span>
-                    <span className="hidden sm:inline">{sketchfabStats.totalViews.toLocaleString()}</span>
+                <div className="flex flex-col items-center p-3 bg-black/60 border border-secondary relative overflow-hidden group">
+                  {/* Fondo con imagen y opacidad, siempre visible y con zoom en hover */}
+                  <div
+                    className="absolute inset-0 transition-transform duration-500 group-hover:scale-110"
+                    style={{
+                      backgroundImage: skillBackgrounds[0],
+                      backgroundSize: 'cover',
+                      backgroundPosition: skillBackgroundPositions[0],
+                      opacity: 1,
+                      zIndex: 1,
+                    }}
+                  >
+                    <div className="absolute inset-0" style={{ background: `rgba(0,0,0,${BACKGROUND_IMAGE_OPACITY})` }} />
                   </div>
-                  <div className="text-xs text-gray-400">
-                    <span className="sm:hidden">VIEWS</span>
-                    <span className="hidden sm:inline">TOTAL VIEWS</span>
-                  </div>
-                </div>
-                <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary">
-                  <Heart className="w-6 h-6 text-red-400 mb-1" />
-                  <div className="text-xl font-bold text-white">
-                    <span className="sm:hidden uppercase">{compactTotalLikes}</span>
-                    <span className="hidden sm:inline">{sketchfabStats.totalLikes.toLocaleString()}</span>
-                  </div>
-                  <div className="text-xs text-gray-400">
-                    <span className="sm:hidden">LIKES</span>
-                    <span className="hidden sm:inline">TOTAL LIKES</span>
-                  </div>
-                </div>
-                <div className="flex flex-col items-center p-3 bg-black/60 border-l border-r border-y border-secondary">
-                  <Shapes className="w-6 h-6 text-yellow-400 mb-1" />
-                  <div className="text-xl font-bold text-white">
-                    <span className="sm:hidden uppercase">{compactTotalTriangles}</span>
-                    <span className="hidden sm:inline">{sketchfabStats.totalTriangles.toLocaleString()}</span>
-                  </div>
-                  <div className="text-xs text-gray-400">
-                    <span className="sm:hidden">TRIANGLES</span>
-                    <span className="hidden sm:inline">TOTAL TRIANGLES</span>
+                  <div className="relative z-10 flex flex-col items-center justify-center">
+                    <Eye className="w-6 h-6 text-blue-400 mb-1" />
+                    <div className="text-xl font-bold text-white">
+                      <span className="sm:hidden uppercase">{compactTotalViews}</span>
+                      <span className="hidden sm:inline">{sketchfabStats.totalViews.toLocaleString()}</span>
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      <span className="sm:hidden">VIEWS</span>
+                      <span className="hidden sm:inline">TOTAL VIEWS</span>
+                    </div>
                   </div>
                 </div>
-                <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary">
-                  <Layers className="w-6 h-6 text-purple-400 mb-1" />
-                  <div className="text-xl font-bold text-white">
-                    <span className="sm:hidden uppercase">{compactTotalVertices}</span>
-                    <span className="hidden sm:inline">{sketchfabStats.totalVertices.toLocaleString()}</span>
+                <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary relative overflow-hidden group">
+                  {/* Fondo con imagen y opacidad, siempre visible y con zoom en hover */}
+                  <div
+                    className="absolute inset-0 transition-transform duration-500 group-hover:scale-110"
+                    style={{
+                      backgroundImage: skillBackgrounds[1],
+                      backgroundSize: 'cover',
+                      backgroundPosition: skillBackgroundPositions[1],
+                      opacity: 1,
+                      zIndex: 1,
+                    }}
+                  >
+                    <div className="absolute inset-0" style={{ background: `rgba(0,0,0,${BACKGROUND_IMAGE_OPACITY})` }} />
                   </div>
-                  <div className="text-xs text-gray-400">
-                    <span className="sm:hidden">VERTICES</span>
-                    <span className="hidden sm:inline">TOTAL VERTICES</span>
+                  <div className="relative z-10 flex flex-col items-center justify-center">
+                    <Heart className="w-6 h-6 text-red-400 mb-1" />
+                    <div className="text-xl font-bold text-white">
+                      <span className="sm:hidden uppercase">{compactTotalLikes}</span>
+                      <span className="hidden sm:inline">{sketchfabStats.totalLikes.toLocaleString()}</span>
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      <span className="sm:hidden">LIKES</span>
+                      <span className="hidden sm:inline">TOTAL LIKES</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center p-3 bg-black/60 border-l border-r border-y border-secondary relative overflow-hidden group">
+                  {/* Fondo con imagen y opacidad, siempre visible y con zoom en hover */}
+                  <div
+                    className="absolute inset-0 transition-transform duration-500 group-hover:scale-110"
+                    style={{
+                      backgroundImage: skillBackgrounds[2],
+                      backgroundSize: 'cover',
+                      backgroundPosition: skillBackgroundPositions[2],
+                      opacity: 1,
+                      zIndex: 1,
+                    }}
+                  >
+                    <div className="absolute inset-0" style={{ background: `rgba(0,0,0,${BACKGROUND_IMAGE_OPACITY})` }} />
+                  </div>
+                  <div className="relative z-10 flex flex-col items-center justify-center">
+                    <Shapes className="w-6 h-6 text-yellow-400 mb-1" />
+                    <div className="text-xl font-bold text-white">
+                      <span className="sm:hidden uppercase">{compactTotalTriangles}</span>
+                      <span className="hidden sm:inline">{sketchfabStats.totalTriangles.toLocaleString()}</span>
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      <span className="sm:hidden">TRIANGLES</span>
+                      <span className="hidden sm:inline">TOTAL TRIANGLES</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center p-3 bg-black/60 border-r border-y border-secondary relative overflow-hidden group">
+                  {/* Fondo con imagen y opacidad, siempre visible y con zoom en hover */}
+                  <div
+                    className="absolute inset-0 transition-transform duration-500 group-hover:scale-110"
+                    style={{
+                      backgroundImage: skillBackgrounds[3],
+                      backgroundSize: 'cover',
+                      backgroundPosition: skillBackgroundPositions[3],
+                      opacity: 1,
+                      zIndex: 1,
+                    }}
+                  >
+                    <div className="absolute inset-0" style={{ background: `rgba(0,0,0,${BACKGROUND_IMAGE_OPACITY})` }} />
+                  </div>
+                  <div className="relative z-10 flex flex-col items-center justify-center">
+                    <Layers className="w-6 h-6 text-purple-400 mb-1" />
+                    <div className="text-xl font-bold text-white">
+                      <span className="sm:hidden uppercase">{compactTotalVertices}</span>
+                      <span className="hidden sm:inline">{sketchfabStats.totalVertices.toLocaleString()}</span>
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      <span className="sm:hidden">VERTICES</span>
+                      <span className="hidden sm:inline">TOTAL VERTICES</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1439,7 +1513,7 @@ export default function ProjectsPage() {
 
               {/* Category + Complexity: grouped on mobile for Sketchfab. On desktop the selects size to content (md:w-auto). */}
               <div className={selectedSource !== "ARTSTATION" ? "flex gap-2 items-end w-full md:w-auto" : "md:w-auto"}>
-                <div className={`flex flex-col gap-2 ${selectedSource !== "ARTSTATION" ? 'flex-1 md:flex-none md:w-auto' : 'md:w-auto'}`}>
+                               <div className={`flex flex-col gap-2 ${selectedSource !== "ARTSTATION" ? 'flex-1 md:flex-none md:w-auto' : 'md:w-auto'}`}>
                   <label htmlFor="category-filter" className="text-xs text-gray-400">CATEGORY</label>
                   <select
                     id="category-filter"
@@ -1491,7 +1565,7 @@ export default function ProjectsPage() {
               {/* VIEW filter - Solo visible en desktop */}
               <div className="hidden md:flex flex-col gap-2">
                 <label className="text-xs text-gray-400">VIEW</label>
-                <div className="flex">
+                               <div className="flex">
                   {selectedSource === "SKETCHFAB" && (
                     <>
                       <button
