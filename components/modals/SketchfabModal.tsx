@@ -1,5 +1,6 @@
 "use client"
 import React from 'react';
+import Image from 'next/image';
 import { Calendar, Heart, Eye, Shapes, Layers, Gauge, FileText, ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { Badge } from '@/components/ui/badge';
@@ -89,10 +90,13 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
                 className="w-full h-64 md:h-156 border border-gray-700 bg-black"
               />
             ) : (
-              <img
-                src={project.thumbnails?.large}
+              <Image
+                src={project.thumbnails?.large || "/placeholder-model.svg"}
                 alt={project.title}
                 className="w-full h-64 md:h-96 object-cover bg-black border border-gray-700"
+                width={640}
+                height={384}
+                priority
               />
             )}
           </div>
@@ -105,11 +109,13 @@ export const SketchfabModal: React.FC<SketchfabModalProps> = ({
               </h2>
               {/* Icono de staffpick si aplica */}
               {project.staffpickedAt && (
-                <img
+                <Image
                   src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/icons/1ec49a9ae15f3f8f2d6ce895f503953c-v2.svg"
                   alt="Staff Picked"
                   title="Staff Picked"
                   className="w-5 h-5 drop-shadow-md mt-0.5 flex-shrink-0"
+                  width={20}
+                  height={20}
                 />
               )}
             </div>

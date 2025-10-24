@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import Image from "next/image";
 
 const images = [
   "victor-cuadot-victor-cuadot-3dpollos.jpg",
@@ -58,11 +59,14 @@ export default function ArtstationInfiniteCarousel() {
       >
         {images.map((img, i) => (
           <div key={i} className="relative group cursor-pointer aspect-square h-36 w-36 flex items-center justify-center">
-            <img
+            <Image
               src={`/images/artstation/${img}`}
               alt={img}
               className="absolute inset-0 w-full h-full object-cover shadow-lg border-l border-secondary opacity-60 group-hover:opacity-100 transition-opacity"
               draggable={false}
+              fill
+              sizes="(max-width: 640px) 100vw, 144px"
+              priority={i < 2}
             />
             {/* Overlay estilo ArtStation */}
             <a

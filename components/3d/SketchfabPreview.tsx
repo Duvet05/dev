@@ -1,6 +1,6 @@
-"use client"
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 interface SketchfabPreviewProps {
   thumbnails?: {
@@ -81,15 +81,16 @@ export const SketchfabPreview: React.FC<SketchfabPreviewProps> = ({
         </div>
       )}
       <div className="relative w-full h-full">
-        <img
-          src={imageUrl}
-          alt={`${modelName} - Sketchfab Preview`}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          onLoad={handleImageLoad}
-          onError={handleImageError}
-          loading="lazy"
-          style={{ minHeight: '100px', minWidth: '100px', display: isLoading ? 'none' : 'block' }}
-        />
+          <Image
+            src={imageUrl}
+            alt={`${modelName} - Sketchfab Preview`}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            fill
+            sizes="100vw"
+            priority={false}
+          />
         {/* Overlay con información en hover */}
         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
           <div className="text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

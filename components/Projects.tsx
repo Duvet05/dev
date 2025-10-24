@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Heart, Eye, Shapes, Layers, Gauge, ExternalLink } from "lucide-react";
@@ -198,11 +199,13 @@ export const Projects: React.FC = () => {
                           {project.title}
                         </h3>
                         {project.staffpickedAt && (
-                          <img
+                          <Image
                             src="https://static.sketchfab.com/static/builds/web/dist/static/assets/images/icons/1ec49a9ae15f3f8f2d6ce895f503953c-v2.svg"
                             alt="Staff Picked"
                             title="Staff Picked"
                             className="w-5 h-5 drop-shadow-md"
+                            width={20}
+                            height={20}
                           />
                         )}
                         {project.date && (

@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Calendar, Heart, Eye, ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -101,12 +102,15 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
             <div className="absolute inset-0 bg-black/30" />
             {/* Imagen principal centrada */}
             <div className="relative w-full h-full flex items-center justify-center">
-              <img
+              <Image
                 src={asset.imageUrl}
                 alt={asset.title || "Asset"}
                 className="max-w-full max-h-full object-contain cursor-pointer"
                 style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))' }}
+                width={512}
+                height={512}
                 onClick={() => handleImageClick(asset.imageUrl)}
+                priority
               />
             </div>
             {/* Indicador de click */}
@@ -117,10 +121,13 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
         );
       } else {
         return (
-          <img
+          <Image
             src={asset.imageUrl}
             alt={asset.title || "Asset"}
             className="w-full h-full object-cover"
+            width={512}
+            height={512}
+            priority
           />
         );
       }
@@ -179,11 +186,14 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
                       })()}
                     </div>
                   ) : (
-                    <img
-                      src={project.thumbnails?.large}
+                    <Image
+                      src={project.thumbnails?.large || "/placeholder-model.svg"}
                       alt={project.title}
                       className="w-full aspect-square object-cover bg-black border border-gray-700 cursor-pointer"
+                      width={512}
+                      height={512}
                       onClick={() => project.thumbnails?.large && handleImageClick(project.thumbnails.large)}
+                      priority
                     />
                   )}
                 </div>
@@ -338,10 +348,13 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
                       variant="secondary"
                       className="text-xs rounded-none flex items-center gap-1 font-vt323 bg-gray-800 text-gray-200 border border-gray-600"
                     >
-                      <img
+                      <Image
                         src={software.iconUrl}
                         alt={software.name}
                         className="w-4 h-4 object-contain"
+                        width={16}
+                        height={16}
+                        priority={false}
                       />
                       {software.name.toUpperCase()}
                     </Badge>
@@ -390,11 +403,14 @@ export const ArtStationModal: React.FC<ArtStationModalProps> = ({
             >
               <X className="w-6 h-6" />
             </button>
-            <img
+            <Image
               src={imageModalSrc}
               alt="Fullscreen view"
               className="max-w-[95vw] max-h-[95vh] object-contain"
+              width={1024}
+              height={1024}
               onClick={(e) => e.stopPropagation()}
+              priority
             />
           </div>
         </div>

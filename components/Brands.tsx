@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 export const Brands: React.FC = () => {
   const brands = [
@@ -10,13 +11,8 @@ export const Brands: React.FC = () => {
   ];
 
   const [isMobile, setIsMobile] = useState(false);
-
   useEffect(() => {
-    const checkMobile = () => {
-      if (typeof window !== 'undefined') {
-        setIsMobile(window.innerWidth <= 640);
-      }
-    };
+    const checkMobile = () => setIsMobile(window.innerWidth <= 640);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -39,10 +35,13 @@ export const Brands: React.FC = () => {
               key={index}
               className="flex-shrink-0 mx-8 flex items-center justify-center"
             >
-              <img
-                src={brand.logo}
+              <Image
+                src={brand.logo.startsWith('/') ? brand.logo : '/' + brand.logo}
                 alt={brand.name}
                 className="h-12 w-auto object-contain invert"
+                height={48}
+                width={120}
+                style={{height: '48px', width: 'auto'}}
               />
             </div>
           ))}

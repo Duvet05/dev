@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { WindowHeader } from "./layout/WindowHeader";
 import { ArrowRight } from "lucide-react";
@@ -16,10 +17,13 @@ export const AboutMe: React.FC<AboutMeProps> = () => (
     <div className="flex flex-col lg:flex-row flex-1 min-h-0">
       {/* Contenedor de imagen - tamaño fijo */}
       <div className="border-l border-t border-r border-secondary bg-primary p-6 text-white text-lg font-vt323 flex items-center justify-center lg:flex-shrink-0 lg:border-b lg:border-r-0">
-        <img
+        <Image
           src="/images/dithered-image.png"
           alt="Cuadot Profile"
           className="w-[196px] h-[196px] object-cover rounded-lg aspect-square"
+          width={196}
+          height={196}
+          priority
         />
       </div>
       
