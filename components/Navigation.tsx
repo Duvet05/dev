@@ -96,6 +96,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           <button onClick={handleProjectsNavigation} className="text-gray-400 hover:text-white hover:underline cursor-pointer bg-transparent border-none animate-pulse-green transition-colors">PROJECTS</button>
           <button onClick={() => handleNavigation('skills')} className="text-gray-400 hover:text-white hover:underline cursor-pointer bg-transparent border-none transition-colors">SKILLS</button>
           <button onClick={() => handleNavigation('brands')} className="text-gray-400 hover:text-white hover:underline cursor-pointer bg-transparent border-none transition-colors">BRANDS</button>
+          <button onClick={() => window.location.href = '/games'} className="text-red-400 hover:text-red-300 hover:underline cursor-pointer bg-transparent border-none animate-pulse-red transition-colors">GAMES</button>
           <button onClick={() => handleNavigation('contact')} className="text-gray-400 hover:text-white hover:underline cursor-pointer bg-transparent border-none transition-colors">CONTACT</button>
         </div>
         
@@ -103,6 +104,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         <div className="flex md:hidden space-x-4 text-base">
           <button onClick={() => handleNavigation('home')} className="text-gray-400 hover:text-white hover:underline cursor-pointer bg-transparent border-none transition-colors">HOME</button>
           <button onClick={handleProjectsNavigation} className="text-gray-400 hover:text-white hover:underline cursor-pointer bg-transparent border-none animate-pulse-green transition-colors">PROJECTS</button>
+          <button onClick={() => window.location.href = '/games'} className="text-red-400 hover:text-red-300 hover:underline cursor-pointer bg-transparent border-none animate-pulse-red transition-colors">GAMES</button>
         </div>
         
         {/* Mini reproductor de música funcional estilo terminal/pixel art - Solo en desktop */}
@@ -202,9 +204,23 @@ export const Navigation: React.FC<NavigationProps> = ({
             text-shadow: 0 0 5px rgb(34, 197, 94);
           }
         }
-        
+
+        @keyframes pulse-red {
+          0%, 100% {
+            color: rgb(248, 113, 113); /* text-red-400 */
+          }
+          50% {
+            color: rgb(239, 68, 68); /* text-red-500 */
+            text-shadow: 0 0 8px rgb(239, 68, 68);
+          }
+        }
+
         .animate-pulse-green {
           animation: pulse-green 1.5s ease-in-out infinite;
+        }
+
+        .animate-pulse-red {
+          animation: pulse-red 1.2s ease-in-out infinite;
         }
         .hide-music-880 {
           display: flex;

@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# game bundles (large files - consider using Git LFS or CDN)
+# Uncomment the line below if you want to ignore the game bundle:
+# public/games/*.jsdos

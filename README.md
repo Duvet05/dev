@@ -1,5 +1,12 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Features
+
+- 3D Artist Portfolio with cyberpunk/retro aesthetic
+- Interactive 3D model viewer
+- Music player with custom pixel art controls
+- Command & Conquer: Red Alert playable in browser (WASM/js-dos)
+
 ## Getting Started
 
 First, run the development server:
@@ -15,6 +22,12 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Play Red Alert
+
+Visit [http://localhost:3000/games](http://localhost:3000/games) to play Command & Conquer: Red Alert in your browser!
+
+For detailed setup and deployment instructions, see [REDALERT_SETUP.md](REDALERT_SETUP.md).
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
