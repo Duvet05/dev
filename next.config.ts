@@ -24,6 +24,13 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '500mb',
+    },
+  },
+  // Configuración para archivos estáticos grandes
+  compress: false,
 };
 
 export default nextConfig;
